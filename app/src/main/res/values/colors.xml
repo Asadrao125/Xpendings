@@ -10,4 +10,7 @@
 
 
     <color name="splash_background_color">#f5fcfc</color>
+    <color name="light_grey">#e3e5eb</color>
+    <color name="green">#24b554</color>
+    <color name="dark_grey">#909090</color>
 </resources>

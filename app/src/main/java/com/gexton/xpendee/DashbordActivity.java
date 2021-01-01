@@ -20,14 +20,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class DashbordActivity extends AppCompatActivity {
-    private NavigationView nv;
+    BottomNavigationView bottomNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashbord);
 
-        BottomNavigationView bottomNav = (BottomNavigationView) findViewById(R.id.navigationView);
+        bottomNav = (BottomNavigationView) findViewById(R.id.navigationView);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         HomeFragment frag_name = new HomeFragment();
@@ -37,7 +37,6 @@ public class DashbordActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.black, this.getTheme()));
         }
-
     }
 
     private final BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -78,6 +77,17 @@ public class DashbordActivity extends AppCompatActivity {
             ft.replace(R.id.container, fragment);
             ft.addToBackStack(backStateName);
             ft.commit();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (bottomNav.getSelectedItemId() == R.id.home_home) {
+            super.onBackPressed();
+        } else {
+            bottomNav.setSelectedItemId(R.id.home_home);
+            bottomNav.getMenu().getItem(0).setChecked(true);
         }
     }
 
