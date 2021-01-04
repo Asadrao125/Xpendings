@@ -112,7 +112,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         if (name.equals("") || name.equals("No name defined")) {
             Toast.makeText(this, "No Signed In User. Please Sign In", Toast.LENGTH_SHORT).show();
         } else {
-            startActivity(new Intent(getApplicationContext(), DashbordActivity.class));
+            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
             finish();
         }
     }
@@ -156,7 +156,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 editor.putString("email", email);
                 editor.apply();
 
-                Intent intent = new Intent(getApplicationContext(), DashbordActivity.class);
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(intent);
 
                 mGoogleApiClient.disconnect();
@@ -218,7 +218,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                             editor.putString("email", email);
                                             editor.apply();
 
-                                            Intent intent = new Intent(getApplicationContext(), DashbordActivity.class);
+                                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                                             startActivity(intent);
 
                                             LoginManager loginManager = LoginManager.getInstance();

@@ -90,5 +90,4 @@ public class DashbordActivity extends AppCompatActivity {
             bottomNav.getMenu().getItem(0).setChecked(true);
         }
     }
-
 }

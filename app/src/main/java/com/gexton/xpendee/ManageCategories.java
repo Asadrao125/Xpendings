@@ -3,26 +3,42 @@ package com.gexton.xpendee;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TableLayout;
+import android.view.View;
+import android.widget.ImageView;
 
+import com.gexton.xpendee.Adapters.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 public class ManageCategories extends AppCompatActivity {
-    TableLayout tabLayout;
+    TabLayout tabs;
     ViewPager viewPager;
     ViewPagerAdapter viewPagerAdapter;
+    ImageView img_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_categories);
 
-        tabLayout = findViewById(R.id.tabs);
+        init();
+        viewPager.setAdapter(viewPagerAdapter);
+        tabs.setupWithViewPager(viewPager);
+
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                finish();
+            }
+        });
+
+    }
+    private void init() {
+        tabs = findViewById(R.id.tabs);
         viewPager = findViewById(R.id.viewPager);
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(viewPagerAdapter);
-        //tabLayout.setupWithViewPager(viewPager);
-
+        img_back = findViewById(R.id.img_back);
     }
 }

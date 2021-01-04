@@ -1,8 +1,8 @@
-package com.gexton.xpendee;
+package com.gexton.xpendee.Adapters;
 
 
-import com.gexton.xpendee.Fragments.HomeFragment;
-import com.gexton.xpendee.Fragments.TimelineFragment;
+import com.gexton.xpendee.Fragments.ExpenceFragment;
+import com.gexton.xpendee.Fragments.IncomeFragment;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -34,7 +34,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         String title = null;
         if (position == 0) {
-            title = "Expences";
+            title = "Expence";
         } else if (position == 1) {
             title = "Income";
         }

@@ -1,4 +1,4 @@
-package com.gexton.xpendee;
+package com.gexton.xpendee.Fragments;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.gexton.xpendee.R;
 
 public class ExpenceFragment extends Fragment {
 
