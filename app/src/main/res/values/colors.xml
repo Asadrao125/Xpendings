@@ -9,6 +9,9 @@
     <color name="white">#FFFFFFFF</color>
 
 
+    <color name="first_color">#3D5AFE</color>
+
+
     <color name="splash_background_color">#f5fcfc</color>
     <color name="light_grey">#e3e5eb</color>
     <color name="green">#24b554</color>

@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         iv_apple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), DashbordActivity.class));
+
             }
         });
     }

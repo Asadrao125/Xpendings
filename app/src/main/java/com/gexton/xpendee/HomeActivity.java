@@ -4,21 +4,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import com.gexton.xpendee.Adapters.ViewPagerAdapter;
 import com.gexton.xpendee.Adapters.ViewPagerAdapterHome;
+import com.gexton.xpendee.util.Database;
 import com.google.android.material.tabs.TabLayout;
 
 public class HomeActivity extends AppCompatActivity {
     TabLayout tabs;
     ViewPager viewPager;
     ViewPagerAdapterHome viewPagerAdapterHome;
+    Database database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        database = new Database(HomeActivity.this);
+        database.createDatabase();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.black, this.getTheme()));
+        }
 
         tabs = findViewById(R.id.tabs);
         viewPager = findViewById(R.id.viewPager);
@@ -40,5 +50,4 @@ public class HomeActivity extends AppCompatActivity {
             viewPager.setCurrentItem(0);
         }
     }
-
 }

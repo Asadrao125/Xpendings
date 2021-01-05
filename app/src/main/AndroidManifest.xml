@@ -9,13 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Xpendee">
-        <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".AddCategoryActivity"></activity>
+        <activity android:name=".HomeActivity" />
         <activity android:name=".ManageCategories" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-        <activity android:name=".DashbordActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
@@ -34,9 +34,9 @@
             android:authorities="com.facebook.app.FacebookContentProvider192519792590832"
             android:exported="true" />
     </application>
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
 </manifest>
