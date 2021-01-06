@@ -23,7 +23,9 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="20dp"
                 android:id="@+id/img_cross"
+                android:background="?attr/selectableItemBackground"
                 android:src="@drawable/ic_cross"
+                android:padding="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -40,6 +42,7 @@
             <ImageView
                 android:layout_centerVertical="true"
                 android:id="@+id/img_tick"
+                android:background="?attr/selectableItemBackground"
                 android:src="@mipmap/tick"
                 android:layout_alignParentEnd="true"
                 android:layout_width="wrap_content"

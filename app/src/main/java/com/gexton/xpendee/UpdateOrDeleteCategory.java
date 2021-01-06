@@ -44,6 +44,9 @@ public class UpdateOrDeleteCategory extends AppCompatActivity {
             R.mipmap.budget_grey,
             R.mipmap.notification_grey,
             R.mipmap.more_grey,
+            R.mipmap.home_green,
+            R.mipmap.changepwd_more,
+            R.mipmap.info_more
     };
 
     String[] colorArray = {
