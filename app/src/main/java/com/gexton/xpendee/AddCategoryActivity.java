@@ -110,7 +110,6 @@ public class AddCategoryActivity extends AppCompatActivity {
             }
         });
 
-
         int numberOfColumns = 4;
         RecyclerView.LayoutManager mLayoutManagerRVBP = new GridLayoutManager(AddCategoryActivity.this, numberOfColumns);
         recyclerView.setLayoutManager(mLayoutManagerRVBP);

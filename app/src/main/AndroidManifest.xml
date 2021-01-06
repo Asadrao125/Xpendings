@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Xpendee">
-        <activity android:name=".UpdateOrDeleteCategory"></activity>
+        <activity android:name=".NewWalletActivity"></activity>
+        <activity android:name=".UpdateOrDeleteCategory" />
         <activity android:name=".AddCategoryActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".ManageCategories" />
@@ -35,9 +36,9 @@
             android:authorities="com.facebook.app.FacebookContentProvider192519792590832"
             android:exported="true" />
     </application>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
 </manifest>
