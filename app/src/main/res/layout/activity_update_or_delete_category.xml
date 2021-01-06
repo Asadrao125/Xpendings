@@ -117,6 +117,7 @@
         android:padding="10dp"
         android:layout_alignParentBottom="true"
         android:textSize="18sp"
+        android:background="?attr/selectableItemBackground"
         android:textColor="@color/green"
         android:layout_margin="10dp"/>
 
