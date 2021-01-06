@@ -35,7 +35,7 @@ public class UpdateOrDeleteCategory extends AppCompatActivity {
     TextView tv_delete;
 
     //Getting Intent data
-    int id, resID, flag;
+    int id, resID, flag, pos;
     String category_name, color_code;
 
     int[] programImages = {
@@ -76,9 +76,15 @@ public class UpdateOrDeleteCategory extends AppCompatActivity {
         id = getIntent().getIntExtra("id", 10000);
         resID = getIntent().getIntExtra("resId", 10000);
         flag = getIntent().getIntExtra("flag", 10000);
+        pos = getIntent().getIntExtra("position", 10000);
 
         category_name = getIntent().getStringExtra("category_name");
         color_code = getIntent().getStringExtra("color_code");
+
+
+        catName = category_name;
+        iconID = resID;
+        colorCode = color_code;
 
         ImageAdapter imageAdapter = new ImageAdapter(this, programImages);
         recyclerView.setAdapter(imageAdapter);

@@ -63,6 +63,7 @@ public class ExpenceFragment extends Fragment {
                 intent.putExtra("resId", resID);
                 intent.putExtra("color_code", color_code);
                 intent.putExtra("flag", flag);
+                intent.putExtra("position", position);
                 startActivity(intent);
 
             }
