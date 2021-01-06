@@ -40,10 +40,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ColorsAdapter.ViewHolder holder, int position) {
 
-        //holder.text_view_color.tint();
-
         holder.text_view_color.setColorFilter(Color.parseColor(colors[position]), android.graphics.PorterDuff.Mode.MULTIPLY);
-
 
         holder.text_view_color.setOnClickListener(new View.OnClickListener() {
             @Override

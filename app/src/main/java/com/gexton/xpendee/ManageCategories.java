@@ -18,7 +18,6 @@ public class ManageCategories extends AppCompatActivity {
     ViewPager viewPager;
     ViewPagerAdapter viewPagerAdapter;
     ImageView img_back;
-    TextView tv_add_category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +40,6 @@ public class ManageCategories extends AppCompatActivity {
             }
         });
 
-        tv_add_category.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), AddCategoryActivity.class));
-            }
-        });
-
     }
 
     private void init() {
@@ -55,6 +47,6 @@ public class ManageCategories extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         img_back = findViewById(R.id.img_back);
-        tv_add_category = findViewById(R.id.tv_add_category);
     }
+
 }

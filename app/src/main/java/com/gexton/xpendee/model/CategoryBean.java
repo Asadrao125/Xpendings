@@ -6,7 +6,6 @@ public class CategoryBean {
     public String categoryName ;
     public int categoryIcon;
     public String categoryHashCode;
-
     public int catFlag;//1=Expense, 2 = Income
     //int isPredefined;//0=predefined, 1 = user added
 
@@ -18,4 +17,47 @@ public class CategoryBean {
         this.catFlag = catFlag;
         //this.isPredefined = isPredefined;
     }
+
+   /* public CategoryBean() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public int getCategoryIcon() {
+        return categoryIcon;
+    }
+
+    public void setCategoryIcon(int categoryIcon) {
+        this.categoryIcon = categoryIcon;
+    }
+
+    public String getCategoryHashCode() {
+        return categoryHashCode;
+    }
+
+    public void setCategoryHashCode(String categoryHashCode) {
+        this.categoryHashCode = categoryHashCode;
+    }
+
+    public int getCatFlag() {
+        return catFlag;
+    }
+
+    public void setCatFlag(int catFlag) {
+        this.catFlag = catFlag;
+    }*/
 }

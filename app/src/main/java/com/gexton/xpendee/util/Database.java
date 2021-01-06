@@ -140,30 +140,30 @@ public class Database {
         return rowId;
     }//end insertAttendance
 
-
-    public ArrayList<CategoryBean> getAllCategories() {
+    public ArrayList<CategoryBean> getAllCategories(int flag_value) {
         open();
         ArrayList<CategoryBean> categoryBeans = new ArrayList<>();
         CategoryBean temp;
-        String query1 = "select * from category";
+        String query1 = "select * from category WHERE flag = '" + flag_value + "'";
 
         System.out.println("--query in getAllAttendance : " + query1);
         Cursor cursor = sqLiteDatabase.rawQuery(query1, null);
 
         if (cursor.moveToFirst()) {
             do {
+
                 int id = cursor.getInt(cursor.getColumnIndex("id"));
                 String catName = cursor.getString(cursor.getColumnIndex("category_name"));
                 String colorCode = cursor.getString(cursor.getColumnIndex("color_code"));
                 int iconId = cursor.getInt(cursor.getColumnIndex("icon_id"));
-                int flag = cursor.getInt(cursor.getColumnIndex("icon_id"));
-
+                int flag = cursor.getInt(cursor.getColumnIndex("flag"));
 
                 temp = new CategoryBean(id, catName, iconId, colorCode, flag);
 
                 categoryBeans.add(temp);
                 temp = null;
             }
+
             while (cursor.moveToNext());
 
             close();
@@ -174,7 +174,6 @@ public class Database {
 
     }//======end getAllAttendance()===========
 
-
     public void deleteCategory(int id) {
         open();
         String query = "delete from category WHERE id = '" + id + "'";
@@ -183,8 +182,7 @@ public class Database {
 
     }//deleteEvent
 
-
-    public void updateCategory(CategoryBean categoryBean) {
+    public void updateCategory(CategoryBean categoryBean, int id) {
         open();
         ContentValues dataToUpdate = new ContentValues();
         dataToUpdate.put("category_name", categoryBean.categoryName);
@@ -193,7 +191,7 @@ public class Database {
         dataToUpdate.put("flag", categoryBean.catFlag);
 
         //String where = "id" + "=" + "'"+categoryBean.id+"'" + " AND dateof" + "=" + "'"+dateof+"'" + " AND type" + "=" + "'checking'"; // id is string
-        String where = "id" + "=" + "'" + categoryBean.id + "'"; //One WHERE clause
+        String where = "id" + "=" + "'" + id + "'"; //One WHERE clause
 
         try {
             int rows = sqLiteDatabase.update("category", dataToUpdate, where, null);
