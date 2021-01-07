@@ -82,7 +82,6 @@ public class ExpenceFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
         return view;
     }
 
@@ -95,15 +94,4 @@ public class ExpenceFragment extends Fragment {
             rvCategories.setAdapter(adapter);
         }
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (database.getAllCategories(2) != null) {
-            categoryBeanArrayList = database.getAllCategories(1);
-            adapter = new CategoriesListAdapter(getContext(), categoryBeanArrayList);
-            rvCategories.setAdapter(adapter);
-        }
-    }
-
 }

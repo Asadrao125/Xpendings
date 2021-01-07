@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 
 import com.gexton.xpendee.model.CategoryBean;
+import com.gexton.xpendee.model.ExpenseBean;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -138,7 +139,7 @@ public class Database {
 
         System.out.println("-- Record inserted rowId : " + rowId);
         return rowId;
-    }//end insertAttendance
+    }//end insertCategory
 
     public ArrayList<CategoryBean> getAllCategories(int flag_value) {
         open();
@@ -163,16 +164,13 @@ public class Database {
                 categoryBeans.add(temp);
                 temp = null;
             }
-
             while (cursor.moveToNext());
-
             close();
             return categoryBeans;
         }
         close();
         return null;
-
-    }//======end getAllAttendance()===========
+    }//======end getAllCategories()===========
 
     public void deleteCategory(int id) {
         open();
@@ -180,7 +178,7 @@ public class Database {
         sqLiteDatabase.execSQL(query);
         close();
 
-    }//deleteEvent
+    }//deleteCategory
 
     public void updateCategory(CategoryBean categoryBean, int id) {
         open();
@@ -201,5 +199,68 @@ public class Database {
         }
         close();
     }//end updateCategory
+
+
+    //============================start custom methods / Crud for Expense table ====================================
+
+    public long insertExpense(ExpenseBean expenseBean) {
+        long rowId = -1;
+        try {
+            open();
+            ContentValues cv = new ContentValues();
+            cv.put("expense_currency", expenseBean.currency);
+            cv.put("expense_amount", expenseBean.expense);
+            cv.put("expense_category_icon", expenseBean.categoryIcon);
+            cv.put("expense_category_name", expenseBean.categoryName);
+            cv.put("current_day", expenseBean.currentDay);
+            cv.put("expense_description", expenseBean.description);
+            cv.put("image_path", expenseBean.imagePath);
+
+            rowId = sqLiteDatabase.insert("expense", null, cv);
+
+            close();
+        } catch (SQLiteException e) {
+            Toast.makeText(activity, "Database exception", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+
+        System.out.println("-- Record inserted rowId : " + rowId);
+
+        return rowId;
+    }//insertExpense
+
+    public ArrayList<ExpenseBean> getAllExpenses() {
+        open();
+        ArrayList<ExpenseBean> expenseBean = new ArrayList<>();
+        ExpenseBean temp;
+        String query1 = "select * from expense";
+
+        System.out.println("--query in getAllAttendance : " + query1);
+        Cursor cursor = sqLiteDatabase.rawQuery(query1, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                int id = cursor.getInt(cursor.getColumnIndex("id"));
+                String currency = cursor.getString(cursor.getColumnIndex("expense_currency"));
+                Double amount = cursor.getDouble(cursor.getColumnIndex("expense_amount"));
+                int icon = cursor.getInt(cursor.getColumnIndex("expense_category_icon"));
+                String category_name = cursor.getString(cursor.getColumnIndex("expense_category_name"));
+                String current_day = cursor.getString(cursor.getColumnIndex("current_day"));
+                String expense_description = cursor.getString(cursor.getColumnIndex("expense_description"));
+                String image_path = cursor.getString(cursor.getColumnIndex("image_path"));
+
+                temp = new ExpenseBean(id, currency, amount, icon, category_name, current_day, expense_description, image_path);
+
+                expenseBean.add(temp);
+                temp = null;
+            }
+            while (cursor.moveToNext());
+            close();
+            return expenseBean;
+        }
+        close();
+        return null;
+    }//======end getAllExpenses()===========
 
 }

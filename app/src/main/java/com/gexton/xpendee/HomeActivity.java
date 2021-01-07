@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import com.gexton.xpendee.Adapters.ViewPagerAdapter;
 import com.gexton.xpendee.Adapters.ViewPagerAdapterHome;
+import com.gexton.xpendee.Fragments.HomeFragment;
 import com.gexton.xpendee.util.Database;
 import com.google.android.material.tabs.TabLayout;
 
@@ -50,4 +51,6 @@ public class HomeActivity extends AppCompatActivity {
             viewPager.setCurrentItem(0);
         }
     }
+
+
 }

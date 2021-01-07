@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gexton.xpendee.AddExpenseActivity;
 import com.gexton.xpendee.ManageCategories;
 import com.gexton.xpendee.R;
 import com.squareup.picasso.Picasso;
@@ -23,8 +24,8 @@ public class MoreFragment extends Fragment {
     String MY_PREFS_NAME = "Xpendee";
     TextView tv_username, tv_email;
     CircleImageView profile_image;
+    RelativeLayout manage_categories, manual_wallets;
     View view;
-    RelativeLayout manage_categories;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,11 +37,19 @@ public class MoreFragment extends Fragment {
         tv_email = view.findViewById(R.id.tv_email);
         profile_image = view.findViewById(R.id.profile_image);
         manage_categories = view.findViewById(R.id.manage_categories);
+        manual_wallets = view.findViewById(R.id.manual_wallets);
 
         manage_categories.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), ManageCategories.class));
+            }
+        });
+
+        manual_wallets.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), AddExpenseActivity.class));
             }
         });
 

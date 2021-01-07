@@ -79,7 +79,7 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private void converSionAndSettingData() {
+    public void converSionAndSettingData() {
         // Converting GSON object into String
         SharedPreferences prefs1 = getContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
         json = prefs1.getString("Wallet_Bean", "");
@@ -99,7 +99,7 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    @Override
+    /*@Override
     public void onResume() {
         super.onResume();
         converSionAndSettingData();
@@ -109,6 +109,6 @@ public class HomeFragment extends Fragment {
     public void onStart() {
         super.onStart();
         converSionAndSettingData();
-    }
+    }*/
 
 }

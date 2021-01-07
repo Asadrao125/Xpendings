@@ -3,16 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".UpdateOrDeleteCategory">
 
     <RelativeLayout
         android:id="@+id/layout_complete"
-        android:padding="20dp"
-        android:background="@color/first_color"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/first_color"
+        android:padding="20dp">
 
         <RelativeLayout
             android:id="@+id/layout_1"
@@ -20,105 +20,106 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/img_cross"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="20dp"
-                android:id="@+id/img_cross"
-                android:src="@drawable/ic_cross"
+                android:src="@drawable/ic_cross" />
+
+            <ImageView
+                android:id="@+id/img_tick"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:src="@mipmap/tick" />
 
             <TextView
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/img_cross"
-                android:textColor="@android:color/white"
                 android:id="@+id/tv_add_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="Edit Category"/>
-
-            <ImageView
                 android:layout_centerVertical="true"
-                android:id="@+id/img_tick"
-                android:src="@mipmap/tick"
-                android:layout_alignParentEnd="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"/>
+                android:layout_toRightOf="@+id/img_cross"
+                android:text="Edit Category"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
 
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/layout_1"
             android:id="@+id/layout_2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <RelativeLayout
-                android:id="@+id/layout_circle"
-                android:background="@drawable/circle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/image_view_selected"
-                    android:layout_centerInParent="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/home_grey"/>
-
-            </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_1"
+            android:layout_marginTop="20dp">
 
             <EditText
                 android:id="@+id/etName"
-                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:background="@null"
-                android:textColorHint="@android:color/white"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/layout_circle"
-                android:layout_width="match_parent"
-                android:textSize="20dp"
+                android:background="@null"
                 android:focusable="true"
+                android:hint="Category Name"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"
+                android:textSize="20dp" />
+
+            <RelativeLayout
+                android:id="@+id/layout_circle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Category Name"/>
+                android:background="@drawable/circle">
+
+                <ImageView
+                    android:id="@+id/image_view_selected"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/home_grey"
+                    android:tint="@color/white" />
+
+            </RelativeLayout>
 
         </RelativeLayout>
 
     </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvColors"
-        android:layout_below="@+id/layout_complete"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_below="@+id/rvColors"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <View
-        android:background="@color/light_grey"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_above="@+id/tv_delete"/>
-
     <TextView
-        android:layout_alignParentEnd="true"
         android:id="@+id/tv_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Delete"
-        android:padding="10dp"
         android:layout_alignParentBottom="true"
-        android:textSize="18sp"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="10dp"
         android:background="?attr/selectableItemBackground"
+        android:padding="10dp"
+        android:text="Delete"
         android:textColor="@color/green"
-        android:layout_margin="10dp"/>
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_above="@+id/tv_delete"
+        android:background="@color/light_grey" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvColors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_complete"
+        android:layout_marginTop="20dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rvColors"
+        android:layout_marginTop="20dp" />
 
 </RelativeLayout>

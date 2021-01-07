@@ -16,7 +16,6 @@
             android:textSize="18sp"
             android:layout_toRightOf="@+id/layout_layout"
             android:layout_centerVertical="true"
-            android:textColor="@android:color/holo_blue_dark"
             android:id="@+id/tvCatName"/>
 
         <RelativeLayout
@@ -31,6 +30,7 @@
                 android:layout_centerHorizontal="true"
                 android:id="@+id/image_view"
                 android:layout_width="30dp"
+                android:tint="@color/white"
                 android:layout_height="30dp"
                 android:src="@mipmap/ic_launcher"/>
 

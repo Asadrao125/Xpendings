@@ -45,14 +45,22 @@ public class AddCategoryActivity extends AppCompatActivity {
     String fragment_value;
 
     int[] programImages = {
-            R.mipmap.home_grey,
-            R.mipmap.timeline_grey,
-            R.mipmap.budget_grey,
-            R.mipmap.notification_grey,
-            R.mipmap.more_grey,
-            R.mipmap.home_green,
-            R.mipmap.changepwd_more,
-            R.mipmap.info_more
+            R.mipmap.beauty,
+            R.mipmap.bill,
+            R.mipmap.car,
+            R.mipmap.education,
+            R.mipmap.entertainment,
+            R.mipmap.family,
+            R.mipmap.food,
+            R.mipmap.gift,
+            R.mipmap.grocery,
+            R.mipmap.home,
+            R.mipmap.other,
+            R.mipmap.shopping,
+            R.mipmap.sport,
+            R.mipmap.transport,
+            R.mipmap.travel,
+            R.mipmap.work
     };
 
     String[] colorArray = {
@@ -64,7 +72,15 @@ public class AddCategoryActivity extends AppCompatActivity {
             "#FF1744",
             "#00B0FF",
             "#00E5FF",
-            "#1DE9B6"
+            "#1DE9B6",
+            "#6495ED",
+            "#CCCCFF",
+            "#40E0D0",
+            "#9FE2BF",
+            "#DE3163",
+            "#FF7F50",
+            "#FFBF00",
+            "#CD5C5C"
     };
 
     @Override
@@ -110,13 +126,9 @@ public class AddCategoryActivity extends AppCompatActivity {
             }
         });
 
-        int numberOfColumns = 4;
+        int numberOfColumns = 3;
         RecyclerView.LayoutManager mLayoutManagerRVBP = new GridLayoutManager(AddCategoryActivity.this, numberOfColumns);
         recyclerView.setLayoutManager(mLayoutManagerRVBP);
-
-        ColorsAdapter colorsAdapter = new ColorsAdapter(this, colorArray);
-        rvColors.setAdapter(colorsAdapter);
-        rvColors.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(AddCategoryActivity.this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
@@ -131,6 +143,10 @@ public class AddCategoryActivity extends AppCompatActivity {
                 System.out.println("-- item long press pos: " + position);
             }
         }));
+
+        ColorsAdapter colorsAdapter = new ColorsAdapter(this, colorArray);
+        rvColors.setAdapter(colorsAdapter);
+        rvColors.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         rvColors.addOnItemTouchListener(new RecyclerItemClickListener(AddCategoryActivity.this, rvColors, new RecyclerItemClickListener.OnItemClickListener() {
             @Override

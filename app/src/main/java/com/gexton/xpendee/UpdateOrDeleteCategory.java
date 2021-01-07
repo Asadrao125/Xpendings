@@ -39,14 +39,22 @@ public class UpdateOrDeleteCategory extends AppCompatActivity {
     String category_name, color_code;
 
     int[] programImages = {
-            R.mipmap.home_grey,
-            R.mipmap.timeline_grey,
-            R.mipmap.budget_grey,
-            R.mipmap.notification_grey,
-            R.mipmap.more_grey,
-            R.mipmap.home_green,
-            R.mipmap.changepwd_more,
-            R.mipmap.info_more
+            R.mipmap.beauty,
+            R.mipmap.bill,
+            R.mipmap.car,
+            R.mipmap.education,
+            R.mipmap.entertainment,
+            R.mipmap.family,
+            R.mipmap.food,
+            R.mipmap.gift,
+            R.mipmap.grocery,
+            R.mipmap.home,
+            R.mipmap.other,
+            R.mipmap.shopping,
+            R.mipmap.sport,
+            R.mipmap.transport,
+            R.mipmap.travel,
+            R.mipmap.work
     };
 
     String[] colorArray = {
@@ -58,7 +66,15 @@ public class UpdateOrDeleteCategory extends AppCompatActivity {
             "#FF1744",
             "#00B0FF",
             "#00E5FF",
-            "#1DE9B6"
+            "#1DE9B6",
+            "#6495ED",
+            "#CCCCFF",
+            "#40E0D0",
+            "#9FE2BF",
+            "#DE3163",
+            "#FF7F50",
+            "#FFBF00",
+            "#CD5C5C"
     };
 
     @Override

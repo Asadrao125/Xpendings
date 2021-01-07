@@ -15,6 +15,7 @@ import com.gexton.xpendee.R;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -61,7 +62,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView text_view_color;
-        RelativeLayout item_background_layout;
+        CardView item_background_layout;
 
         public ViewHolder(@NonNull View view) {
             super(view);
