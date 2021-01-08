@@ -58,7 +58,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         });
 
         int drawableResId = index != position ? R.drawable.cirrcle_empty : R.drawable.circle_for_images;
-        holder.item_background_layout.setBackgroundResource(drawableResId);
+        holder.row_image.setBackgroundResource(drawableResId);
 
     }
 
