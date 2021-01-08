@@ -33,8 +33,8 @@ public class HomeFragment extends Fragment {
     Button btn_add_cash_wallet;
     TextView tv_balance, tv_currency, tv_my_wallet_name;
     Button btn_edit_wallet;
-    LinearLayout layout_no_data_found;
-    RelativeLayout wallet_complete;
+    public LinearLayout layout_no_data_found;
+    public RelativeLayout wallet_complete;
     String json;
 
     @Override
@@ -89,26 +89,18 @@ public class HomeFragment extends Fragment {
             tv_my_wallet_name.setText(walletBean.wallet_name);
             tv_balance.setText("" + walletBean.balance);
             tv_currency.setText(walletBean.currency);
-        }
-
-        if (prefs1.getString("Wallet_Bean", "").equals("")) {
-            Toast.makeText(getContext(), "NO Wallet Found", Toast.LENGTH_SHORT).show();
-            layout_no_data_found.setVisibility(View.VISIBLE);
-        } else {
             wallet_complete.setVisibility(View.VISIBLE);
+            layout_no_data_found.setVisibility(View.GONE);
+        } else {
+            layout_no_data_found.setVisibility(View.VISIBLE);
+            wallet_complete.setVisibility(View.GONE);
         }
     }
 
-    /*@Override
+    @Override
     public void onResume() {
         super.onResume();
         converSionAndSettingData();
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        converSionAndSettingData();
-    }*/
 
 }

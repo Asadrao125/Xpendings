@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gexton.xpendee.Fragments.HomeFragment;
 import com.gexton.xpendee.model.WalletBean;
 import com.google.gson.Gson;
 
@@ -64,6 +65,11 @@ public class NewWalletActivity extends AppCompatActivity {
         if (walletBean != null) {
             edt_wallet_name.setText(walletBean.wallet_name);
             edt_balance.setText("" + walletBean.balance);
+
+            /*HomeFragment homeFragment = new HomeFragment();
+            homeFragment.wallet_complete.setVisibility(View.VISIBLE);
+            homeFragment.layout_no_data_found.setVisibility(View.GONE);*/
+
         }
     }
 

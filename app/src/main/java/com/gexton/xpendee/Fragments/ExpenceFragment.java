@@ -82,6 +82,7 @@ public class ExpenceFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
         return view;
     }
 
