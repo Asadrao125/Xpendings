@@ -22,7 +22,6 @@ public class CategoriesAdapterForExpense extends RecyclerView.Adapter<Categories
     Context context;
     CategoryBean categoryBean;
     ArrayList<CategoryBean> categoryBeanArrayList;
-
     public int selectedPos = -1;
 
     public CategoriesAdapterForExpense(Context context, ArrayList<CategoryBean> categoryBeanArrayList) {

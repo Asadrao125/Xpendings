@@ -5,41 +5,52 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gexton.xpendee.Adapters.CategoriesListAdapter;
+import com.gexton.xpendee.Adapters.SectionListViewAdapter;
 import com.gexton.xpendee.NewWalletActivity;
 import com.gexton.xpendee.R;
+import com.gexton.xpendee.model.CategoryBean;
+import com.gexton.xpendee.model.DateBean;
+import com.gexton.xpendee.model.ExpenseBean;
 import com.gexton.xpendee.model.WalletBean;
+import com.gexton.xpendee.util.Database;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class HomeFragment extends Fragment {
-    String MY_PREFS_NAME = "Xpendee";
-    TextView tv_name;
+    String MY_PREFS_NAME = "Xpendee", json;
     CircleImageView profile_image;
-    Button btn_add_cash_wallet;
-    TextView tv_balance, tv_currency, tv_my_wallet_name;
-    Button btn_edit_wallet;
+    Button btn_add_cash_wallet, btn_edit_wallet;
+    TextView tv_balance, tv_currency, tv_my_wallet_name, tv_name;
     public LinearLayout layout_no_data_found;
     public RelativeLayout wallet_complete;
-    String json;
+    ListView sectionListView;
+    RelativeLayout listviewLayout;
+    ArrayList<ExpenseBean> expenseBeanArrayList;
+    Database database;
+    ArrayList<String> dateBeanArrayList;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
@@ -52,6 +63,49 @@ public class HomeFragment extends Fragment {
         btn_edit_wallet = view.findViewById(R.id.btn_edit_wallet);
         layout_no_data_found = view.findViewById(R.id.layout_no_data_found);
         wallet_complete = view.findViewById(R.id.wallet_complete);
+        sectionListView = view.findViewById(R.id.sectionListView);
+        listviewLayout = view.findViewById(R.id.listviewLayout);
+        database = new Database(getContext());
+        expenseBeanArrayList = new ArrayList<>();
+        dateBeanArrayList = new ArrayList<>();
+
+        Log.d("tag_dates", "onCreateView: " + database.getAllExpensesDates());
+        Log.d("tag_expense", "onCreateView: " + database.getAllExpenses());
+
+        /*ArrayList<ExpenseBean> list = new ArrayList<>();
+        list.add(new String(String.valueOf(database.getAllExpensesDates())));
+        list.add((new ExpenseBean(0, "PKR", 120.0, 12345, "Name", "08-01-2021"
+                , "Description", "Image Path")));
+        list.add((new ExpenseBean(0, "PKR", 120.0, 12345, "Name", "08-01-2021"
+                , "Description", "Image Path")));
+        list.add(new String(String.valueOf(database.getAllExpensesDates())));
+        list.add((new ExpenseBean(0, "PKR", 120.0, 12345, "Name", "08-01-2021"
+                , "Description", "Image Path")));
+        list.add((new ExpenseBean(0, "PKR", 120.0, 12345, "Name", "08-01-2021"
+                , "Description", "Image Path")));*/
+
+        ArrayList<ExpenseBean> expenseBeanArrayList = new ArrayList<>();
+        expenseBeanArrayList.add(new ExpenseBean(0, "", 250.0, R.mipmap.shopping, "Shopping",
+                "Description", "08-01-2021", "Image_Path"));
+        expenseBeanArrayList.add(new ExpenseBean(0, "", 250.0, R.mipmap.shopping, "Shopping",
+                "Description", "08-01-2021", "Image_Path"));
+        expenseBeanArrayList.add(new ExpenseBean(0, "", 250.0, R.mipmap.shopping, "Shopping",
+                "Description", "08-01-2021", "Image_Path"));
+        expenseBeanArrayList.add(new ExpenseBean(0, "", 250.0, R.mipmap.shopping, "Shopping",
+                "Description", "08-01-2021", "Image_Path"));
+        expenseBeanArrayList.add(new ExpenseBean(0, "", 250.0, R.mipmap.shopping, "Shopping",
+                "Description", "08-01-2021", "Image_Path"));
+
+
+       /* if (database.getAllExpenses() != null) {
+            expenseBeanArrayList = database.getAllExpenses();
+        }
+
+        if (database.getAllExpensesDates() != null) {
+            dateBeanArrayList = database.getAllExpensesDates();
+        }*/
+
+        sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, dateBeanArrayList, getContext()));
 
         converSionAndSettingData();
 
@@ -91,9 +145,17 @@ public class HomeFragment extends Fragment {
             tv_currency.setText(walletBean.currency);
             wallet_complete.setVisibility(View.VISIBLE);
             layout_no_data_found.setVisibility(View.GONE);
+
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) listviewLayout.getLayoutParams();
+            params.addRule(RelativeLayout.BELOW, R.id.wallet_complete);
+
         } else {
             layout_no_data_found.setVisibility(View.VISIBLE);
             wallet_complete.setVisibility(View.GONE);
+
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) listviewLayout.getLayoutParams();
+            params.addRule(RelativeLayout.BELOW, R.id.layout2);
+
         }
     }
 

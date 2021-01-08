@@ -263,4 +263,28 @@ public class Database {
         return null;
     }//======end getAllExpenses()===========
 
+    public ArrayList<String> getAllExpensesDates() {
+        open();
+        ArrayList<String> list = new ArrayList<>();
+        String temp;
+        String query1 = "select current_day from expense";
+
+        System.out.println("--query in getAllAttendance : " + query1);
+        Cursor cursor = sqLiteDatabase.rawQuery(query1, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                String current_day = cursor.getString(cursor.getColumnIndex("current_day"));
+                temp = current_day;
+                list.add(temp);
+                temp = null;
+            }
+            while (cursor.moveToNext());
+            close();
+            return list;
+        }
+        close();
+        return null;
+    }//======end getAllExpensesDates()===========
+
 }
