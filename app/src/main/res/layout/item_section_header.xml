@@ -4,76 +4,107 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp">
 
-    <RelativeLayout
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:id="@+id/layout_icon"
+    <TextView
+        android:layout_alignParentTop="true"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:id="@+id/tv_date"
+        android:text="Date"
+        android:padding="10dp"/>
+
+    <RelativeLayout
+        android:layout_below="@+id/tv_date"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:id="@+id/lay1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/layout_icon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/circle">
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/image_view"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+            <RelativeLayout
+                android:id="@+id/lay1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle">
+
+                <ImageView
+                    android:id="@+id/image_view"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/shopping" />
+
+            </RelativeLayout>
+
+            <View
                 android:layout_centerHorizontal="true"
-                android:layout_centerInParent="true"
-                android:src="@mipmap/shopping" />
+                android:layout_width="3dp"
+                android:layout_height="60dp"
+                android:layout_below="@+id/lay1"
+                android:background="@color/light_grey" />
 
         </RelativeLayout>
 
-        <View
-            android:layout_centerHorizontal="true"
-            android:layout_width="3dp"
-            android:layout_height="60dp"
-            android:layout_below="@+id/lay1"
-            android:background="@color/light_grey" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/layout_icon">
-
-        <TextView
-            android:id="@+id/tv_image_path"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/layout_side"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:text="image path"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true" />
+            android:layout_toEndOf="@+id/layout_icon"
+            android:layout_centerVertical="true">
 
-        <TextView
-            android:id="@+id/tv_expense_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_catName"
-            android:layout_marginTop="5dp"
-            android:text="PKR -150"
-            android:textColor="@android:color/holo_red_dark" />
+            <TextView
+                android:id="@+id/tv_image_path"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="image path"
+                android:layout_toEndOf="@+id/tv_expense_amount"
+                android:visibility="visible"
+                android:gravity="end"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true" />
 
-        <TextView
-            android:id="@+id/tv_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_expense_amount"
-            android:layout_marginTop="5dp"
-            android:text="Description" />
+            <ImageView
+                android:src="@mipmap/ic_launcher"
+                android:id="@+id/image_path"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true" />
 
-        <TextView
-            android:id="@+id/tv_catName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Shopping"
-            android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/tv_expense_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_catName"
+                android:layout_marginTop="5dp"
+                android:text="PKR -150"
+                android:textColor="@android:color/holo_red_dark" />
+
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_expense_amount"
+                android:layout_marginTop="5dp"
+                android:text="Description" />
+
+            <TextView
+                android:id="@+id/tv_catName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Shopping"
+                android:textColor="@color/black" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

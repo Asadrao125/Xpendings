@@ -5,11 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import droidninja.filepicker.FilePickerBuilder;
+import droidninja.filepicker.FilePickerConst;
+import droidninja.filepicker.utils.ContentUriUtils;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -35,11 +41,14 @@ import com.gexton.xpendee.util.Database;
 import com.gexton.xpendee.util.RecyclerItemClickListener;
 
 import java.io.File;
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import static java.security.AccessController.getContext;
 
 public class AddExpenseActivity extends AppCompatActivity {
     ArrayList<CategoryBean> categoryBeanArrayList;
@@ -124,14 +133,7 @@ public class AddExpenseActivity extends AppCompatActivity {
         select_image_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(
-                        Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-
-                Intent chooser = Intent.createChooser(intent,
-                        "Choose a Picture");
-                startActivityForResult(chooser,
-                        ACTION_REQUEST_GALLERY);
+                pickPhoto();
             }
         });
 
@@ -211,16 +213,59 @@ public class AddExpenseActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK) {
+        if (requestCode == CUSTOM_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            ArrayList<Uri> dataList = data.getParcelableArrayListExtra(FilePickerConst.KEY_SELECTED_MEDIA);
+            if (dataList != null) {
+                photoPaths = new ArrayList<Uri>();
+                photoPaths.addAll(dataList);
 
-            Uri selectedImageUri;
-            selectedImageUri = data == null ? null : data.getData();
-            img_1.setImageURI(selectedImageUri);
-
-            image_path = selectedImageUri.getPath();
-            Toast.makeText(this, "Image Path: " + image_path, Toast.LENGTH_SHORT).show();
-
+                try {
+                    image_path = ContentUriUtils.INSTANCE.getFilePath(AddExpenseActivity.this, photoPaths.get(0));
+                    if (image_path != null) {
+                        Toast.makeText(AddExpenseActivity.this, image_path, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
+    }
+
+    private String getRealPathFromURI(Uri contentURI) {
+
+        String thePath = "no-path-found";
+        String[] filePathColumn = {MediaStore.Images.Media.DISPLAY_NAME};
+        Cursor cursor = getContentResolver().query(contentURI, filePathColumn, null, null, null);
+        if (cursor.moveToFirst()) {
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            thePath = cursor.getString(columnIndex);
+        }
+        cursor.close();
+        return thePath;
+    }
+
+    private ArrayList<Uri> photoPaths = new ArrayList<>();
+    final int CUSTOM_REQUEST_CODE = 987;
+
+    private void pickPhoto() {
+        FilePickerBuilder.getInstance()
+                .setMaxCount(1)
+                .setSelectedFiles(photoPaths) //this is optional
+                .setActivityTheme(R.style.FilePickerTheme)
+                .setActivityTitle("Please select media")
+                .setImageSizeLimit(5)
+                .setVideoSizeLimit(10)
+                .setSpan(FilePickerConst.SPAN_TYPE.FOLDER_SPAN, 3)
+                .setSpan(FilePickerConst.SPAN_TYPE.DETAIL_SPAN, 4)
+                .enableVideoPicker(false)
+                .enableCameraSupport(true)
+                .showGifs(false)
+                .showFolderView(true)
+                .enableSelectAll(false)
+                .enableImagePicker(true)
+                .setCameraPlaceholder(R.drawable.ic_camera)
+                .withOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                .pickPhoto(this, CUSTOM_REQUEST_CODE);
     }
 
 }

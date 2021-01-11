@@ -85,7 +85,8 @@ public class HomeFragment extends Fragment {
                 , "Description", "Image Path")));*/
 
         ArrayList<ExpenseBean> expenseBeanArrayList = new ArrayList<>();
-        expenseBeanArrayList.add(new ExpenseBean(0, "", 250.0, R.mipmap.shopping, "Shopping",
+
+        /*expenseBeanArrayList.add(new ExpenseBean(0, "", 250.0, R.mipmap.shopping, "Shopping",
                 "Description", "08-01-2021", "Image_Path"));
         expenseBeanArrayList.add(new ExpenseBean(0, "", 250.0, R.mipmap.shopping, "Shopping",
                 "Description", "08-01-2021", "Image_Path"));
@@ -94,16 +95,16 @@ public class HomeFragment extends Fragment {
         expenseBeanArrayList.add(new ExpenseBean(0, "", 250.0, R.mipmap.shopping, "Shopping",
                 "Description", "08-01-2021", "Image_Path"));
         expenseBeanArrayList.add(new ExpenseBean(0, "", 250.0, R.mipmap.shopping, "Shopping",
-                "Description", "08-01-2021", "Image_Path"));
+                "Description", "08-01-2021", "Image_Path"));*/
 
 
-       /* if (database.getAllExpenses() != null) {
+        if (database.getAllExpenses() != null) {
             expenseBeanArrayList = database.getAllExpenses();
         }
 
         if (database.getAllExpensesDates() != null) {
             dateBeanArrayList = database.getAllExpensesDates();
-        }*/
+        }
 
         sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, dateBeanArrayList, getContext()));
 
@@ -131,6 +132,7 @@ public class HomeFragment extends Fragment {
         Picasso.get().load(image).into(profile_image);
 
         return view;
+
     }
 
     public void converSionAndSettingData() {
