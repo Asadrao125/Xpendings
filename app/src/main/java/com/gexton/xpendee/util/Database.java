@@ -215,6 +215,7 @@ public class Database {
             cv.put("current_day", expenseBean.currentDay);
             cv.put("expense_description", expenseBean.description);
             cv.put("image_path", expenseBean.imagePath);
+            cv.put("color_code", expenseBean.colorCode);
 
             rowId = sqLiteDatabase.insert("expense", null, cv);
 
@@ -249,8 +250,9 @@ public class Database {
                 String current_day = cursor.getString(cursor.getColumnIndex("current_day"));
                 String expense_description = cursor.getString(cursor.getColumnIndex("expense_description"));
                 String image_path = cursor.getString(cursor.getColumnIndex("image_path"));
+                String color_code = cursor.getString(cursor.getColumnIndex("color_code"));
 
-                temp = new ExpenseBean(id, currency, amount, icon, category_name, current_day, expense_description, image_path);
+                temp = new ExpenseBean(id, currency, amount, icon, category_name, current_day, expense_description, image_path, color_code);
 
                 expenseBean.add(temp);
                 temp = null;

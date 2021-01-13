@@ -30,9 +30,10 @@
                 android:id="@+id/lay1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/circle">
+                android:background="@drawable/circle_for_home_expense_list">
 
                 <ImageView
+                    android:tint="@color/white"
                     android:id="@+id/image_view"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
@@ -65,7 +66,7 @@
                 android:layout_marginRight="10dp"
                 android:text="image path"
                 android:layout_toEndOf="@+id/tv_expense_amount"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:gravity="end"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true" />

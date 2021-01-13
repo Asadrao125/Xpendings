@@ -72,31 +72,7 @@ public class HomeFragment extends Fragment {
         Log.d("tag_dates", "onCreateView: " + database.getAllExpensesDates());
         Log.d("tag_expense", "onCreateView: " + database.getAllExpenses());
 
-        /*ArrayList<ExpenseBean> list = new ArrayList<>();
-        list.add(new String(String.valueOf(database.getAllExpensesDates())));
-        list.add((new ExpenseBean(0, "PKR", 120.0, 12345, "Name", "08-01-2021"
-                , "Description", "Image Path")));
-        list.add((new ExpenseBean(0, "PKR", 120.0, 12345, "Name", "08-01-2021"
-                , "Description", "Image Path")));
-        list.add(new String(String.valueOf(database.getAllExpensesDates())));
-        list.add((new ExpenseBean(0, "PKR", 120.0, 12345, "Name", "08-01-2021"
-                , "Description", "Image Path")));
-        list.add((new ExpenseBean(0, "PKR", 120.0, 12345, "Name", "08-01-2021"
-                , "Description", "Image Path")));*/
-
         ArrayList<ExpenseBean> expenseBeanArrayList = new ArrayList<>();
-
-        /*expenseBeanArrayList.add(new ExpenseBean(0, "", 250.0, R.mipmap.shopping, "Shopping",
-                "Description", "08-01-2021", "Image_Path"));
-        expenseBeanArrayList.add(new ExpenseBean(0, "", 250.0, R.mipmap.shopping, "Shopping",
-                "Description", "08-01-2021", "Image_Path"));
-        expenseBeanArrayList.add(new ExpenseBean(0, "", 250.0, R.mipmap.shopping, "Shopping",
-                "Description", "08-01-2021", "Image_Path"));
-        expenseBeanArrayList.add(new ExpenseBean(0, "", 250.0, R.mipmap.shopping, "Shopping",
-                "Description", "08-01-2021", "Image_Path"));
-        expenseBeanArrayList.add(new ExpenseBean(0, "", 250.0, R.mipmap.shopping, "Shopping",
-                "Description", "08-01-2021", "Image_Path"));*/
-
 
         if (database.getAllExpenses() != null) {
             expenseBeanArrayList = database.getAllExpenses();
@@ -107,6 +83,8 @@ public class HomeFragment extends Fragment {
         }
 
         sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, dateBeanArrayList, getContext()));
+
+        Log.d("expense_bean_list", "onCreateView: " + database.getAllExpenses());
 
         converSionAndSettingData();
 
