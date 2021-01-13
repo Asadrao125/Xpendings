@@ -2,6 +2,7 @@ package com.gexton.xpendee.Fragments;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -29,9 +30,15 @@ import com.gexton.xpendee.model.DateBean;
 import com.gexton.xpendee.model.ExpenseBean;
 import com.gexton.xpendee.model.WalletBean;
 import com.gexton.xpendee.util.Database;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -48,6 +55,9 @@ public class HomeFragment extends Fragment {
     ArrayList<ExpenseBean> expenseBeanArrayList;
     Database database;
     ArrayList<String> dateBeanArrayList;
+    PieChart pieChart;
+    ArrayList<PieEntry> list = new ArrayList<>();
+    ArrayList<CategoryBean> allCatList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,6 +78,27 @@ public class HomeFragment extends Fragment {
         database = new Database(getContext());
         expenseBeanArrayList = new ArrayList<>();
         dateBeanArrayList = new ArrayList<>();
+        pieChart = view.findViewById(R.id.pieChart);
+
+        //Gettiing all categories list
+        allCatList = database.getAllCategories(1);
+        for (int i = 0; i < allCatList.size(); i++) {
+
+            CategoryBean cb = allCatList.get(i);
+
+            ArrayList<ExpenseBean> expenseBeansListInThisCat = database.getExpenseByName(cb.categoryName);
+            Log.d("list_by_category_name", "onCreateView: " + expenseBeansListInThisCat);
+
+            cb.listExpenseBean = expenseBeansListInThisCat;
+
+            Log.d("list_list_list", "onCreateView: " + cb.listExpenseBean);
+
+        }
+
+        settingPieChart(allCatList);
+
+        Log.d("expense_categories", "onCreateView: " + database.getAllExpenseCategories());
+        Log.d("expenses", "onCreateView: " + database.getExpenses());
 
         Log.d("tag_dates", "onCreateView: " + database.getAllExpensesDates());
         Log.d("tag_expense", "onCreateView: " + database.getAllExpenses());
@@ -113,6 +144,37 @@ public class HomeFragment extends Fragment {
 
     }
 
+    private void settingPieChart(ArrayList<CategoryBean> categoryBeans) {
+
+        list.clear();
+        for (int i = 0; i < allCatList.size(); i++) {
+            CategoryBean categoryBean = allCatList.get(i);
+            ArrayList<ExpenseBean> expenseBeansInThisCat = categoryBean.listExpenseBean;
+            float totalExpense = 0;
+            if (expenseBeansInThisCat != null) {
+                for (int j = 0; j < expenseBeansInThisCat.size(); j++) {
+                    totalExpense = (float) (totalExpense + expenseBeansInThisCat.get(j).expense);
+                }//end inner loop
+            }
+
+            list.add(new PieEntry(totalExpense, categoryBean.categoryName));
+        }//end outer loop
+
+        PieDataSet pieDataSet = new PieDataSet(list, "");
+        pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        pieDataSet.setValueTextColor(Color.BLACK);
+        pieDataSet.setValueTextSize(14f);
+
+        PieData pieData = new PieData(pieDataSet);
+        pieChart.setData(pieData);
+        pieChart.getDescription().setEnabled(false);
+        pieChart.setCenterText("All Expenses");
+        pieChart.animateX(500);
+        pieChart.animateY(500);
+        pieChart.animate();
+
+    }
+
     public void converSionAndSettingData() {
         // Converting GSON object into String
         SharedPreferences prefs1 = getContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
@@ -138,6 +200,7 @@ public class HomeFragment extends Fragment {
 
         }
     }
+
 
     @Override
     public void onResume() {

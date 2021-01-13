@@ -203,6 +203,7 @@ public class Database {
 
     //============================start custom methods / Crud for Expense table ====================================
 
+
     public long insertExpense(ExpenseBean expenseBean) {
         long rowId = -1;
         try {
@@ -288,5 +289,89 @@ public class Database {
         close();
         return null;
     }//======end getAllExpensesDates()===========
+
+    public ArrayList<String> getAllExpenseCategories() {
+        open();
+        ArrayList<String> list = new ArrayList<>();
+        String temp;
+        String query1 = "select expense_category_name from expense";
+
+        System.out.println("--query in getAllExpenseCategories : " + query1);
+        Cursor cursor = sqLiteDatabase.rawQuery(query1, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                String current_day = cursor.getString(cursor.getColumnIndex("expense_category_name"));
+                temp = current_day;
+                list.add(temp);
+                temp = null;
+            }
+            while (cursor.moveToNext());
+            close();
+            return list;
+        }
+        close();
+        return null;
+    }//======end getAllExpenseCategories()===========
+
+    public ArrayList<Double> getExpenses() {
+        open();
+        ArrayList<Double> list = new ArrayList<>();
+        Double temp;
+        String query1 = "select expense_amount from expense";
+
+        System.out.println("--query in getAllExpenseCategories : " + query1);
+        Cursor cursor = sqLiteDatabase.rawQuery(query1, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Double expense = cursor.getDouble(cursor.getColumnIndex("expense_amount"));
+                temp = expense;
+                list.add(temp);
+                temp = null;
+            }
+            while (cursor.moveToNext());
+            close();
+            return list;
+        }
+        close();
+        return null;
+    }//======end getExpenses()===========
+
+    public ArrayList<ExpenseBean> getExpenseByName(String catName) {
+        open();
+        ArrayList<ExpenseBean> expenseBean = new ArrayList<>();
+        ExpenseBean temp;
+        String query1 = "select * from expense WHERE expense_category_name = '" + catName + "'";
+
+        System.out.println("--query in getAllAttendance : " + query1);
+        Cursor cursor = sqLiteDatabase.rawQuery(query1, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                int id = cursor.getInt(cursor.getColumnIndex("id"));
+                String currency = cursor.getString(cursor.getColumnIndex("expense_currency"));
+                Double amount = cursor.getDouble(cursor.getColumnIndex("expense_amount"));
+                int icon = cursor.getInt(cursor.getColumnIndex("expense_category_icon"));
+                String category_name = cursor.getString(cursor.getColumnIndex("expense_category_name"));
+                String current_day = cursor.getString(cursor.getColumnIndex("current_day"));
+                String expense_description = cursor.getString(cursor.getColumnIndex("expense_description"));
+                String image_path = cursor.getString(cursor.getColumnIndex("image_path"));
+                String color_code = cursor.getString(cursor.getColumnIndex("color_code"));
+
+                temp = new ExpenseBean(id, currency, amount, icon, category_name, current_day, expense_description, image_path, color_code);
+
+                expenseBean.add(temp);
+                temp = null;
+            }
+            while (cursor.moveToNext());
+            close();
+            return expenseBean;
+        }
+        close();
+        return null;
+
+    }//======end getExpenseByName()===========
 
 }

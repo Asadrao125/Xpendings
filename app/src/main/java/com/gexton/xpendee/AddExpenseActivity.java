@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -37,8 +38,10 @@ import com.gexton.xpendee.Adapters.CategoriesAdapterForExpense;
 import com.gexton.xpendee.Adapters.CategoriesListAdapter;
 import com.gexton.xpendee.model.CategoryBean;
 import com.gexton.xpendee.model.ExpenseBean;
+import com.gexton.xpendee.model.WalletBean;
 import com.gexton.xpendee.util.Database;
 import com.gexton.xpendee.util.RecyclerItemClickListener;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -56,14 +59,14 @@ public class AddExpenseActivity extends AppCompatActivity {
     RecyclerView rvCategories;
     Database database;
     TextView tv_current_day, tv_date, tv_save;
-    int ACTION_REQUEST_GALLERY = 999;
     ImageView img_1;
-    String image_path, current_date, description, currency = "PKR", date, catName;
+    String image_path, current_date, description, currency = "PKR", date, catName, color_code;
     RelativeLayout current_day_layout, select_image_layout;
     DatePickerDialog.OnDateSetListener mDateListener;
     EditText edt_description, edt_balance;
     int categoryIcon;
     Double expense_amount;
+    String colorHex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,7 +165,8 @@ public class AddExpenseActivity extends AppCompatActivity {
             public void onItemClick(View view, int position) {
                 catName = categoryBeanArrayList.get(position).categoryName;
                 categoryIcon = categoryBeanArrayList.get(position).categoryIcon;
-                Toast.makeText(AddExpenseActivity.this, "" + catName, Toast.LENGTH_SHORT).show();
+                color_code = categoryBeanArrayList.get(position).categoryHashCode;
+                colorHex = color_code;
 
                 adapter.selectedPos = position;
                 adapter.notifyDataSetChanged();
@@ -197,12 +201,38 @@ public class AddExpenseActivity extends AppCompatActivity {
                     Toast.makeText(AddExpenseActivity.this, "Please select image", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    expense_amount = Double.parseDouble(expense);
-                    Toast.makeText(AddExpenseActivity.this, "" + currency + "\n" + expense_amount + "\n" + categoryIcon + "\n" + catName, Toast.LENGTH_SHORT).show();
-                    ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon, catName, date, description, image_path);
-                    Toast.makeText(AddExpenseActivity.this, "Expense Added !" + database.insertExpense(expenseBean), Toast.LENGTH_SHORT).show();
-                    onBackPressed();
+                    SharedPreferences prefs1 = getApplicationContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
+                    String json = prefs1.getString("Wallet_Bean", "");
+                    Gson gson = new Gson();
+                    WalletBean walletBean = gson.fromJson(json, WalletBean.class);
 
+                    Double balance = walletBean.balance;
+                    String currency = walletBean.currency;
+                    String walletName = walletBean.wallet_name;
+
+                    expense_amount = Double.parseDouble(expense);
+                    Double newBalance = balance - expense_amount;
+                    if (walletBean.balance >= expense_amount) {
+                        Toast.makeText(AddExpenseActivity.this, "" + currency + "\n" + expense_amount + "\n" + categoryIcon + "\n" + catName + "\n" + color_code, Toast.LENGTH_SHORT).show();
+                        ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
+                                catName, date, description, image_path, colorHex);
+                        Toast.makeText(AddExpenseActivity.this, "Expense Added !" + database.insertExpense(expenseBean), Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(AddExpenseActivity.this, "Your new wallet amount is " + newBalance, Toast.LENGTH_SHORT).show();
+                        WalletBean newWalletBean = new WalletBean(newBalance, walletName, currency);
+
+                        Gson newGson = new Gson();
+                        String newJson = newGson.toJson(newWalletBean);
+
+                        SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
+                        editor.putString("Wallet_Bean", newJson);
+                        editor.apply();
+
+                        onBackPressed();
+
+                    } else {
+                        Toast.makeText(AddExpenseActivity.this, "Sorry, increase your wallet to add this expense", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -229,19 +259,6 @@ public class AddExpenseActivity extends AppCompatActivity {
                 }
             }
         }
-    }
-
-    private String getRealPathFromURI(Uri contentURI) {
-
-        String thePath = "no-path-found";
-        String[] filePathColumn = {MediaStore.Images.Media.DISPLAY_NAME};
-        Cursor cursor = getContentResolver().query(contentURI, filePathColumn, null, null, null);
-        if (cursor.moveToFirst()) {
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            thePath = cursor.getString(columnIndex);
-        }
-        cursor.close();
-        return thePath;
     }
 
     private ArrayList<Uri> photoPaths = new ArrayList<>();

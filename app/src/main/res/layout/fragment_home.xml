@@ -177,6 +177,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/listviewLayout"
         android:layout_below="@+id/layout2"
         android:layout_width="match_parent"
@@ -190,6 +191,12 @@
             android:id="@+id/sectionListView" />
 
     </RelativeLayout>
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/pieChart"
+        android:layout_below="@+id/wallet_complete"/>
 
     <RelativeLayout
         android:id="@+id/layout1"
