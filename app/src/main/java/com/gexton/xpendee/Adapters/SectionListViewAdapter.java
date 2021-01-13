@@ -112,7 +112,6 @@ public class SectionListViewAdapter extends BaseAdapter {
 
 
                 if (!TextUtils.isEmpty(((ExpenseBean) list.get(i)).colorCode)) {
-                    //lay1.setBackgroundColor(Color.parseColor(((ExpenseBean) list.get(i)).colorCode));
                     GradientDrawable background = (GradientDrawable) lay1.getBackground();
                     background.setColor(Color.parseColor(((ExpenseBean) list.get(i)).colorCode));
                 }
@@ -131,8 +130,6 @@ public class SectionListViewAdapter extends BaseAdapter {
                 if (imgFile.exists()) {
                     Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                     image_path.setImageBitmap(myBitmap);
-                    //Picasso.get().load(((ExpenseBean) list.get(i)).imagePath).into(image_path);
-                    //Toast.makeText(context, "Image found", Toast.LENGTH_SHORT).show();
                 }
 
                 //Picasso.get().load("/storage/emulated/0/DCIM/Facebook/IMG_20210111_085404.jpg").into(image_path);

@@ -1,8 +1,10 @@
 package com.gexton.xpendee.Fragments;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.PermissionRequest;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -36,10 +39,15 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.gson.Gson;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -82,20 +90,24 @@ public class HomeFragment extends Fragment {
 
         //Gettiing all categories list
         allCatList = database.getAllCategories(1);
-        for (int i = 0; i < allCatList.size(); i++) {
+        if (allCatList != null) {
+            for (int i = 0; i < allCatList.size(); i++) {
 
-            CategoryBean cb = allCatList.get(i);
+                CategoryBean cb = allCatList.get(i);
 
-            ArrayList<ExpenseBean> expenseBeansListInThisCat = database.getExpenseByName(cb.categoryName);
-            Log.d("list_by_category_name", "onCreateView: " + expenseBeansListInThisCat);
+                ArrayList<ExpenseBean> expenseBeansListInThisCat = database.getExpenseByName(cb.categoryName);
+                Log.d("list_by_category_name", "onCreateView: " + expenseBeansListInThisCat);
 
-            cb.listExpenseBean = expenseBeansListInThisCat;
+                cb.listExpenseBean = expenseBeansListInThisCat;
 
-            Log.d("list_list_list", "onCreateView: " + cb.listExpenseBean);
+                Log.d("list_list_list", "onCreateView: " + cb.listExpenseBean);
 
+            }
         }
 
-        settingPieChart(allCatList);
+        if (allCatList != null) {
+            settingPieChart(allCatList);
+        }
 
         Log.d("expense_categories", "onCreateView: " + database.getAllExpenseCategories());
         Log.d("expenses", "onCreateView: " + database.getExpenses());
@@ -208,4 +220,28 @@ public class HomeFragment extends Fragment {
         converSionAndSettingData();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Dexter.withContext(getContext()).withPermissions(Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)
+                    .withListener(new MultiplePermissionsListener() {
+                        @Override
+                        public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
+                            if (multiplePermissionsReport.areAllPermissionsGranted()) {
+                                Toast.makeText(getContext(), "All Permissions Are Granted", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onPermissionRationaleShouldBeShown(List<com.karumi.dexter.listener.PermissionRequest> list, PermissionToken permissionToken) {
+
+                        }
+
+                    }).check();
+        }
+    }
 }
