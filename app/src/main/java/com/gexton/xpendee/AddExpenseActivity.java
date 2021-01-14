@@ -20,6 +20,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -58,7 +59,7 @@ public class AddExpenseActivity extends AppCompatActivity {
     CategoriesAdapterForExpense adapter = null;
     RecyclerView rvCategories;
     Database database;
-    TextView tv_current_day, tv_date, tv_save;
+    TextView tv_current_day, tv_date, tv_save, tv_reset;
     ImageView img_1;
     String image_path, current_date, description, currency = "PKR", date, catName, color_code;
     RelativeLayout current_day_layout, select_image_layout;
@@ -73,6 +74,10 @@ public class AddExpenseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_expense);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.black, this.getTheme()));
+        }
+
         database = new Database(AddExpenseActivity.this);
 
         rvCategories = findViewById(R.id.rvCategories);
@@ -84,6 +89,7 @@ public class AddExpenseActivity extends AppCompatActivity {
         select_image_layout = findViewById(R.id.select_image_layout);
         edt_balance = findViewById(R.id.edt_balance);
         tv_save = findViewById(R.id.tv_save);
+        tv_reset = findViewById(R.id.tv_reset);
 
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
         Date d = new Date();
@@ -160,7 +166,8 @@ public class AddExpenseActivity extends AppCompatActivity {
             rvCategories.setAdapter(adapter);
         }
 
-        rvCategories.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(), rvCategories, new RecyclerItemClickListener.OnItemClickListener() {
+        rvCategories.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(),
+                rvCategories, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 catName = categoryBeanArrayList.get(position).categoryName;
@@ -170,6 +177,7 @@ public class AddExpenseActivity extends AppCompatActivity {
 
                 adapter.selectedPos = position;
                 adapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -234,6 +242,19 @@ public class AddExpenseActivity extends AppCompatActivity {
                         Toast.makeText(AddExpenseActivity.this, "Sorry, increase your wallet to add this expense", Toast.LENGTH_SHORT).show();
                     }
                 }
+            }
+        });
+
+        tv_reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                edt_balance.setText("");
+                edt_description.setText("");
+                tv_date.setText("");
+
+                adapter.selectedPos = 0;
+                adapter.notifyDataSetChanged();
+
             }
         });
 

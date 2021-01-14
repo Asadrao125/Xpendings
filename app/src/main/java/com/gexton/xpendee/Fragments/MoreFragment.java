@@ -49,7 +49,7 @@ public class MoreFragment extends Fragment {
         manual_wallets.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), AddExpenseActivity.class));
+
             }
         });
 

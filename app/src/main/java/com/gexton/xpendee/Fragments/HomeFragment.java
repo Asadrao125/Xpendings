@@ -58,8 +58,7 @@ public class HomeFragment extends Fragment {
     TextView tv_balance, tv_currency, tv_my_wallet_name, tv_name;
     public LinearLayout layout_no_data_found;
     public RelativeLayout wallet_complete;
-    ListView sectionListView;
-    RelativeLayout listviewLayout;
+    RelativeLayout static_layout_wallet;
     ArrayList<ExpenseBean> expenseBeanArrayList;
     Database database;
     ArrayList<String> dateBeanArrayList;
@@ -81,8 +80,7 @@ public class HomeFragment extends Fragment {
         btn_edit_wallet = view.findViewById(R.id.btn_edit_wallet);
         layout_no_data_found = view.findViewById(R.id.layout_no_data_found);
         wallet_complete = view.findViewById(R.id.wallet_complete);
-        sectionListView = view.findViewById(R.id.sectionListView);
-        listviewLayout = view.findViewById(R.id.listviewLayout);
+        static_layout_wallet = view.findViewById(R.id.static_layout_wallet);
         database = new Database(getContext());
         expenseBeanArrayList = new ArrayList<>();
         dateBeanArrayList = new ArrayList<>();
@@ -115,23 +113,18 @@ public class HomeFragment extends Fragment {
         Log.d("tag_dates", "onCreateView: " + database.getAllExpensesDates());
         Log.d("tag_expense", "onCreateView: " + database.getAllExpenses());
 
-        ArrayList<ExpenseBean> expenseBeanArrayList = new ArrayList<>();
-
-        if (database.getAllExpenses() != null) {
-            expenseBeanArrayList = database.getAllExpenses();
-        }
-
-        if (database.getAllExpensesDates() != null) {
-            dateBeanArrayList = database.getAllExpensesDates();
-        }
-
-        sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, dateBeanArrayList, getContext()));
-
         Log.d("expense_bean_list", "onCreateView: " + database.getAllExpenses());
 
         converSionAndSettingData();
 
         btn_edit_wallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), NewWalletActivity.class));
+            }
+        });
+
+        static_layout_wallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), NewWalletActivity.class));
@@ -199,20 +192,11 @@ public class HomeFragment extends Fragment {
             tv_currency.setText(walletBean.currency);
             wallet_complete.setVisibility(View.VISIBLE);
             layout_no_data_found.setVisibility(View.GONE);
-
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) listviewLayout.getLayoutParams();
-            params.addRule(RelativeLayout.BELOW, R.id.wallet_complete);
-
         } else {
             layout_no_data_found.setVisibility(View.VISIBLE);
             wallet_complete.setVisibility(View.GONE);
-
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) listviewLayout.getLayoutParams();
-            params.addRule(RelativeLayout.BELOW, R.id.layout2);
-
         }
     }
-
 
     @Override
     public void onResume() {
