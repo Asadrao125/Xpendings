@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gexton.xpendee.Adapters.CategoriesListAdapter;
@@ -29,6 +30,7 @@ public class IncomeFragment extends Fragment {
     Database database;
     TextView tv_add_category;
     View view;
+    RelativeLayout no_data_layout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,11 +43,15 @@ public class IncomeFragment extends Fragment {
         rvCategories.setLayoutManager(new LinearLayoutManager(getContext()));
         database = new Database(getContext());
         categoryBeanArrayList = new ArrayList<>();
+        no_data_layout = view.findViewById(R.id.no_data_layout);
 
         if (database.getAllCategories(2) != null) {
             categoryBeanArrayList = database.getAllCategories(2);
             adapter = new CategoriesListAdapter(getContext(), categoryBeanArrayList);
             rvCategories.setAdapter(adapter);
+            no_data_layout.setVisibility(View.GONE);
+        } else {
+            no_data_layout.setVisibility(View.VISIBLE);
         }
 
         rvCategories.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), rvCategories, new RecyclerItemClickListener.OnItemClickListener() {
@@ -92,6 +98,9 @@ public class IncomeFragment extends Fragment {
             categoryBeanArrayList = database.getAllCategories(2);
             adapter = new CategoriesListAdapter(getContext(), categoryBeanArrayList);
             rvCategories.setAdapter(adapter);
+            no_data_layout.setVisibility(View.GONE);
+        } else {
+            no_data_layout.setVisibility(View.VISIBLE);
         }
     }
 

@@ -10,12 +10,37 @@
         android:id="@+id/layout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/black">
+        android:background="@color/navy_blue">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="30dp">
+            android:layout_margin="20dp"
+            android:paddingBottom="30dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_toLeftOf="@+id/img_calender"
+                android:src="@mipmap/wallet_top" />
+
+            <ImageView
+                android:id="@+id/img_calender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_toLeftOf="@+id/img_search"
+                android:src="@mipmap/calendar_top" />
+
+            <ImageView
+                android:id="@+id/img_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/search_top" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -44,6 +69,23 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/no_data_layout"
+        android:visibility="gone"
+        android:layout_below="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:textColor="@color/black"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="No transaction found"/>
+
+    </RelativeLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_expense"
         android:layout_width="wrap_content"
@@ -51,7 +93,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="20dp"
-        android:backgroundTint="@color/com_facebook_messenger_blue"
+        android:backgroundTint="@color/fab_background_color"
         android:src="@drawable/ic_baseline_add_24"
         app:fabSize="normal"
         app:tint="@color/white"

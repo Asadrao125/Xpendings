@@ -3,7 +3,6 @@ package com.gexton.xpendee;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import droidninja.filepicker.FilePickerBuilder;
 import droidninja.filepicker.FilePickerConst;
@@ -11,23 +10,17 @@ import droidninja.filepicker.utils.ContentUriUtils;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,7 +29,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gexton.xpendee.Adapters.CategoriesAdapterForExpense;
-import com.gexton.xpendee.Adapters.CategoriesListAdapter;
 import com.gexton.xpendee.model.CategoryBean;
 import com.gexton.xpendee.model.ExpenseBean;
 import com.gexton.xpendee.model.WalletBean;
@@ -46,27 +38,27 @@ import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import static java.security.AccessController.getContext;
-
-public class AddExpenseActivity extends AppCompatActivity {
+public class AddIncomeActivity extends AppCompatActivity {
     ArrayList<CategoryBean> categoryBeanArrayList;
     CategoriesAdapterForExpense adapter = null;
     RecyclerView rvCategories;
     Database database;
-    TextView tv_current_day, tv_date, tv_save, tv_reset, tv_categories, tv_details;
-    ImageView img_1, img_back, img_camera;
-    String image_path, current_date, description, currency = "PKR", date, catName, color_code, user_selected_date, colorHex;
+    TextView tv_current_day, tv_date, tv_save, tv_reset;
+    ImageView img_1;
+    String image_path, current_date, description, currency = "PKR", user_selected_date, catName, color_code;
     RelativeLayout current_day_layout, select_image_layout, no_data_layout;
     EditText edt_description, edt_balance;
     int categoryIcon;
     Double expense_amount;
+    String colorHex;
+    ImageView img_cross, img_camera;
+    TextView tv_details, tv_categories;
     Calendar myCalendar;
     private ArrayList<Uri> photoPaths = new ArrayList<>();
     final int CUSTOM_REQUEST_CODE = 987;
@@ -74,13 +66,14 @@ public class AddExpenseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_expense);
+        setContentView(R.layout.activity_add_income);
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.navy_blue, this.getTheme()));
         }
 
-        database = new Database(AddExpenseActivity.this);
+        database = new Database(AddIncomeActivity.this);
 
         rvCategories = findViewById(R.id.rvCategories);
         tv_current_day = findViewById(R.id.tv_current_day);
@@ -92,19 +85,12 @@ public class AddExpenseActivity extends AppCompatActivity {
         edt_balance = findViewById(R.id.edt_balance);
         tv_save = findViewById(R.id.tv_save);
         tv_reset = findViewById(R.id.tv_reset);
-        img_back = findViewById(R.id.img_back);
+        img_cross = findViewById(R.id.img_cross);
+        tv_details = findViewById(R.id.tv_details);
         tv_categories = findViewById(R.id.tv_categories);
         no_data_layout = findViewById(R.id.no_data_layout);
-        tv_details = findViewById(R.id.tv_details);
         myCalendar = Calendar.getInstance();
         img_camera = findViewById(R.id.img_camera);
-
-        img_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
 
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
         Date d = new Date();
@@ -114,6 +100,7 @@ public class AddExpenseActivity extends AppCompatActivity {
         tv_current_day.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String formattedDate = new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime());
                 tv_date.setText(formattedDate);
                 user_selected_date = formattedDate;
@@ -136,23 +123,25 @@ public class AddExpenseActivity extends AppCompatActivity {
             }
         };
 
-        img_camera.setOnClickListener(new View.OnClickListener() {
+        current_day_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new DatePickerDialog(AddIncomeActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+
+            }
+        });
+
+        select_image_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 pickPhoto();
             }
         });
 
-        current_day_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new DatePickerDialog(AddExpenseActivity.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-
-        select_image_layout.setOnClickListener(new View.OnClickListener() {
+        img_camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 pickPhoto();
@@ -173,8 +162,8 @@ public class AddExpenseActivity extends AppCompatActivity {
 
         categoryBeanArrayList = new ArrayList<>();
 
-        if (database.getAllCategories(1) != null) {
-            categoryBeanArrayList = database.getAllCategories(1);
+        if (database.getAllCategories(2) != null) {
+            categoryBeanArrayList = database.getAllCategories(2);
             adapter = new CategoriesAdapterForExpense(this, categoryBeanArrayList);
             rvCategories.setAdapter(adapter);
             rvCategories.setVisibility(View.VISIBLE);
@@ -219,19 +208,19 @@ public class AddExpenseActivity extends AppCompatActivity {
                 description = edt_description.getText().toString().trim();
 
                 if (TextUtils.isEmpty(expense)) {
-                    Toast.makeText(AddExpenseActivity.this, "Please enter expence amount", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddIncomeActivity.this, "Please enter expence amount", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(currency)) {
-                    Toast.makeText(AddExpenseActivity.this, "Please enter currency", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddIncomeActivity.this, "Please enter currency", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(catName)) {
-                    Toast.makeText(AddExpenseActivity.this, "Please select category", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddIncomeActivity.this, "Please select category", Toast.LENGTH_SHORT).show();
                 } else if (categoryIcon == 0) {
-                    Toast.makeText(AddExpenseActivity.this, "Please select category", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddIncomeActivity.this, "Please select category", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(user_selected_date)) {
-                    Toast.makeText(AddExpenseActivity.this, "Please enter date", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddIncomeActivity.this, "Please enter date", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(description)) {
-                    Toast.makeText(AddExpenseActivity.this, "Please enter description", Toast.LENGTH_SHORT).show();
-                }/* else if (TextUtils.isEmpty(image_path)) {
-                    Toast.makeText(AddExpenseActivity.this, "Please select image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddIncomeActivity.this, "Please enter description", Toast.LENGTH_SHORT).show();
+                } /*else if (TextUtils.isEmpty(image_path)) {
+                    Toast.makeText(AddIncomeActivity.this, "Please select image", Toast.LENGTH_SHORT).show();
                 }*/ else {
 
                     SharedPreferences prefs1 = getApplicationContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
@@ -244,29 +233,24 @@ public class AddExpenseActivity extends AppCompatActivity {
                     String walletName = walletBean.wallet_name;
 
                     expense_amount = Double.parseDouble(expense);
-                    Double newBalance = balance - expense_amount;
-                    if (walletBean.balance >= expense_amount) {
-                        Toast.makeText(AddExpenseActivity.this, "" + currency + "\n" + expense_amount + "\n" + categoryIcon + "\n" + catName + "\n" + color_code, Toast.LENGTH_SHORT).show();
-                        ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
-                                catName, user_selected_date, description, image_path, colorHex, 1);
-                        Toast.makeText(AddExpenseActivity.this, "Expense Added ! " + database.insertExpense(expenseBean), Toast.LENGTH_SHORT).show();
+                    Double newBalance = balance + expense_amount;
 
-                        Toast.makeText(AddExpenseActivity.this, "Your new wallet amount is " + newBalance, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddIncomeActivity.this, "" + currency + "\n" + expense_amount + "\n" + categoryIcon + "\n" + catName + "\n" + color_code, Toast.LENGTH_SHORT).show();
+                    ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
+                            catName, user_selected_date, description, image_path, colorHex, 2);
+                    Toast.makeText(AddIncomeActivity.this, "Income Added ! " + database.insertExpense(expenseBean), Toast.LENGTH_SHORT).show();
 
-                        WalletBean newWalletBean = new WalletBean(newBalance, walletName, currency);
+                    Toast.makeText(AddIncomeActivity.this, "Your new wallet amount is " + newBalance, Toast.LENGTH_SHORT).show();
+                    WalletBean newWalletBean = new WalletBean(newBalance, walletName, currency);
 
-                        Gson newGson = new Gson();
-                        String newJson = newGson.toJson(newWalletBean);
+                    Gson newGson = new Gson();
+                    String newJson = newGson.toJson(newWalletBean);
 
-                        SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
-                        editor.putString("Wallet_Bean", newJson);
-                        editor.apply();
+                    SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
+                    editor.putString("Wallet_Bean", newJson);
+                    editor.apply();
 
-                        onBackPressed();
-
-                    } else {
-                        Toast.makeText(AddExpenseActivity.this, "Sorry, increase your wallet to add this expense", Toast.LENGTH_SHORT).show();
-                    }
+                    onBackPressed();
                 }
             }
         });
@@ -297,7 +281,7 @@ public class AddExpenseActivity extends AppCompatActivity {
                 photoPaths.addAll(dataList);
 
                 try {
-                    image_path = ContentUriUtils.INSTANCE.getFilePath(AddExpenseActivity.this, photoPaths.get(0));
+                    image_path = ContentUriUtils.INSTANCE.getFilePath(AddIncomeActivity.this, photoPaths.get(0));
                     if (image_path != null) {
                         //Toast.makeText(AddIncomeActivity.this, image_path, Toast.LENGTH_SHORT).show();
                         File file = new File(image_path);

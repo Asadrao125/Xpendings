@@ -112,7 +112,8 @@ public class Database {
     }
 
     //============================start custom methods / Crud for category table ====================================
-	/*CREATE TABLE "category" (
+
+    /*CREATE TABLE "category" (
 	"id" INTEGER,
 	"category_name" TEXT,
 	"color_code" TEXT,
@@ -203,6 +204,18 @@ public class Database {
 
     //============================start custom methods / Crud for Expense table ====================================
 
+    /*  CREATE TABLE "expense" (
+	"id"	INTEGER,
+	"expense_currency"	TEXT,
+	"expense_amount"	REAL,
+	"expense_category_icon"	INTEGER,
+	"expense_category_name"	TEXT,
+	"current_day"	TEXT,
+	"expense_description"	TEXT,
+	"image_path"	TEXT,
+	"color_code"	TEXT,
+	"flag"	INTEGER,
+	PRIMARY KEY("id" AUTOINCREMENT)); */
 
     public long insertExpense(ExpenseBean expenseBean) {
         long rowId = -1;
@@ -217,10 +230,12 @@ public class Database {
             cv.put("expense_description", expenseBean.description);
             cv.put("image_path", expenseBean.imagePath);
             cv.put("color_code", expenseBean.colorCode);
+            cv.put("flag", expenseBean.flag);
 
             rowId = sqLiteDatabase.insert("expense", null, cv);
 
             close();
+
         } catch (SQLiteException e) {
             Toast.makeText(activity, "Database exception", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
@@ -253,7 +268,7 @@ public class Database {
                 String image_path = cursor.getString(cursor.getColumnIndex("image_path"));
                 String color_code = cursor.getString(cursor.getColumnIndex("color_code"));
 
-                temp = new ExpenseBean(id, currency, amount, icon, category_name, current_day, expense_description, image_path, color_code);
+                temp = new ExpenseBean(id, currency, amount, icon, category_name, current_day, expense_description, image_path, color_code, 1);
 
                 expenseBean.add(temp);
                 temp = null;
@@ -360,7 +375,7 @@ public class Database {
                 String image_path = cursor.getString(cursor.getColumnIndex("image_path"));
                 String color_code = cursor.getString(cursor.getColumnIndex("color_code"));
 
-                temp = new ExpenseBean(id, currency, amount, icon, category_name, current_day, expense_description, image_path, color_code);
+                temp = new ExpenseBean(id, currency, amount, icon, category_name, current_day, expense_description, image_path, color_code, 1);
 
                 expenseBean.add(temp);
                 temp = null;

@@ -9,7 +9,7 @@ import android.os.Handler;
 import android.view.Menu;
 
 public class SplashActivity extends AppCompatActivity {
-    private final int SPLASH_DISPLAY_LENGTH = 1000;
+    private final int SPLASH_DISPLAY_LENGTH = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

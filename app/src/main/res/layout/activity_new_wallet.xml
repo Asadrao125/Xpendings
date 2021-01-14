@@ -10,7 +10,7 @@
         android:id="@+id/layout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/black">
+        android:background="@color/navy_blue">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -57,13 +57,12 @@
                 android:layout_below="@+id/tv_currency"
                 android:layout_margin="5dp"
                 android:inputType="number"
+                android:maxLength="10"
+                android:maxLines="1"
                 android:background="@null"
-                android:hint="0"
+                android:hint="e.g 1500"
                 android:textAlignment="textEnd"
-                android:textColor="@color/green"
-                android:textColorHint="@color/green"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tv_balance"
@@ -120,8 +119,8 @@
                 android:layout_below="@+id/tv_currency"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/img_wallet"
-                android:hint="Wallet Name"
-                android:textColor="@color/green"
+                android:hint="e.g My Wallet"
+                android:maxLines="1"
                 android:textSize="18sp" />
 
             <ImageView

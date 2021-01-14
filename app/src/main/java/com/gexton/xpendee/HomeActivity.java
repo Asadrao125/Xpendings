@@ -28,7 +28,7 @@ public class HomeActivity extends AppCompatActivity {
         database.createDatabase();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.black, this.getTheme()));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.navy_blue, this.getTheme()));
         }
 
         tabs = findViewById(R.id.tabs);

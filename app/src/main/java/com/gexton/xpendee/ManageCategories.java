@@ -25,7 +25,7 @@ public class ManageCategories extends AppCompatActivity {
         setContentView(R.layout.activity_manage_categories);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.green, this.getTheme()));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.navy_blue, this.getTheme()));
         }
 
         init();

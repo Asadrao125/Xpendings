@@ -28,6 +28,7 @@ public class TimelineFragment extends Fragment {
     Database database;
     ArrayList<String> dateBeanArrayList;
     FloatingActionButton fab_add_expense;
+    RelativeLayout no_data_layout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,6 +40,7 @@ public class TimelineFragment extends Fragment {
         listviewLayout = view.findViewById(R.id.listviewLayout);
         fab_add_expense = view.findViewById(R.id.fab_add_expense);
         database = new Database(getContext());
+        no_data_layout = view.findViewById(R.id.no_data_layout);
 
         expenseBeanArrayList = new ArrayList<>();
 
@@ -56,15 +58,13 @@ public class TimelineFragment extends Fragment {
     }
 
     private void settingAddapter() {
-        if (database.getAllExpenses() != null) {
+        if (database.getAllExpenses() != null && database.getAllExpensesDates() != null) {
             expenseBeanArrayList = database.getAllExpenses();
-        }
-
-        if (database.getAllExpensesDates() != null) {
             dateBeanArrayList = database.getAllExpensesDates();
+            sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, dateBeanArrayList, getContext()));
+        } else {
+            no_data_layout.setVisibility(View.VISIBLE);
         }
-
-        sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, dateBeanArrayList, getContext()));
     }
 
     @Override

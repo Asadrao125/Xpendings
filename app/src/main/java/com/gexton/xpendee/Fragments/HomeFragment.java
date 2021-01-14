@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -33,7 +34,11 @@ import com.gexton.xpendee.model.DateBean;
 import com.gexton.xpendee.model.ExpenseBean;
 import com.gexton.xpendee.model.WalletBean;
 import com.gexton.xpendee.util.Database;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -63,8 +68,11 @@ public class HomeFragment extends Fragment {
     Database database;
     ArrayList<String> dateBeanArrayList;
     PieChart pieChart;
+    BarChart barChart;
     ArrayList<PieEntry> list = new ArrayList<>();
+    ArrayList<BarEntry> listBarEntry = new ArrayList<>();
     ArrayList<CategoryBean> allCatList;
+    CardView cardView_pieChart, cardView_barChart;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -85,6 +93,9 @@ public class HomeFragment extends Fragment {
         expenseBeanArrayList = new ArrayList<>();
         dateBeanArrayList = new ArrayList<>();
         pieChart = view.findViewById(R.id.pieChart);
+        barChart = view.findViewById(R.id.barChart);
+        cardView_pieChart = view.findViewById(R.id.card_view_pieChart);
+        cardView_barChart = view.findViewById(R.id.card_view_barChart);
 
         //Gettiing all categories list
         allCatList = database.getAllCategories(1);
@@ -92,19 +103,25 @@ public class HomeFragment extends Fragment {
             for (int i = 0; i < allCatList.size(); i++) {
 
                 CategoryBean cb = allCatList.get(i);
-
                 ArrayList<ExpenseBean> expenseBeansListInThisCat = database.getExpenseByName(cb.categoryName);
                 Log.d("list_by_category_name", "onCreateView: " + expenseBeansListInThisCat);
-
                 cb.listExpenseBean = expenseBeansListInThisCat;
-
                 Log.d("list_list_list", "onCreateView: " + cb.listExpenseBean);
 
             }
         }
 
         if (allCatList != null) {
+
             settingPieChart(allCatList);
+            settingBarChart(allCatList);
+
+            cardView_barChart.setVisibility(View.VISIBLE);
+            cardView_pieChart.setVisibility(View.VISIBLE);
+
+        } else {
+            cardView_barChart.setVisibility(View.GONE);
+            cardView_pieChart.setVisibility(View.GONE);
         }
 
         Log.d("expense_categories", "onCreateView: " + database.getAllExpenseCategories());
@@ -149,37 +166,6 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void settingPieChart(ArrayList<CategoryBean> categoryBeans) {
-
-        list.clear();
-        for (int i = 0; i < allCatList.size(); i++) {
-            CategoryBean categoryBean = allCatList.get(i);
-            ArrayList<ExpenseBean> expenseBeansInThisCat = categoryBean.listExpenseBean;
-            float totalExpense = 0;
-            if (expenseBeansInThisCat != null) {
-                for (int j = 0; j < expenseBeansInThisCat.size(); j++) {
-                    totalExpense = (float) (totalExpense + expenseBeansInThisCat.get(j).expense);
-                }//end inner loop
-            }
-
-            list.add(new PieEntry(totalExpense, categoryBean.categoryName));
-        }//end outer loop
-
-        PieDataSet pieDataSet = new PieDataSet(list, "");
-        pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-        pieDataSet.setValueTextColor(Color.BLACK);
-        pieDataSet.setValueTextSize(14f);
-
-        PieData pieData = new PieData(pieDataSet);
-        pieChart.setData(pieData);
-        pieChart.getDescription().setEnabled(false);
-        pieChart.setCenterText("All Expenses");
-        pieChart.animateX(500);
-        pieChart.animateY(500);
-        pieChart.animate();
-
-    }
-
     public void converSionAndSettingData() {
         // Converting GSON object into String
         SharedPreferences prefs1 = getContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
@@ -192,9 +178,12 @@ public class HomeFragment extends Fragment {
             tv_currency.setText(walletBean.currency);
             wallet_complete.setVisibility(View.VISIBLE);
             layout_no_data_found.setVisibility(View.GONE);
+
         } else {
+
             layout_no_data_found.setVisibility(View.VISIBLE);
             wallet_complete.setVisibility(View.GONE);
+
         }
     }
 
@@ -228,4 +217,65 @@ public class HomeFragment extends Fragment {
                     }).check();
         }
     }
+
+    private void settingPieChart(ArrayList<CategoryBean> categoryBeans) {
+
+        list.clear();
+        for (int i = 0; i < allCatList.size(); i++) {
+            CategoryBean categoryBean = allCatList.get(i);
+            ArrayList<ExpenseBean> expenseBeansInThisCat = categoryBean.listExpenseBean;
+            float totalExpense = 0;
+            if (expenseBeansInThisCat != null) {
+                for (int j = 0; j < expenseBeansInThisCat.size(); j++) {
+                    totalExpense = (float) (totalExpense + expenseBeansInThisCat.get(j).expense);
+                }//end inner loop
+            }
+
+            list.add(new PieEntry(totalExpense, categoryBean.categoryName));
+        }//end outer loop
+
+        PieDataSet pieDataSet = new PieDataSet(list, "");
+        pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        pieDataSet.setValueTextColor(Color.BLACK);
+        pieDataSet.setValueTextSize(16f);
+
+        PieData pieData = new PieData(pieDataSet);
+        pieChart.setData(pieData);
+        pieChart.getDescription().setEnabled(false);
+        pieChart.setCenterText("All Expenses");
+        pieChart.animateX(500);
+        pieChart.animateY(500);
+        pieChart.animate();
+
+    }
+
+    public void settingBarChart(ArrayList<CategoryBean> categoryBeans) {
+        listBarEntry.clear();
+        for (int i = 0; i < allCatList.size(); i++) {
+            CategoryBean categoryBean = allCatList.get(i);
+            ArrayList<ExpenseBean> expenseBeansInThisCat = categoryBean.listExpenseBean;
+            float totalExpense = 0;
+            if (expenseBeansInThisCat != null) {
+                for (int j = 0; j < expenseBeansInThisCat.size(); j++) {
+                    totalExpense = (float) (totalExpense + expenseBeansInThisCat.get(j).expense);
+                }//end inner loop
+            }
+
+            listBarEntry.add(new BarEntry(i, totalExpense));
+
+        }//end outer loop
+
+        BarDataSet barDataSet = new BarDataSet(listBarEntry, "All Expenses");
+        barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        barDataSet.setValueTextColor(Color.BLACK);
+        barDataSet.setValueTextSize(16f);
+
+        BarData barData = new BarData(barDataSet);
+        barChart.setFitBars(true);
+        barChart.setData(barData);
+        barChart.getDescription().setText("");
+        barChart.animateY(1000);
+        barChart.setPinchZoom(false);
+    }
+
 }

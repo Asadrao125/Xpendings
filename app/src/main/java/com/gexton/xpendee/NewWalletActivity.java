@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,7 +27,7 @@ public class NewWalletActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_wallet);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.black, this.getTheme()));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.navy_blue, this.getTheme()));
         }
 
         tv_save = findViewById(R.id.tv_save);
@@ -41,21 +42,29 @@ public class NewWalletActivity extends AppCompatActivity {
                 balance = edt_balance.getText().toString().trim();
                 wallet_name = edt_wallet_name.getText().toString().trim();
 
-                Double balance_new = Double.valueOf(balance);
 
-                WalletBean walletBean = new WalletBean(balance_new, wallet_name, currency);
-                Gson gson = new Gson();
-                String json = gson.toJson(walletBean);
+                if (TextUtils.isEmpty(balance)) {
+                    Toast.makeText(NewWalletActivity.this, "Please enter wallet amount", Toast.LENGTH_SHORT).show();
+                } else if (TextUtils.isEmpty(wallet_name)) {
+                    Toast.makeText(NewWalletActivity.this, "Please enter wallet name", Toast.LENGTH_SHORT).show();
+                } else {
+                    Double balance_new = Double.valueOf(balance);
 
-                SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
-                editor.putString("Wallet_Bean", json);
-                editor.apply();
-                Toast.makeText(NewWalletActivity.this, "Wallet Added", Toast.LENGTH_SHORT).show();
+                    WalletBean walletBean = new WalletBean(balance_new, wallet_name, currency);
+                    Gson gson = new Gson();
+                    String json = gson.toJson(walletBean);
 
-                edt_wallet_name.setText("");
-                edt_balance.setText("");
+                    SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
+                    editor.putString("Wallet_Bean", json);
+                    editor.apply();
+                    Toast.makeText(NewWalletActivity.this, "Wallet Added", Toast.LENGTH_SHORT).show();
 
-                onBackPressed();
+                    edt_wallet_name.setText("");
+                    edt_balance.setText("");
+
+                    onBackPressed();
+                }
+
             }
         });
 

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -91,6 +92,10 @@ public class UpdateOrDeleteCategory extends AppCompatActivity {
         rvColors.setHasFixedSize(true);
 
         etName = findViewById(R.id.etName);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.navy_blue, this.getTheme()));
+        }
 
         id = getIntent().getIntExtra("id", 10000);
         resID = getIntent().getIntExtra("resId", 10000);

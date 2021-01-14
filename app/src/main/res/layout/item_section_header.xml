@@ -1,53 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp">
 
-    <TextView
-        android:layout_alignParentTop="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textColor="@color/black"
-        android:id="@+id/tv_date"
-        android:text="Date"
-        android:padding="10dp"/>
-
     <RelativeLayout
-        android:layout_below="@+id/tv_date"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_date">
 
         <RelativeLayout
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:id="@+id/layout_icon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
 
             <RelativeLayout
                 android:id="@+id/lay1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:background="@drawable/circle_for_home_expense_list">
 
                 <ImageView
-                    android:tint="@color/white"
                     android:id="@+id/image_view"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_centerHorizontal="true"
                     android:layout_centerInParent="true"
-                    android:src="@mipmap/shopping" />
+                    android:src="@mipmap/shopping"
+                    android:tint="@color/white" />
 
             </RelativeLayout>
 
             <View
-                android:layout_centerHorizontal="true"
                 android:layout_width="3dp"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_below="@+id/lay1"
+                android:layout_centerHorizontal="true"
                 android:background="@color/light_grey" />
 
         </RelativeLayout>
@@ -56,29 +48,21 @@
             android:id="@+id/layout_side"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/layout_icon"
-            android:layout_centerVertical="true">
+            android:layout_toEndOf="@+id/layout_icon">
+
+            <!--android:layout_centerVertical="true"-->
 
             <TextView
                 android:id="@+id/tv_image_path"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:text="image path"
                 android:layout_toEndOf="@+id/tv_expense_amount"
-                android:visibility="gone"
                 android:gravity="end"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true" />
-
-            <ImageView
-                android:src="@mipmap/ic_launcher"
-                android:id="@+id/image_path"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="10dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true" />
+                android:text="image path"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_expense_amount"
@@ -105,8 +89,35 @@
                 android:text="Shopping"
                 android:textColor="@color/black" />
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="5dp"
+                app:cardCornerRadius="8dp">
+
+                <ImageView
+                    android:id="@+id/image_path"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@color/white"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_launcher" />
+            </androidx.cardview.widget.CardView>
+
         </RelativeLayout>
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:padding="10dp"
+        android:text="Date"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
 
 </RelativeLayout>

@@ -10,8 +10,9 @@ public class ExpenseBean {
     public String description;
     public String imagePath;
     public String colorCode;
+    public int flag; //1 for expense , 2 for income
 
-    public ExpenseBean(int id, String currency, Double expense, int categoryIcon, String categoryName, String currentDay, String description, String imagePath, String colorCode) {
+    public ExpenseBean(int id, String currency, Double expense, int categoryIcon, String categoryName, String currentDay, String description, String imagePath, String colorCode, int flag) {
         this.id = id;
         this.currency = currency;
         this.expense = expense;
@@ -21,6 +22,7 @@ public class ExpenseBean {
         this.description = description;
         this.imagePath = imagePath;
         this.colorCode = colorCode;
+        this.flag = flag;
     }
 
     @Override
@@ -35,6 +37,7 @@ public class ExpenseBean {
                 ", description='" + description + '\'' +
                 ", imagePath='" + imagePath + '\'' +
                 ", colorCode='" + colorCode + '\'' +
+                ", flag=" + flag +
                 '}';
     }
 }

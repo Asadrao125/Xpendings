@@ -104,38 +104,34 @@ public class SectionListViewAdapter extends BaseAdapter {
                 String val = String.valueOf(((ExpenseBean) list.get(i)).expense);
 
                 tv_expense_amount.setText("PKR " + val);
-                tv_catName.setText(((ExpenseBean) list.get(i)).categoryName);
-                tv_description.setText(((ExpenseBean) list.get(i)).description);
-                tv_image_path.setText(((ExpenseBean) list.get(i)).imagePath);
-                image_view.setImageResource(((ExpenseBean) list.get(i)).categoryIcon);
-                tv_date.setText(((ExpenseBean) list.get(i)).currentDay);
+                tv_catName.setText((list.get(i)).categoryName);
+                tv_description.setText((list.get(i)).description);
+                tv_image_path.setText((list.get(i)).imagePath);
+                image_view.setImageResource((list.get(i)).categoryIcon);
+                tv_date.setText((list.get(i)).currentDay);
 
-
-                if (!TextUtils.isEmpty(((ExpenseBean) list.get(i)).colorCode)) {
+                if (!TextUtils.isEmpty((list.get(i)).colorCode)) {
                     GradientDrawable background = (GradientDrawable) lay1.getBackground();
-                    background.setColor(Color.parseColor(((ExpenseBean) list.get(i)).colorCode));
+                    background.setColor(Color.parseColor((list.get(i)).colorCode));
                 }
 
                 //Getting image from phone using image path
+                try {
+                    if (TextUtils.isEmpty(list.get(i).imagePath)) {
+                        image_path.setVisibility(View.GONE);
+                    } else {
+                        File file = new File(list.get(i).imagePath);
+                        Picasso.get().load(file).into(image_path);
+                        System.out.println("-- file path " + file.getAbsolutePath());
+                        image_path.setVisibility(View.VISIBLE);
+                    }
 
-                //image_path.setImageURI(Uri.parse(new File(((ExpenseBean) list.get(i)).imagePath).toString()));
-
-                 /* File imgFile = new File("/storage/emulated/0/DCIM/Facebook/IMG_20210111_085404.jpg");
-                if (imgFile.exists()) {
-                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                    image_path.setImageBitmap(myBitmap);
-                }*/
-
-                File imgFile = new File(((ExpenseBean) list.get(i)).imagePath);
-                if (imgFile.exists()) {
-                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                    image_path.setImageBitmap(myBitmap);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
-                //Picasso.get().load("/storage/emulated/0/DCIM/Facebook/IMG_20210111_085404.jpg").into(image_path);
-
                 if (i > 0) {
-                    if (((ExpenseBean) list.get(i)).currentDay.equals(((ExpenseBean) list.get(i - 1)).currentDay)) {
+                    if ((list.get(i)).currentDay.equals((list.get(i - 1)).currentDay)) {
                         tv_date.setVisibility(View.GONE);
                     } else {
                         tv_date.setVisibility(View.VISIBLE);

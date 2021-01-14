@@ -91,9 +91,9 @@ public class AddCategoryActivity extends AppCompatActivity {
 
         database = new Database(AddCategoryActivity.this);
 
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.black, this.getTheme()));
-        }*/
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.navy_blue, this.getTheme()));
+        }
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -107,19 +107,13 @@ public class AddCategoryActivity extends AppCompatActivity {
             fragment_value = getIntent().getStringExtra("farment_value");
         }
 
-        /*categoryBeans = new ArrayList<>();
-        categoryBeans.add(new CategoryBean(1, "Food & Drink",  R.mipmap.home_grey, "#C62828"));
-        categoryBeans.add(new CategoryBean(2, "Home",  R.mipmap.timeline_grey, "#C62828"));
-        categoryBeans.add(new CategoryBean(3, "Food & Drink",  R.mipmap.budget_grey, "#C62828"));
-        categoryBeans.add(new CategoryBean(4, "Food & Drink",  R.mipmap.notification_grey, "#C62828"));
-        categoryBeans.add(new CategoryBean(5, "Food & Drink",  R.mipmap.more_grey, "#C62828"));*/
-
         ImageAdapter imageAdapter = new ImageAdapter(this, programImages);
         recyclerView.setAdapter(imageAdapter);
         img_cross = findViewById(R.id.img_cross);
         img_tick = findViewById(R.id.img_tick);
         image_view_selected = findViewById(R.id.image_view_selected);
         layout_complete = findViewById(R.id.layout_complete);
+
         img_cross.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

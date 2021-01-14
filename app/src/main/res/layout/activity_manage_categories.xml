@@ -10,7 +10,7 @@
         android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/green"
+        android:background="@color/navy_blue"
         android:paddingBottom="15dp"
         android:paddingTop="15dp">
 
@@ -44,13 +44,13 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar_layout"
         app:tabGravity="fill"
-        android:background="@color/green"
+        android:background="@color/navy_blue"
         app:tabIndicatorColor="@android:color/white"
-        app:tabIndicatorHeight="3dp"
         app:tabMode="fixed"
+        app:tabTextColor="@color/dark_grey"
         app:tabSelectedTextColor="@android:color/white" />
 
 </RelativeLayout>

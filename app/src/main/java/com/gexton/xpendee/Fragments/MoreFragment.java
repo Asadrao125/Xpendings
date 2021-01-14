@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gexton.xpendee.AddExpenseActivity;
+import com.gexton.xpendee.AddIncomeActivity;
 import com.gexton.xpendee.ManageCategories;
 import com.gexton.xpendee.R;
 import com.squareup.picasso.Picasso;
@@ -49,7 +50,7 @@ public class MoreFragment extends Fragment {
         manual_wallets.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(getContext(), AddIncomeActivity.class));
             }
         });
 
