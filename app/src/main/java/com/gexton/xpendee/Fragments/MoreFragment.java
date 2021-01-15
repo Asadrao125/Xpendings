@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.gexton.xpendee.AddExpenseActivity;
 import com.gexton.xpendee.AddIncomeActivity;
+import com.gexton.xpendee.BuildConfig;
 import com.gexton.xpendee.ManageCategories;
 import com.gexton.xpendee.R;
 import com.squareup.picasso.Picasso;
@@ -27,6 +28,8 @@ public class MoreFragment extends Fragment {
     CircleImageView profile_image;
     RelativeLayout manage_categories, manual_wallets;
     View view;
+    RelativeLayout logout_layout, about_app_layout, share_app_layout, rate_app_layout;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,6 +42,10 @@ public class MoreFragment extends Fragment {
         profile_image = view.findViewById(R.id.profile_image);
         manage_categories = view.findViewById(R.id.manage_categories);
         manual_wallets = view.findViewById(R.id.manual_wallets);
+        logout_layout = view.findViewById(R.id.logout_layout);
+        about_app_layout = view.findViewById(R.id.about_app_layout);
+        share_app_layout = view.findViewById(R.id.share_app_layout);
+        rate_app_layout = view.findViewById(R.id.rate_app_layout);
 
         manage_categories.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +61,34 @@ public class MoreFragment extends Fragment {
             }
         });
 
+        about_app_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        share_app_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shareIntent();
+            }
+        });
+
+        rate_app_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shareIntent();
+            }
+        });
+
+        logout_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         SharedPreferences prefs = getContext().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         String name = prefs.getString("name", "No name defined");
         String image = prefs.getString("image", "No name defined");
@@ -65,4 +100,19 @@ public class MoreFragment extends Fragment {
 
         return view;
     }
+
+    private void shareIntent() {
+        try {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Xpendee");
+            String shareMessage = "Let me recommend you this application\n\n";
+            shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID;
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+            startActivity(Intent.createChooser(shareIntent, "Please select"));
+        } catch (Exception e) {
+            e.toString();
+        }
+    }
+
 }

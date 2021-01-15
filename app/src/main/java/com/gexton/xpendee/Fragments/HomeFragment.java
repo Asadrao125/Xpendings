@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.gexton.xpendee.Adapters.CategoriesListAdapter;
 import com.gexton.xpendee.Adapters.SectionListViewAdapter;
+import com.gexton.xpendee.BuildConfig;
 import com.gexton.xpendee.NewWalletActivity;
 import com.gexton.xpendee.R;
 import com.gexton.xpendee.model.CategoryBean;
@@ -191,6 +192,8 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         converSionAndSettingData();
+        settingPieChart(allCatList);
+        settingBarChart(allCatList);
     }
 
     @Override
