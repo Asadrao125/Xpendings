@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.gexton.xpendee.Adapters.SectionListViewAdapter;
 import com.gexton.xpendee.AddExpenseActivity;
@@ -29,6 +30,7 @@ public class TimelineFragment extends Fragment {
     ArrayList<String> dateBeanArrayList;
     FloatingActionButton fab_add_expense;
     RelativeLayout no_data_layout;
+    TextView tvExpense, tvWealth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +43,8 @@ public class TimelineFragment extends Fragment {
         fab_add_expense = view.findViewById(R.id.fab_add_expense);
         database = new Database(getContext());
         no_data_layout = view.findViewById(R.id.no_data_layout);
+        tvExpense = view.findViewById(R.id.tvExpense);
+        tvWealth = view.findViewById(R.id.tvWealth);
 
         expenseBeanArrayList = new ArrayList<>();
 

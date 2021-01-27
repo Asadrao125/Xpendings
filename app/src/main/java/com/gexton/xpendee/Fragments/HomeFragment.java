@@ -192,8 +192,10 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         converSionAndSettingData();
-        settingPieChart(allCatList);
-        settingBarChart(allCatList);
+        if (allCatList != null) {
+            settingPieChart(allCatList);
+            settingBarChart(allCatList);
+        }
     }
 
     @Override

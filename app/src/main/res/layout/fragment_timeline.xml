@@ -60,9 +60,66 @@
         android:layout_below="@+id/layout1"
         android:visibility="visible">
 
+        <RelativeLayout
+            android:id="@+id/cashflow_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_margin="10dp"
+                android:textColor="@android:color/holo_red_light"
+                android:text="Total Expenses"/>
+
+            <TextView
+                android:layout_margin="10dp"
+                android:layout_width="1dp"
+                android:layout_height="40dp"
+                android:background="@color/dark_grey"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_margin="10dp"
+                android:textColor="@color/green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_alignParentEnd="true"
+                android:text="Total Expenses"/>
+
+            <TextView
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="1500"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/green"
+                android:textSize="18sp"
+                android:id="@+id/tvExpense"
+                android:layout_below="@id/tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tvWealth"
+               android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="1500"
+                android:textSize="18sp"
+                android:textColor="@android:color/holo_red_light"
+                android:layout_below="@id/tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
         <ListView
             android:id="@+id/sectionListView"
             android:layout_width="match_parent"
+            android:layout_below="@id/cashflow_layout"
             android:layout_height="wrap_content"
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp" />
