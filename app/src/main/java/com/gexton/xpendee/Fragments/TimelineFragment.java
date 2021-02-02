@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.gexton.xpendee.Adapters.SectionListViewAdapter;
 import com.gexton.xpendee.AddExpenseActivity;
 import com.gexton.xpendee.R;
+import com.gexton.xpendee.UpdateOrDeleteExpense;
 import com.gexton.xpendee.model.ExpenseBean;
 import com.gexton.xpendee.util.Database;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -25,7 +27,7 @@ public class TimelineFragment extends Fragment {
     View view;
     RelativeLayout listviewLayout;
     ListView sectionListView;
-    ArrayList<ExpenseBean> expenseBeanArrayList;
+    public static ArrayList<ExpenseBean> expenseBeanArrayList;
     Database database;
     ArrayList<String> dateBeanArrayList;
     FloatingActionButton fab_add_expense;
@@ -54,6 +56,15 @@ public class TimelineFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), AddExpenseActivity.class));
+            }
+        });
+
+        sectionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getContext(), UpdateOrDeleteExpense.class);
+                intent.putExtra("position", i);
+                startActivity(intent);
             }
         });
 

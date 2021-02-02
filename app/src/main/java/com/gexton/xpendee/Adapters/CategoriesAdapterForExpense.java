@@ -46,7 +46,6 @@ public class CategoriesAdapterForExpense extends RecyclerView.Adapter<Categories
         GradientDrawable background = (GradientDrawable) holder.layout.getBackground();
         background.setColor(Color.parseColor(categoryBean.categoryHashCode));
 
-
         holder.rvItem.setBackgroundColor(selectedPos == position ? Color.parseColor("#E0E0E0") : Color.parseColor("#FFFFFF"));
     }
 

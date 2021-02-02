@@ -389,4 +389,30 @@ public class Database {
 
     }//======end getExpenseByName()===========
 
+    public void updateExpense(ExpenseBean expenseBean, int id) {
+        open();
+        ContentValues dataToUpdate = new ContentValues();
+        dataToUpdate.put("expense_category_name", expenseBean.categoryName);
+        dataToUpdate.put("color_code", expenseBean.colorCode);
+        dataToUpdate.put("expense_category_icon", expenseBean.categoryIcon);
+        dataToUpdate.put("flag", 1);
+        dataToUpdate.put("image_path", expenseBean.imagePath);
+        dataToUpdate.put("expense_description", expenseBean.description);
+        dataToUpdate.put("current_day", expenseBean.currentDay);
+        dataToUpdate.put("expense_amount", expenseBean.expense);
+        dataToUpdate.put("expense_currency", expenseBean.currency);
+
+        //String where = "id" + "=" + "'"+categoryBean.id+"'" + " AND dateof" + "=" + "'"+dateof+"'" + " AND type" + "=" + "'checking'"; // id is string
+        String where = "id" + "=" + "'" + id + "'"; //One WHERE clause
+
+        try {
+            int rows = sqLiteDatabase.update("expense", dataToUpdate, where, null);
+            System.out.println("-- rows updated: " + rows);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        close();
+    }//end updateExpense
+
+
 }
