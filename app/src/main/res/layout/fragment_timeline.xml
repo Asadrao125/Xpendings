@@ -122,6 +122,7 @@
             android:layout_below="@id/cashflow_layout"
             android:layout_height="wrap_content"
             android:divider="@android:color/transparent"
+            android:layout_marginBottom="40dp"
             android:dividerHeight="0dp" />
 
     </RelativeLayout>

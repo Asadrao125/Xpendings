@@ -326,13 +326,9 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
         if (!TextUtils.isEmpty(image_path)) {
             File file = new File(image_path);
             Picasso.get().load(file).into(img_1);
-        } else {
-            Toast.makeText(this, "Image Not Found", Toast.LENGTH_SHORT).show();
         }
-
         //adapter.selectedPos = pos;
         //adapter.notifyDataSetChanged();
-
     }
 
     @Override

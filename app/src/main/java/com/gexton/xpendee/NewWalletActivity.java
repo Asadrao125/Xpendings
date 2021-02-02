@@ -42,7 +42,6 @@ public class NewWalletActivity extends AppCompatActivity {
                 balance = edt_balance.getText().toString().trim();
                 wallet_name = edt_wallet_name.getText().toString().trim();
 
-
                 if (TextUtils.isEmpty(balance)) {
                     Toast.makeText(NewWalletActivity.this, "Please enter wallet amount", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(wallet_name)) {
