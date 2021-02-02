@@ -341,6 +341,18 @@
             android:textStyle="bold"
             android:layout_below="@+id/galery_images_layout"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="DELETE"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:id="@+id/tvDelete"
+            android:layout_margin="20dp"
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_below="@+id/galery_images_layout"
+            android:layout_height="wrap_content"/>
+
         <RelativeLayout
             android:id="@+id/no_data_layout"
             android:layout_below="@+id/layout_complete"

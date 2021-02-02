@@ -414,5 +414,14 @@ public class Database {
         close();
     }//end updateExpense
 
+    public void deleteExpense(int id) {
+        open();
+        String query = "delete from expense WHERE id = '" + id + "'";
+        sqLiteDatabase.execSQL(query);
+        close();
+
+    }//deleteExpense
+
+
 
 }

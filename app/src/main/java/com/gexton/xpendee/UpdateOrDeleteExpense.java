@@ -61,6 +61,7 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
     final int CUSTOM_REQUEST_CODE = 987;
     int pos;
     String expenseDate;
+    TextView tvDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +90,7 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
         tv_details = findViewById(R.id.tv_details);
         myCalendar = Calendar.getInstance();
         img_camera = findViewById(R.id.img_camera);
+        tvDelete = findViewById(R.id.tvDelete);
 
         //Getting listview position from timeline fragmnet
         pos = getIntent().getIntExtra("position", 10000);
@@ -315,6 +317,15 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
         });
 
         settingDataInFields();
+
+        tvDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                database.deleteExpense(id);
+                Toast.makeText(UpdateOrDeleteExpense.this, "Expense Deleted", Toast.LENGTH_SHORT).show();
+                onBackPressed();
+            }
+        });
 
     }
 
