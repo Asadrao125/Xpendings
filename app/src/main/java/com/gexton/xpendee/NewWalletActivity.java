@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ public class NewWalletActivity extends AppCompatActivity {
     EditText edt_balance, edt_wallet_name;
     String currency = "PKR";
     String balance, wallet_name;
+    ImageView imgBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +35,16 @@ public class NewWalletActivity extends AppCompatActivity {
         tv_save = findViewById(R.id.tv_save);
         edt_balance = findViewById(R.id.edt_balance);
         edt_wallet_name = findViewById(R.id.edt_wallet_name);
+        imgBack = findViewById(R.id.imgBack);
 
         settingDataInFields();
+
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         tv_save.setOnClickListener(new View.OnClickListener() {
             @Override

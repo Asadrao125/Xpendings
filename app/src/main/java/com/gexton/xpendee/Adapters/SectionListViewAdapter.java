@@ -30,6 +30,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class SectionListViewAdapter extends BaseAdapter {
@@ -100,6 +101,7 @@ public class SectionListViewAdapter extends BaseAdapter {
                 TextView tv_date = view.findViewById(R.id.tv_date);
                 ImageView image_path = view.findViewById(R.id.image_path);
                 RelativeLayout lay1 = view.findViewById(R.id.lay1);
+                CardView cvImage = view.findViewById(R.id.cvImage);
 
                 String val = String.valueOf(((ExpenseBean) list.get(i)).expense);
 
@@ -119,6 +121,7 @@ public class SectionListViewAdapter extends BaseAdapter {
                 try {
                     if (TextUtils.isEmpty(list.get(i).imagePath)) {
                         image_path.setVisibility(View.GONE);
+                        //cvImage.setVisibility(View.GONE);
                     } else {
                         File file = new File(list.get(i).imagePath);
                         Picasso.get().load(file).into(image_path);

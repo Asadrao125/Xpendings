@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Xpendee">
-        <activity android:name=".UpdateOrDeleteExpense"></activity>
+        <activity android:name=".NewBudgetActivity"></activity>
+        <activity android:name=".UpdateOrDeleteExpense" />
         <activity android:name=".AddIncomeActivity" />
         <activity android:name=".AddExpenseActivity" />
         <activity android:name=".NewWalletActivity" />
@@ -41,13 +42,13 @@
             android:authorities="com.facebook.app.FacebookContentProvider192519792590832"
             android:exported="true" />
     </application>
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
 </manifest>

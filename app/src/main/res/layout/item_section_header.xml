@@ -22,7 +22,6 @@
                 android:id="@+id/lay1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:background="@drawable/circle_for_home_expense_list">
 
                 <ImageView
@@ -32,13 +31,14 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerInParent="true"
                     android:src="@mipmap/shopping"
-                    android:tint="@color/white" />
+                    app:tint="@color/white" />
 
             </RelativeLayout>
 
             <View
                 android:layout_width="3px"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
                 android:layout_below="@+id/lay1"
                 android:layout_centerHorizontal="true"
                 android:background="@color/light_grey" />
@@ -88,7 +88,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Shopping"
+                android:layout_marginRight="10dp"
                 android:textColor="@color/black" />
+
+            <ImageView
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/edit_category"
+                android:layout_toEndOf="@+id/tv_catName"/>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
@@ -96,15 +104,17 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_margin="5dp"
+                android:id="@+id/cvImage"
                 app:cardCornerRadius="8dp">
 
                 <ImageView
                     android:id="@+id/image_path"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:background="@color/white"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/ic_launcher" />
+
             </androidx.cardview.widget.CardView>
 
         </RelativeLayout>

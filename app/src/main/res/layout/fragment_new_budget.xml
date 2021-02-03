@@ -5,29 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.NewBudgetFragment">
 
-    <RelativeLayout
-        android:id="@+id/layout1"
-        android:layout_width="match_parent"
-        android:background="@color/navy_blue"
-        android:layout_height="wrap_content">
-
-        <RelativeLayout
-            android:padding="30dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Budgets"
-                android:textSize="18sp"
-                android:textColor="@android:color/white" />
-
-        </RelativeLayout>
-
-    </RelativeLayout>
-
     <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/no_data_layout"
         android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,17 +31,170 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:textSize="15sp"
-            android:textColor="@android:color/holo_blue_dark"
             android:text="Start saving money by creating budgets and we will help you stick to it"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Create Budget"
-            android:background="@drawable/button_green_background"
+            android:id="@+id/btnCreateBudget"
+            android:backgroundTint="@color/green"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"/>
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/toolbar_layout"
+        android:background="@color/navy_blue"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_centerVertical="true"
+            android:id="@+id/imgBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/back"
+            android:padding="10dp"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/imgBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Budgets"
+            android:textSize="18sp"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SAVE"
+            android:textSize="18sp"
+            android:textColor="@color/green" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/budget_complete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar_layout"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:id="@+id/budget_complete_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <RelativeLayout
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_marginTop="5dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:id="@+id/static_layout_wallet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground">
+
+                <ImageView
+                    android:id="@+id/img_wallet_green"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/budget_green" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_alignParentEnd="true"
+                    android:src="@mipmap/forward_arrow" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/img_wallet_green"
+                    android:text="Budget Name"
+                    android:id="@+id/tvBudgetName"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_toEndOf="@+id/img_wallet_green"
+                    android:layout_below="@+id/tvBudgetName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Monthly"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/tvRecurrance"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:id="@+id/balance_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/static_layout_wallet">
+
+               <TextView
+                   android:id="@+id/tvBudgetAmount"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Budget Amount"
+                   android:textColor="@color/green"
+                   android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tvBudgetPercentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30.5%"
+                    android:layout_alignParentEnd="true"/>
+
+                <ProgressBar
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/progressBar"
+                    android:layout_marginBottom="10dp"
+                    android:layout_below="@+id/tvBudgetAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="7 Dec 2021"
+                    android:layout_below="@+id/progressBar"/>
+
+                <TextView
+                    android:layout_marginBottom="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="6 Jan 2021"
+                    android:layout_below="@+id/progressBar"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_below="@+id/wallet_complete_layout"
+            android:background="@color/light_grey" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

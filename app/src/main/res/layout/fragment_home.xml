@@ -36,7 +36,6 @@
                android:layout_marginTop="10dp"
                android:text="You don't have any wallet.\nTo continue managing your money, create a cash wallet"
                android:textAlignment="center"
-               android:textColor="@android:color/holo_blue_dark"
                android:textSize="15sp" />
 
            <Button
@@ -45,7 +44,7 @@
                android:layout_height="wrap_content"
                android:layout_marginBottom="20dp"
                android:layout_marginTop="20dp"
-               android:background="@drawable/button_green_background"
+               android:backgroundTint="@color/green"
                android:text="Add Cash Wallet" />
 
        </LinearLayout>
@@ -93,13 +92,14 @@
                android:id="@+id/wallet_complete_layout"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:layout_marginBottom="10dp"
-               android:layout_marginLeft="20dp"
-               android:layout_marginRight="20dp"
-               android:layout_marginTop="10dp">
+               android:layout_marginBottom="10dp">
 
                <RelativeLayout
-                   android:padding="10dp"
+                   android:paddingLeft="20dp"
+                   android:paddingRight="20dp"
+                   android:layout_marginTop="5dp"
+                   android:paddingTop="10dp"
+                   android:paddingBottom="10dp"
                    android:id="@+id/static_layout_wallet"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
@@ -132,16 +132,19 @@
                </RelativeLayout>
 
                <RelativeLayout
+                   android:paddingLeft="20dp"
+                   android:paddingRight="20dp"
                    android:id="@+id/balance_layout"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
-                   android:layout_below="@+id/tv_my_wallet_name"
-                   android:layout_marginTop="10dp">
+                   android:layout_below="@+id/tv_my_wallet_name">
 
                    <Button
+                       android:backgroundTint="@color/transparent_green"
                        android:id="@+id/btn_edit_wallet"
                        android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
+                       android:layout_height="40dp"
+                       android:textColor="@color/dark_green"
                        android:layout_alignParentEnd="true"
                        android:text="Edit Wallet" />
 
@@ -168,11 +171,13 @@
                </RelativeLayout>
 
                <TextView
+                   android:paddingLeft="20dp"
+                   android:paddingRight="20dp"
                    android:id="@+id/tv_my_wallet_name"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:layout_below="@+id/static_layout_wallet"
-                   android:layout_marginTop="20dp"
+                   android:layout_marginTop="10dp"
                    android:text="My Wallet" />
 
            </RelativeLayout>

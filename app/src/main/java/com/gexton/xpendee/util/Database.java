@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.util.Log;
 import android.widget.Toast;
 
 
@@ -422,6 +423,28 @@ public class Database {
 
     }//deleteExpense
 
+    public double sumExpenses() {
+        open();
+
+        String query1 = "select expense_amount from expense";
+        String query = "select sum(expense_amount) from expense";
+
+        System.out.println("--query in getAllExpenseCategories : " + query);
+        Log.d("sum_of_expense", "sumExpenses: " + query);
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            double expense;
+            do {
+                expense = cursor.getDouble(cursor.getColumnIndex("expense_amount"));
+            }
+            while (cursor.moveToNext());
+            close();
+            return expense;
+        }
+        close();
+        return 0;
 
 
+    }
 }
