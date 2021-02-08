@@ -8,14 +8,17 @@ import droidninja.filepicker.FilePickerBuilder;
 import droidninja.filepicker.FilePickerConst;
 import droidninja.filepicker.utils.ContentUriUtils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -49,7 +52,10 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
     RecyclerView rvCategories;
     Database database;
     TextView tv_current_day, tv_date, tv_save, tv_reset, tv_categories, tv_details;
-    ImageView img_1, img_back, img_camera;
+    ImageView img_back, img_camera;
+    @SuppressLint("StaticFieldLeak")
+    public static ImageView img_1, img_2, img_3, img_4, img_5, img_6;
+    public static String img_path1, img_path2, img_path3, img_path4, img_path5, img_path6;
     String image_path, current_date, description, currency = "PKR", date, catName, color_code, user_selected_date, colorHex;
     RelativeLayout current_day_layout, select_image_layout, no_data_layout;
     EditText edt_description, edt_balance;
@@ -77,6 +83,11 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
         rvCategories = findViewById(R.id.rvCategories);
         tv_current_day = findViewById(R.id.tv_current_day);
         img_1 = findViewById(R.id.img_1);
+        img_2 = findViewById(R.id.img_2);
+        img_3 = findViewById(R.id.img_3);
+        img_4 = findViewById(R.id.img_4);
+        img_5 = findViewById(R.id.img_5);
+        img_6 = findViewById(R.id.img_6);
         current_day_layout = findViewById(R.id.current_day_layout);
         tv_date = findViewById(R.id.tv_date);
         edt_description = findViewById(R.id.edt_description);
@@ -201,6 +212,8 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
             no_data_layout.setVisibility(View.VISIBLE);
         }
 
+        clickListeners();
+
         rvCategories.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(),
                 rvCategories, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
@@ -257,8 +270,6 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
                         ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
                                 catName, user_selected_date, description, image_path, colorHex, 1);
                         database.updateExpense(expenseBean, id);
-
-                        //Toast.makeText(UpdateOrDeleteExpense.this, "Your new wallet amount is " + newBalance, Toast.LENGTH_SHORT).show();
 
                         onBackPressed();
 
@@ -321,11 +332,31 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
         tvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                SharedPreferences prefs1 = getApplicationContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
+                String json = prefs1.getString("Wallet_Bean", "");
+                Gson gson = new Gson();
+                WalletBean walletBean = gson.fromJson(json, WalletBean.class);
+
+                double newBalance = walletBean.balance + exp_amt;
+                String currency = walletBean.currency;
+                String walletName = walletBean.wallet_name;
+
+                WalletBean newWalletBean = new WalletBean(newBalance, walletName, currency);
+                Gson newGson = new Gson();
+                String newJson = newGson.toJson(newWalletBean);
+
+                SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
+                editor.putString("Wallet_Bean", newJson);
+                editor.apply();
+
                 database.deleteExpense(id);
                 Toast.makeText(UpdateOrDeleteExpense.this, "Expense Deleted", Toast.LENGTH_SHORT).show();
                 onBackPressed();
             }
         });
+
+        fetchGalleryImages(UpdateOrDeleteExpense.this);
 
     }
 
@@ -386,5 +417,132 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
                 .setCameraPlaceholder(R.drawable.ic_camera)
                 .withOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                 .pickPhoto(this, CUSTOM_REQUEST_CODE);
+    }
+
+    public ArrayList<String> fetchGalleryImages(Activity context) {
+        ArrayList<String> galleryImageUrls;
+        final String[] columns = {MediaStore.Images.Media.DATA, MediaStore.Images.Media._ID};//get all columns of type images
+        final String orderBy = MediaStore.Images.Media.DATE_TAKEN;//order data by date
+
+        Cursor imagecursor = context.managedQuery(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, columns, null,
+                null, orderBy + " DESC");//get all data in Cursor by sorting in DESC order
+
+        galleryImageUrls = new ArrayList<String>();
+
+        for (int i = 0; i < imagecursor.getCount(); i++) {
+            imagecursor.moveToPosition(i);
+            int dataColumnIndex = imagecursor.getColumnIndex(MediaStore.Images.Media.DATA);//get column index
+            galleryImageUrls.add(imagecursor.getString(dataColumnIndex));//get Image from column index
+        }
+
+        //Getting 6 gallery images
+        img_path1 = galleryImageUrls.get(0);
+        img_path2 = galleryImageUrls.get(1);
+        img_path3 = galleryImageUrls.get(2);
+        img_path4 = galleryImageUrls.get(3);
+        img_path5 = galleryImageUrls.get(4);
+        img_path6 = galleryImageUrls.get(5);
+
+        /*File file1 = new File(img_path1);
+        Picasso.get().load(file1).into(img_1);*/
+
+        File file2 = new File(img_path2);
+        Picasso.get().load(file2).into(img_2);
+
+        File file3 = new File(img_path3);
+        Picasso.get().load(file3).into(img_3);
+
+        File file4 = new File(img_path4);
+        Picasso.get().load(file4).into(img_4);
+
+        File file5 = new File(img_path5);
+        Picasso.get().load(file5).into(img_5);
+
+        File file6 = new File(img_path6);
+        Picasso.get().load(file6).into(img_6);
+
+        Log.e("fatch_in", "images: " + galleryImageUrls);
+        return galleryImageUrls;
+    }
+
+    private void clickListeners() {
+        img_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                img_1.setBackgroundResource(R.drawable.square_shape);
+                img_2.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_3.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_4.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_5.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_6.setBackgroundResource(R.drawable.cirrcle_empty);
+                image_path = img_path1;
+            }
+        });
+
+        img_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                img_1.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_2.setBackgroundResource(R.drawable.square_shape);
+                img_3.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_4.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_5.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_6.setBackgroundResource(R.drawable.cirrcle_empty);
+                image_path = img_path2;
+            }
+        });
+
+        img_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                img_1.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_2.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_3.setBackgroundResource(R.drawable.square_shape);
+                img_4.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_5.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_6.setBackgroundResource(R.drawable.cirrcle_empty);
+                image_path = img_path3;
+            }
+        });
+
+        img_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                img_1.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_2.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_3.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_4.setBackgroundResource(R.drawable.square_shape);
+                img_5.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_6.setBackgroundResource(R.drawable.cirrcle_empty);
+                image_path = img_path4;
+            }
+        });
+
+        img_5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                img_1.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_2.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_3.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_4.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_5.setBackgroundResource(R.drawable.square_shape);
+                img_6.setBackgroundResource(R.drawable.cirrcle_empty);
+                image_path = img_path5;
+            }
+        });
+
+        img_6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                img_1.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_2.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_3.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_4.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_5.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_6.setBackgroundResource(R.drawable.square_shape);
+                image_path = img_path6;
+            }
+        });
     }
 }

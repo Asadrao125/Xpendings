@@ -443,10 +443,6 @@ public class AddExpenseActivity extends AppCompatActivity {
             galleryImageUrls.add(imagecursor.getString(dataColumnIndex));//get Image from column index
         }
 
-        /*newImageBeanList = galleryImageUrls;
-        imageBeanAdapter = new ImageBeanAdapter(this, newImageBeanList);
-        rvImages.setAdapter(imageBeanAdapter);*/
-
         //Getting 6 gallery images
         img_path1 = galleryImageUrls.get(0);
         img_path2 = galleryImageUrls.get(1);

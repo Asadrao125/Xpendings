@@ -3,10 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
     android:layout_margin="10dp"
     android:id="@+id/rvItem">
 
     <RelativeLayout
+        android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:id="@+id/layout_layout"
         android:layout_width="wrap_content"
@@ -31,6 +33,7 @@
         android:layout_below="@+id/layout_layout"
         android:text="Name"
         android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
         android:textAlignment="center"
         android:textSize="16sp" />
 

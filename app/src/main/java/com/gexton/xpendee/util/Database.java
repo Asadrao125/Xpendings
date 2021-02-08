@@ -423,28 +423,38 @@ public class Database {
 
     }//deleteExpense
 
-    public double sumExpenses() {
+    public ArrayList<ExpenseBean> getAllExpensesFlag(int flag_value) {
         open();
+        ArrayList<ExpenseBean> expenseBean = new ArrayList<>();
+        ExpenseBean temp;
+        String query1 = "select * from expense WHERE flag = '" + flag_value + "'";
 
-        String query1 = "select expense_amount from expense";
-        String query = "select sum(expense_amount) from expense";
-
-        System.out.println("--query in getAllExpenseCategories : " + query);
-        Log.d("sum_of_expense", "sumExpenses: " + query);
-        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+        System.out.println("--query in getAllAttendance : " + query1);
+        Cursor cursor = sqLiteDatabase.rawQuery(query1, null);
 
         if (cursor.moveToFirst()) {
-            double expense;
             do {
-                expense = cursor.getDouble(cursor.getColumnIndex("expense_amount"));
+
+                int id = cursor.getInt(cursor.getColumnIndex("id"));
+                String currency = cursor.getString(cursor.getColumnIndex("expense_currency"));
+                Double amount = cursor.getDouble(cursor.getColumnIndex("expense_amount"));
+                int icon = cursor.getInt(cursor.getColumnIndex("expense_category_icon"));
+                String category_name = cursor.getString(cursor.getColumnIndex("expense_category_name"));
+                String current_day = cursor.getString(cursor.getColumnIndex("current_day"));
+                String expense_description = cursor.getString(cursor.getColumnIndex("expense_description"));
+                String image_path = cursor.getString(cursor.getColumnIndex("image_path"));
+                String color_code = cursor.getString(cursor.getColumnIndex("color_code"));
+
+                temp = new ExpenseBean(id, currency, amount, icon, category_name, current_day, expense_description, image_path, color_code, 1);
+
+                expenseBean.add(temp);
+                temp = null;
             }
             while (cursor.moveToNext());
             close();
-            return expense;
+            return expenseBean;
         }
         close();
-        return 0;
-
-
-    }
+        return null;
+    }//======end getAllExpenses()===========
 }

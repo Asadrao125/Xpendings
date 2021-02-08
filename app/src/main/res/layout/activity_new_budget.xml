@@ -8,7 +8,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:id="@+id/layout1"
@@ -35,7 +35,7 @@
                     android:layout_toEndOf="@+id/imgBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Budgets"
+                    android:text="Add Budget"
                     android:textSize="18sp"
                     android:textColor="@android:color/white" />
 
@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:text="SAVE"
                     android:id="@+id/btnSave"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textColor="@color/green" />
 
             </RelativeLayout>
@@ -66,8 +66,8 @@
                 android:layout_margin="20dp">
 
                 <EditText
-                    android:focusable="true"
                     android:id="@+id/edtBudget"
+                    android:focusable="true"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -76,12 +76,10 @@
                     android:inputType="number"
                     android:maxLength="10"
                     android:maxLines="1"
-                    android:textColor="@color/green"
                     android:background="@null"
-                    android:textColorHint="@color/green"
                     android:hint="e.g 1500"
                     android:textAlignment="textEnd"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"/>
 
                 <TextView
                     android:id="@+id/tv_balance"

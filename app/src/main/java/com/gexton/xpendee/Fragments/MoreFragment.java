@@ -2,6 +2,7 @@ package com.gexton.xpendee.Fragments;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gexton.xpendee.AddExpenseActivity;
 import com.gexton.xpendee.AddIncomeActivity;
@@ -78,14 +80,18 @@ public class MoreFragment extends Fragment {
         rate_app_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                shareIntent();
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getContext().getPackageName())));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + getContext().getPackageName())));
+                }
             }
         });
 
         logout_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Toast.makeText(getContext(), "Logout", Toast.LENGTH_SHORT).show();
             }
         });
 

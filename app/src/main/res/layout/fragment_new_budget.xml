@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_grey"
     tools:context=".Fragments.NewBudgetFragment">
 
     <LinearLayout
@@ -45,46 +46,33 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/toolbar_layout"
-        android:background="@color/navy_blue"
-        android:padding="20dp"
+        android:id="@+id/layout1"
         android:layout_width="match_parent"
+        android:background="@color/navy_blue"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:layout_centerVertical="true"
-            android:id="@+id/imgBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/back"
-            android:padding="10dp"
-            android:layout_marginRight="10dp"/>
+        <RelativeLayout
+            android:padding="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/imgBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Budgets"
-            android:textSize="18sp"
-            android:textColor="@android:color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Budget"
+                android:textSize="18sp"
+                android:textColor="@android:color/white" />
 
-        <TextView
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SAVE"
-            android:textSize="18sp"
-            android:textColor="@color/green" />
+        </RelativeLayout>
 
     </RelativeLayout>
 
     <RelativeLayout
+        android:background="@color/white"
         android:id="@+id/budget_complete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar_layout"
+        android:layout_below="@+id/layout1"
         android:visibility="visible">
 
         <RelativeLayout
@@ -141,6 +129,7 @@
             <RelativeLayout
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
+                android:paddingTop="20dp"
                 android:id="@+id/balance_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -165,6 +154,7 @@
                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                     android:layout_marginTop="10dp"
                     android:id="@+id/progressBar"
+                    android:progressBackgroundTint="@color/green"
                     android:layout_marginBottom="10dp"
                     android:layout_below="@+id/tvBudgetAmount"
                     android:layout_width="match_parent"
@@ -188,12 +178,6 @@
             </RelativeLayout>
 
         </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_below="@+id/wallet_complete_layout"
-            android:background="@color/light_grey" />
 
     </RelativeLayout>
 

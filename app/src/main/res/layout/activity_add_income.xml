@@ -256,30 +256,35 @@
                         android:src="@mipmap/ic_launcher" />
 
                     <ImageView
+                        android:id="@+id/img_2"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginRight="10dp"
                         android:src="@mipmap/ic_launcher" />
 
                     <ImageView
+                        android:id="@+id/img_3"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginRight="10dp"
                         android:src="@mipmap/ic_launcher" />
 
                     <ImageView
+                        android:id="@+id/img_4"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginRight="10dp"
                         android:src="@mipmap/ic_launcher" />
 
                     <ImageView
+                        android:id="@+id/img_5"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginRight="10dp"
                         android:src="@mipmap/ic_launcher" />
 
                     <ImageView
+                        android:id="@+id/img_6"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginRight="10dp"

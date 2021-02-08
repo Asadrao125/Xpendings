@@ -38,8 +38,7 @@ public class TimelineFragment extends Fragment {
     TextView tvDailyCashFlow, tvWealth;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_timeline, container, false);
 
@@ -50,7 +49,6 @@ public class TimelineFragment extends Fragment {
         no_data_layout = view.findViewById(R.id.no_data_layout);
         tvDailyCashFlow = view.findViewById(R.id.tvDailyCashFlow);
         tvWealth = view.findViewById(R.id.tvWealth);
-
         expenseBeanArrayList = new ArrayList<>();
 
         settingAddapter();
@@ -79,8 +77,9 @@ public class TimelineFragment extends Fragment {
     }
 
     private void settingAddapter() {
-        if (database.getAllExpenses() != null && database.getAllExpensesDates() != null) {
-            expenseBeanArrayList = database.getAllExpenses();
+        //getAllExpenses()
+        if (database.getAllExpensesFlag(1) != null && database.getAllExpensesDates() != null) {
+            expenseBeanArrayList = database.getAllExpensesFlag(1);
             dateBeanArrayList = database.getAllExpensesDates();
             sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, dateBeanArrayList, getContext()));
         } else {

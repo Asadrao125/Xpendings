@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,11 +27,11 @@ import static android.content.Context.MODE_PRIVATE;
 public class NewBudgetFragment extends Fragment {
     Button btnCreateBudget;
     View view;
-    RelativeLayout static_layout_wallet;
-    TextView tvBudgetName, tvRecurrance, tvBudgetAmount;
+    RelativeLayout static_layout_wallet, budget_complete;
+    TextView tvBudgetName, tvRecurrance, tvBudgetAmount, tvBudgetPercentage;
     String MY_PREFS_NAME = "MY_PREFS_NAME", json;
     LinearLayout no_data_layout;
-    RelativeLayout budget_complete;
+    ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,6 +44,8 @@ public class NewBudgetFragment extends Fragment {
         tvBudgetAmount = view.findViewById(R.id.tvBudgetAmount);
         no_data_layout = view.findViewById(R.id.no_data_layout);
         budget_complete = view.findViewById(R.id.budget_complete);
+        progressBar = view.findViewById(R.id.progressBar);
+        tvBudgetPercentage = view.findViewById(R.id.tvBudgetPercentage);
 
         static_layout_wallet.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +59,7 @@ public class NewBudgetFragment extends Fragment {
         btnCreateBudget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //startActivity(new Intent(getContext(), NewBudgetActivity.class));
+                startActivity(new Intent(getContext(), NewBudgetActivity.class));
             }
         });
 
@@ -66,6 +69,7 @@ public class NewBudgetFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        converSionAndSettingData();
     }
 
     public void converSionAndSettingData() {
@@ -77,6 +81,14 @@ public class NewBudgetFragment extends Fragment {
         if (budgetBean != null) {
             tvBudgetName.setText(budgetBean.budgetName);
             tvBudgetAmount.setText("$" + budgetBean.amount);
+            int maxProgress = (int) Math.round(budgetBean.amount);
+            progressBar.setMax(100); //Maximum value for progress
+            progressBar.setProgress(maxProgress); //Desired value for progress
+
+            //Calculating percentage
+            double percentage = ((budgetBean.amount * 100) / budgetBean.amount);
+            tvBudgetPercentage.setText(percentage + " %");
+
             budget_complete.setVisibility(View.VISIBLE);
             no_data_layout.setVisibility(View.GONE);
         } else {
@@ -84,5 +96,4 @@ public class NewBudgetFragment extends Fragment {
             budget_complete.setVisibility(View.GONE);
         }
     }
-
 }

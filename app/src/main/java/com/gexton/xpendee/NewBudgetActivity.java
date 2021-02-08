@@ -20,7 +20,6 @@ import com.gexton.xpendee.model.WalletBean;
 import com.google.gson.Gson;
 
 public class NewBudgetActivity extends AppCompatActivity {
-    View view;
     ImageView imgBack;
     TextView btnSave;
     EditText edtBudget, edtBudgetName;
@@ -31,7 +30,7 @@ public class NewBudgetActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_budget);
 
-        imgBack = view.findViewById(R.id.imgBack);
+        imgBack = findViewById(R.id.imgBack);
         btnSave = findViewById(R.id.btnSave);
         edtBudget = findViewById(R.id.edtBudget);
         edtBudgetName = findViewById(R.id.edtBudgetName);
@@ -77,5 +76,21 @@ public class NewBudgetActivity extends AppCompatActivity {
                 }
             }
         });
+
+        settingDataInFields();
+
     }
+
+    private void settingDataInFields() {
+        // Converting GSON object into String
+        SharedPreferences prefs1 = this.getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
+        String json = prefs1.getString("Budget_Bean", "");
+        Gson gson = new Gson();
+        BudgetBean budgetBean = gson.fromJson(json, BudgetBean.class);
+        if (budgetBean != null) {
+            edtBudgetName.setText(budgetBean.budgetName);
+            edtBudget.setText("" + budgetBean.amount);
+        }
+    }
+
 }
