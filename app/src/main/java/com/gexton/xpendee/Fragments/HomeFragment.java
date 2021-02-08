@@ -1,9 +1,11 @@
 package com.gexton.xpendee.Fragments;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -14,11 +16,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.PermissionRequest;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -74,6 +82,8 @@ public class HomeFragment extends Fragment {
     ArrayList<BarEntry> listBarEntry = new ArrayList<>();
     ArrayList<CategoryBean> allCatList;
     CardView cardView_pieChart, cardView_barChart;
+    ImageView img_calender;
+    private AlertDialog alertDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -97,6 +107,7 @@ public class HomeFragment extends Fragment {
         barChart = view.findViewById(R.id.barChart);
         cardView_pieChart = view.findViewById(R.id.card_view_pieChart);
         cardView_barChart = view.findViewById(R.id.card_view_barChart);
+        img_calender = view.findViewById(R.id.img_calender);
 
         //Gettiing all categories list
         allCatList = database.getAllCategories(1);
@@ -163,8 +174,97 @@ public class HomeFragment extends Fragment {
         tv_name.setText(name);
         Picasso.get().load(image).into(profile_image);
 
+        img_calender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showFilterDialog();
+            }
+        });
         return view;
+    }
 
+    private void showFilterDialog() {
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        View v = inflater.inflate(R.layout.dialog_for_filtering_expenses, null);
+
+        CheckBox cbDaily = v.findViewById(R.id.cbDaily);
+        CheckBox cbWeekly = v.findViewById(R.id.cbWeekly);
+        CheckBox cbMonthly = v.findViewById(R.id.cbMonthly);
+        CheckBox cbYearly = v.findViewById(R.id.cbYearly);
+        CheckBox cbAllTime = v.findViewById(R.id.cbAllTime);
+
+        RelativeLayout daily_layout = v.findViewById(R.id.daily_layout);
+        RelativeLayout weekly_layout = v.findViewById(R.id.weekly_layout);
+        RelativeLayout monthly_layout = v.findViewById(R.id.monthly_layout);
+        RelativeLayout yearly_layout = v.findViewById(R.id.yearly_layout);
+        RelativeLayout all_time_layout = v.findViewById(R.id.all_time_layout);
+
+        daily_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (cbDaily.isChecked()) {
+                    cbDaily.setChecked(false);
+                } else {
+                    cbDaily.setChecked(true);
+                }
+            }
+        });
+
+        weekly_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (cbWeekly.isChecked()) {
+                    cbWeekly.setChecked(false);
+                } else {
+                    cbWeekly.setChecked(true);
+                }
+            }
+        });
+
+        monthly_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (cbMonthly.isChecked()) {
+                    cbMonthly.setChecked(false);
+                } else {
+                    cbMonthly.setChecked(true);
+                }
+            }
+        });
+
+        yearly_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (cbYearly.isChecked()) {
+                    cbYearly.setChecked(false);
+                } else {
+                    cbYearly.setChecked(true);
+                }
+            }
+        });
+
+        all_time_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (cbAllTime.isChecked()) {
+                    cbAllTime.setChecked(false);
+                } else {
+                    cbAllTime.setChecked(true);
+                }
+            }
+        });
+
+        alertDialog = new AlertDialog.Builder(getContext()).setView(v).create();
+
+        Window window = alertDialog.getWindow();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams wlp = window.getAttributes();
+
+        wlp.gravity = Gravity.BOTTOM;
+        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        window.setAttributes(wlp);
+
+        alertDialog.show();
     }
 
     public void converSionAndSettingData() {
