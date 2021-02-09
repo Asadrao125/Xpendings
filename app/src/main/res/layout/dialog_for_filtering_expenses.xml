@@ -1,157 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog_filter_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/cureve_background_for_filter_dialog">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_gray"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
 
         <RelativeLayout
+            android:id="@+id/daily_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/view_gray"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp">
+            android:layout_below="@+id/tvSelectPeriod"
+            android:layout_marginTop="5dp">
 
-            <RelativeLayout
-                android:id="@+id/daily_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvSelectPeriod"
-                android:layout_marginTop="20dp">
-
-                <CheckBox
-                    android:id="@+id/cbDaily"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true" />
-
-                <TextView
-                    android:id="@+id/tvDaily"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="Daily"
-                    android:textSize="14sp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/weekly_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/daily_layout"
-                android:layout_marginTop="20dp">
-
-                <CheckBox
-                    android:id="@+id/cbWeekly"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true" />
-
-                <TextView
-                    android:id="@+id/tvWeekly"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="Weekly"
-                    android:textSize="14sp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/monthly_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/weekly_layout"
-                android:layout_marginTop="20dp">
-
-                <CheckBox
-                    android:id="@+id/cbMonthly"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true" />
-
-                <TextView
-                    android:id="@+id/tvMonthly"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="Monthly"
-                    android:textSize="14sp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/yearly_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/monthly_layout"
-                android:layout_marginTop="20dp">
-
-                <CheckBox
-                    android:id="@+id/cbYearly"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true" />
-
-                <TextView
-                    android:id="@+id/tvYearly"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="Yearly"
-                    android:textSize="14sp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/all_time_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/yearly_layout"
-                android:layout_marginTop="20dp">
-
-                <CheckBox
-                    android:id="@+id/cbAllTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true" />
-
-                <TextView
-                    android:id="@+id/tvAllTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="All Time"
-                    android:textSize="14sp" />
-
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/tvSelectPeriod"
+            <CheckBox
+                android:id="@+id/cbDaily"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select Period"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:layout_alignParentEnd="true"
+                android:clickable="false"
+                android:focusable="false"
+                android:longClickable="false" />
 
+            <TextView
+                android:id="@+id/tvDaily"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Daily"
+                android:textSize="16sp" />
 
         </RelativeLayout>
 
-        <View
-            android:id="@+id/view_gray"
-            android:layout_width="60dp"
-            android:layout_height="10px"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/current_day_background" />
+        <RelativeLayout
+            android:id="@+id/weekly_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/daily_layout">
+
+            <CheckBox
+                android:id="@+id/cbWeekly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:clickable="false"
+                android:focusable="false"
+                android:longClickable="false" />
+
+            <TextView
+                android:id="@+id/tvWeekly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Weekly"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/monthly_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/weekly_layout">
+
+            <CheckBox
+                android:id="@+id/cbMonthly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:clickable="false"
+                android:focusable="false"
+                android:longClickable="false" />
+
+            <TextView
+                android:id="@+id/tvMonthly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Monthly"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/yearly_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/monthly_layout">
+
+            <CheckBox
+                android:id="@+id/cbYearly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:clickable="false"
+                android:focusable="false"
+                android:longClickable="false" />
+
+            <TextView
+                android:id="@+id/tvYearly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Yearly"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/all_time_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/yearly_layout"
+            android:layout_marginBottom="20dp">
+
+            <CheckBox
+                android:id="@+id/cbAllTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:clickable="false"
+                android:focusable="false"
+                android:longClickable="false" />
+
+            <TextView
+                android:id="@+id/tvAllTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="All Time"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvSelectPeriod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Period"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
     </RelativeLayout>
+
+    <View
+        android:id="@+id/view_gray"
+        android:layout_width="60dp"
+        android:layout_height="10px"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/current_day_background" />
 
 </RelativeLayout>

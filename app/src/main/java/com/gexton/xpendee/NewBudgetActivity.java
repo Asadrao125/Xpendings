@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,21 +26,50 @@ public class NewBudgetActivity extends AppCompatActivity {
     TextView btnSave;
     EditText edtBudget, edtBudgetName;
     String budgetName, currency = "PKR", budgetAmount, recurrance = "Monthly";
+    RelativeLayout layout_budget_for, layout_recurrance, layout_date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_budget);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.navy_blue, this.getTheme()));
+        }
+
         imgBack = findViewById(R.id.imgBack);
         btnSave = findViewById(R.id.btnSave);
         edtBudget = findViewById(R.id.edtBudget);
         edtBudgetName = findViewById(R.id.edtBudgetName);
+        layout_budget_for = findViewById(R.id.layout_budget_for);
+        layout_recurrance = findViewById(R.id.layout_recurrance);
+        layout_date = findViewById(R.id.layout_date);
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+
+        layout_budget_for.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), AllExpensesCategoryActivity.class));
+            }
+        });
+
+        layout_recurrance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        layout_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 

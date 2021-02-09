@@ -13,41 +13,41 @@
         <RelativeLayout
             android:id="@+id/layout1"
             android:layout_width="match_parent"
-            android:background="@color/navy_blue"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/navy_blue">
 
             <RelativeLayout
-                android:padding="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="20dp">
 
                 <ImageView
-                    android:layout_centerVertical="true"
                     android:id="@+id/imgBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/back"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
                     android:padding="10dp"
-                    android:layout_marginRight="10dp"/>
+                    android:src="@mipmap/back" />
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/imgBack"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="Add Budget"
-                    android:textSize="18sp"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
 
                 <TextView
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"
+                    android:id="@+id/btnSave"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
                     android:text="SAVE"
-                    android:id="@+id/btnSave"
-                    android:textSize="16sp"
-                    android:textColor="@color/green" />
+                    android:textColor="@color/green"
+                    android:textSize="16sp" />
 
             </RelativeLayout>
 
@@ -67,19 +67,19 @@
 
                 <EditText
                     android:id="@+id/edtBudget"
-                    android:focusable="true"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_below="@+id/tv_currency"
                     android:layout_margin="5dp"
+                    android:background="@null"
+                    android:focusable="true"
+                    android:hint="e.g 1500"
                     android:inputType="number"
                     android:maxLength="10"
                     android:maxLines="1"
-                    android:background="@null"
-                    android:hint="e.g 1500"
                     android:textAlignment="textEnd"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tv_balance"
@@ -119,6 +119,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/layout_budget_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout2">
@@ -148,15 +149,121 @@
                     android:src="@mipmap/budget_addbudget" />
 
                 <TextView
-                    android:textColor="@color/black"
                     android:id="@+id/tv_currency_new"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     android:text="Details"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
 
             </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_budget_for"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_budget_name"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/forward_arrow" />
+
+            <TextView
+                android:id="@+id/tv_all_expenses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_budget_for"
+                android:text="All Expenses"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_budget_for"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Budget For" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_recurrance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_budget_for"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="10dp"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/forward_arrow" />
+
+            <TextView
+                android:id="@+id/tv_monthly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_recurrance"
+                android:text="Monthly"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_recurrance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recurrence" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_recurrance"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="10dp"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/forward_arrow" />
+
+            <TextView
+                android:id="@+id/tv_today"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_date"
+                android:text="Today"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start Date" />
 
         </RelativeLayout>
 
