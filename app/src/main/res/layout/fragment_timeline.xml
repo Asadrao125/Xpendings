@@ -19,8 +19,7 @@
            <RelativeLayout
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:layout_margin="20dp"
-               android:paddingBottom="20dp">
+               android:layout_margin="20dp">
 
                <ImageView
                    android:layout_width="wrap_content"
@@ -70,6 +69,16 @@
                android:layout_height="match_parent"
                android:orientation="vertical"
                tools:ignore="UselessParent">
+
+                <!--app:selectedDateBackground="@drawable/shape_drawable_calender"-->
+               <devs.mulham.horizontalcalendar.HorizontalCalendarView
+                   android:visibility="gone"
+                   android:id="@+id/calendarView"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:background="@color/navy_blue"
+                   app:selectorColor="@android:color/white"
+                   app:textColorSelected="@android:color/white" />
 
                <LinearLayout
                    android:padding="10dp"

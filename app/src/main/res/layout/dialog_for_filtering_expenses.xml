@@ -144,7 +144,8 @@
             android:id="@+id/tvSelectPeriod"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select Period"
+            android:text="SELECT PERIOD"
+            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="18sp" />
 

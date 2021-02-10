@@ -1,13 +1,20 @@
 package com.gexton.xpendee.Fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import devs.mulham.horizontalcalendar.HorizontalCalendar;
+import devs.mulham.horizontalcalendar.HorizontalCalendarView;
+import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
+import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -36,6 +43,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class TimelineFragment extends Fragment {
     View view;
     LinearLayout listviewLayout;
@@ -49,6 +58,11 @@ public class TimelineFragment extends Fragment {
     ImageView img_calender;
     private AlertDialog alertDialog;
     String TAG = "TimelineFragment";
+    SharedPreferences.Editor editor;
+    SharedPreferences prefs;
+    String filter_value;
+    CheckBox cbDaily, cbWeekly, cbMonthly, cbYearly, cbAllTime;
+    HorizontalCalendar horizontalCalendar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,6 +78,62 @@ public class TimelineFragment extends Fragment {
         tvWealth = view.findViewById(R.id.tvWealth);
         expenseBeanArrayList = new ArrayList<>();
         img_calender = view.findViewById(R.id.img_calender);
+        editor = getContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
+        prefs = getContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
+        filter_value = prefs.getString("filter", "");
+
+        /* end after 1 month from now */
+        Calendar endDate = Calendar.getInstance();
+        endDate.add(Calendar.MONTH, 1);
+
+        /* start before 1 month from now */
+        Calendar startDate = Calendar.getInstance();
+        startDate.add(Calendar.MONTH, -1);
+
+        horizontalCalendar = new HorizontalCalendar.Builder(view, R.id.calendarView)
+                .range(startDate, endDate)
+                .datesNumberOnScreen(3)
+                .configure()
+                .showTopText(true)
+                .showBottomText(false)
+                .textSize(/*Top*/14, /*Middle*/16, /*Bottom*/14)
+                .end()
+                .build();
+
+        horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
+            @Override
+            public void onDateSelected(Calendar date, int position) {
+
+                String dateNew = DateFormat.format("dd-MM-yyyy", date).toString();
+
+                expenseBeanArrayList = database.getAllDailyExpenses(dateNew);
+                dateBeanArrayList = database.getAllExpensesDates();
+                if (expenseBeanArrayList != null) {
+                    sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, dateBeanArrayList, getContext()));
+                    sumExpense(expenseBeanArrayList);
+                    tvWealth.setText("-$" + sumExpense(expenseBeanArrayList));
+
+                    editor.putString("filter", "daily");
+                    editor.apply();
+
+                } else {
+                    Toast.makeText(getContext(), "No Record Found", Toast.LENGTH_SHORT).show();
+                    /*sectionListView.setVisibility(View.GONE);
+                    no_data_layout.setVisibility(View.VISIBLE);*/
+                }
+
+            }
+
+            @Override
+            public void onCalendarScroll(HorizontalCalendarView calendarView, int dx, int dy) {
+
+            }
+
+            @Override
+            public boolean onDateLongClicked(Calendar date, int position) {
+                return true;
+            }
+        });
 
         settingAddapter();
 
@@ -100,8 +170,8 @@ public class TimelineFragment extends Fragment {
 
     private void settingAddapter() {
         //getAllExpenses()
-        if (database.getAllExpensesFlag(1) != null && database.getAllExpensesDates() != null) {
-            expenseBeanArrayList = database.getAllExpensesFlag(1);
+        if (database.getAllExpensesFlag() != null && database.getAllExpensesDates() != null) {
+            expenseBeanArrayList = database.getAllExpensesFlag();
             dateBeanArrayList = database.getAllExpensesDates();
             sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, dateBeanArrayList, getContext()));
             if (expenseBeanArrayList != null) {
@@ -120,26 +190,44 @@ public class TimelineFragment extends Fragment {
         if (expenseBeanArrayList != null) {
             Log.d("sum_of_expenses", "onCreateView: " + sumExpense(expenseBeanArrayList));
             tvWealth.setText("-$" + sumExpense(expenseBeanArrayList));
+            Log.d("sum_income", "onCreateView: " + sumIncome(expenseBeanArrayList));
         }
     }
 
     public double sumExpense(ArrayList<ExpenseBean> list) {
         double sum = 0;
+        double sumIncome = 0;
         for (ExpenseBean j : list) {
             sum = sum + j.expense;
+
+            if (j.flag == 2) {
+                sumIncome = sumIncome + j.expense;
+                Log.d(TAG, "sumExpense: " + sumIncome);
+            }
         }
         return sum;
+    }
+
+    public double sumIncome(ArrayList<ExpenseBean> list) {
+        double sumIncome = 0;
+        for (ExpenseBean j : list) {
+            if (j.flag == 2) {
+                sumIncome = sumIncome + j.expense;
+                Log.d(TAG, "sumExpense: " + sumIncome);
+            }
+        }
+        return sumIncome;
     }
 
     private void showFilterDialog() {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View v = inflater.inflate(R.layout.dialog_for_filtering_expenses, null);
 
-        CheckBox cbDaily = v.findViewById(R.id.cbDaily);
-        CheckBox cbWeekly = v.findViewById(R.id.cbWeekly);
-        CheckBox cbMonthly = v.findViewById(R.id.cbMonthly);
-        CheckBox cbYearly = v.findViewById(R.id.cbYearly);
-        CheckBox cbAllTime = v.findViewById(R.id.cbAllTime);
+        cbDaily = v.findViewById(R.id.cbDaily);
+        cbWeekly = v.findViewById(R.id.cbWeekly);
+        cbMonthly = v.findViewById(R.id.cbMonthly);
+        cbYearly = v.findViewById(R.id.cbYearly);
+        cbAllTime = v.findViewById(R.id.cbAllTime);
 
         RelativeLayout daily_layout = v.findViewById(R.id.daily_layout);
         RelativeLayout weekly_layout = v.findViewById(R.id.weekly_layout);
@@ -171,14 +259,18 @@ public class TimelineFragment extends Fragment {
                     expenseBeanArrayList = database.getAllDailyExpenses(formattedDate);
                     dateBeanArrayList = database.getAllExpensesDates();
                     if (expenseBeanArrayList != null) {
-                        Log.d(TAG, "getAllDailyExpenses: " + expenseBeanArrayList);
                         sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, dateBeanArrayList, getContext()));
                         sumExpense(expenseBeanArrayList);
                         tvWealth.setText("-$" + sumExpense(expenseBeanArrayList));
+
+                        editor.putString("filter", "daily");
+                        editor.apply();
+
+                        horizontalCalendar.getCalendarView().setVisibility(View.VISIBLE);
+
                     } else {
                         Toast.makeText(getContext(), "No Record Found", Toast.LENGTH_SHORT).show();
                     }
-                    //alertDialog.dismiss();
                 }
             }
         });
@@ -194,8 +286,8 @@ public class TimelineFragment extends Fragment {
                     cbMonthly.setChecked(false);
                     cbYearly.setChecked(false);
                     cbAllTime.setChecked(false);
-                    Log.d(TAG, "getAllWeeklyExpenses: " + database.getAllWeeklyExpenses());
-                    //alertDialog.dismiss();
+                    editor.putString("filter", "weekly");
+                    editor.apply();
                 }
             }
         });
@@ -211,7 +303,8 @@ public class TimelineFragment extends Fragment {
                     cbWeekly.setChecked(false);
                     cbYearly.setChecked(false);
                     cbAllTime.setChecked(false);
-                    //alertDialog.dismiss();
+                    editor.putString("filter", "monthly");
+                    editor.apply();
                 }
             }
         });
@@ -227,7 +320,8 @@ public class TimelineFragment extends Fragment {
                     cbDaily.setChecked(false);
                     cbWeekly.setChecked(false);
                     cbAllTime.setChecked(false);
-                    //alertDialog.dismiss();
+                    editor.putString("filter", "yearly");
+                    editor.apply();
                 }
             }
         });
@@ -243,7 +337,10 @@ public class TimelineFragment extends Fragment {
                     cbDaily.setChecked(false);
                     cbWeekly.setChecked(false);
                     cbYearly.setChecked(false);
+                    editor.putString("filter", "all_time");
+                    editor.apply();
                     settingAddapter();
+                    horizontalCalendar.getCalendarView().setVisibility(View.GONE);
                 }
             }
         });
@@ -258,5 +355,21 @@ public class TimelineFragment extends Fragment {
         window.setAttributes(wlp);
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
+    }
+
+    public void getFilterStatus() {
+        if (!TextUtils.isEmpty(filter_value)) {
+            if (filter_value.equals("daily")) {
+                cbDaily.setChecked(true);
+            } else if (filter_value.equals("weekly")) {
+                cbWeekly.setChecked(true);
+            } else if (filter_value.equals("monthly")) {
+                cbMonthly.setChecked(true);
+            } else if (filter_value.equals("yearly")) {
+                cbYearly.setChecked(true);
+            } else if (filter_value.equals("all_time")) {
+                cbAllTime.setChecked(true);
+            }
+        }
     }
 }

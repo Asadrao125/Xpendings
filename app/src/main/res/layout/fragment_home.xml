@@ -203,28 +203,14 @@
                android:paddingBottom="20dp">
 
                <ImageView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_marginLeft="20dp"
-                   android:layout_toLeftOf="@+id/img_calender"
-                   android:src="@mipmap/wallet_top" />
-
-               <ImageView
-                   android:id="@+id/img_calender"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_marginLeft="20dp"
-                   android:layout_toLeftOf="@+id/img_search"
-                   android:src="@mipmap/calendar_top" />
-
-               <ImageView
-                   android:id="@+id/img_search"
+                   android:id="@+id/imgShare"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:layout_alignParentEnd="true"
                    android:layout_marginLeft="20dp"
                    android:layout_marginRight="10dp"
-                   android:src="@mipmap/search_top" />
+                   android:src="@mipmap/share_more"
+                   android:tint="@color/white"/>
 
                <TextView
                    android:layout_width="wrap_content"

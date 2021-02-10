@@ -75,8 +75,6 @@ public class Database {
         myOutput.flush();
         myOutput.close();
         myInput.close();
-
-
     }
 
     private boolean checkDatabase() {
@@ -423,13 +421,14 @@ public class Database {
 
     }//deleteExpense
 
-    public ArrayList<ExpenseBean> getAllExpensesFlag(int flag_value) {
+    public ArrayList<ExpenseBean> getAllExpensesFlag(/*int flag_value*/) {
         open();
         ArrayList<ExpenseBean> expenseBean = new ArrayList<>();
         ExpenseBean temp;
-        String query1 = "select * from expense WHERE flag = '" + flag_value + "'";
+        //String query1 = "select * from expense WHERE flag = '" + flag_value + "'";
+        String query1 = "select * from expense";
 
-        System.out.println("--query in getAllAttendance : " + query1);
+        System.out.println("--query in getAllExpensesFlag : " + query1);
         Cursor cursor = sqLiteDatabase.rawQuery(query1, null);
 
         if (cursor.moveToFirst()) {
@@ -492,43 +491,5 @@ public class Database {
         close();
         return null;
     }//======end getAllDailyExpenses()===========
-
-    public ArrayList<ExpenseBean> getAllWeeklyExpenses() {
-        open();
-        ArrayList<ExpenseBean> expenseBean = new ArrayList<>();
-        ExpenseBean temp;
-
-        String query = "SELECT * FROM expense WHERE current_day >= datetime('now', 'weekday 0', '-7 days')";
-
-        //String query = "select * from expense where  current_day >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
-
-        System.out.println("--query in getAllWeeklyExpenses : " + query);
-        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-
-                int id = cursor.getInt(cursor.getColumnIndex("id"));
-                String currency = cursor.getString(cursor.getColumnIndex("expense_currency"));
-                Double amount = cursor.getDouble(cursor.getColumnIndex("expense_amount"));
-                int icon = cursor.getInt(cursor.getColumnIndex("expense_category_icon"));
-                String category_name = cursor.getString(cursor.getColumnIndex("expense_category_name"));
-                String current_day = cursor.getString(cursor.getColumnIndex("current_day"));
-                String expense_description = cursor.getString(cursor.getColumnIndex("expense_description"));
-                String image_path = cursor.getString(cursor.getColumnIndex("image_path"));
-                String color_code = cursor.getString(cursor.getColumnIndex("color_code"));
-
-                temp = new ExpenseBean(id, currency, amount, icon, category_name, current_day, expense_description, image_path, color_code, 1);
-
-                expenseBean.add(temp);
-                temp = null;
-            }
-            while (cursor.moveToNext());
-            close();
-            return expenseBean;
-        }
-        close();
-        return null;
-    }//======end getAllWeeklyExpenses()===========
 
 }

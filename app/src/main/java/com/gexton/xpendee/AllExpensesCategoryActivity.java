@@ -90,22 +90,18 @@ public class AllExpensesCategoryActivity extends AppCompatActivity {
         tv_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("category_bean_id's", "Array List Id's: " + arrayListId.toString());
-                Gson gson = new Gson();
-                String jsonText = gson.toJson(arrayListId);
-                prefsEditor.putString("category_bean_id's", jsonText);
-                prefsEditor.apply();
-                Log.d("category_bean_id's", "Saving Data: Data Saved");
-                Toast.makeText(AllExpensesCategoryActivity.this, "Id's Saved", Toast.LENGTH_SHORT).show();
+                if (arrayListId.size() > 0) {
+                    Log.d("category_bean_id's", "Array List Id's: " + arrayListId.toString());
+                    Gson gson = new Gson();
+                    String jsonText = gson.toJson(arrayListId);
+                    prefsEditor.putString("category_bean_id's", jsonText);
+                    prefsEditor.apply();
+                    Log.d("category_bean_id's", "Saving Data: Data Saved");
+                    Toast.makeText(AllExpensesCategoryActivity.this, "Id's Saved", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(AllExpensesCategoryActivity.this, "Please select category", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-
-        /*Gson gson = new Gson();
-        String jsonText = prefs.getString("category_bean_id's", null);
-        String[] text = gson.fromJson(jsonText, String[].class);
-        if (text.length > 0) {
-            Log.d("category_bean_id's", "Retrieve: "+text);
-        }*/
-
     }
 }

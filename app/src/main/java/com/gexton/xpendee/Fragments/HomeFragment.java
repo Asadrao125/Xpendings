@@ -1,45 +1,31 @@
 package com.gexton.xpendee.Fragments;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.webkit.PermissionRequest;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gexton.xpendee.Adapters.CategoriesListAdapter;
-import com.gexton.xpendee.Adapters.SectionListViewAdapter;
 import com.gexton.xpendee.BuildConfig;
 import com.gexton.xpendee.NewWalletActivity;
 import com.gexton.xpendee.R;
 import com.gexton.xpendee.model.CategoryBean;
-import com.gexton.xpendee.model.DateBean;
 import com.gexton.xpendee.model.ExpenseBean;
 import com.gexton.xpendee.model.WalletBean;
 import com.gexton.xpendee.util.Database;
@@ -59,7 +45,6 @@ import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,8 +67,7 @@ public class HomeFragment extends Fragment {
     ArrayList<BarEntry> listBarEntry = new ArrayList<>();
     ArrayList<CategoryBean> allCatList;
     CardView cardView_pieChart, cardView_barChart;
-    ImageView img_calender;
-    private AlertDialog alertDialog;
+    ImageView imgShare;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -107,42 +91,29 @@ public class HomeFragment extends Fragment {
         barChart = view.findViewById(R.id.barChart);
         cardView_pieChart = view.findViewById(R.id.card_view_pieChart);
         cardView_barChart = view.findViewById(R.id.card_view_barChart);
-        img_calender = view.findViewById(R.id.img_calender);
+        imgShare = view.findViewById(R.id.imgShare);
 
         //Gettiing all categories list
         allCatList = database.getAllCategories(1);
         if (allCatList != null) {
             for (int i = 0; i < allCatList.size(); i++) {
-
                 CategoryBean cb = allCatList.get(i);
                 ArrayList<ExpenseBean> expenseBeansListInThisCat = database.getExpenseByName(cb.categoryName);
                 Log.d("list_by_category_name", "onCreateView: " + expenseBeansListInThisCat);
                 cb.listExpenseBean = expenseBeansListInThisCat;
                 Log.d("list_list_list", "onCreateView: " + cb.listExpenseBean);
-
             }
         }
 
         if (allCatList != null) {
-
             settingPieChart(allCatList);
             settingBarChart(allCatList);
-
             cardView_barChart.setVisibility(View.VISIBLE);
             cardView_pieChart.setVisibility(View.VISIBLE);
-
         } else {
             cardView_barChart.setVisibility(View.GONE);
             cardView_pieChart.setVisibility(View.GONE);
         }
-
-        Log.d("expense_categories", "onCreateView: " + database.getAllExpenseCategories());
-        Log.d("expenses", "onCreateView: " + database.getExpenses());
-
-        Log.d("tag_dates", "onCreateView: " + database.getAllExpensesDates());
-        Log.d("tag_expense", "onCreateView: " + database.getAllExpenses());
-
-        Log.d("expense_bean_list", "onCreateView: " + database.getAllExpenses());
 
         converSionAndSettingData();
 
@@ -152,14 +123,12 @@ public class HomeFragment extends Fragment {
                 startActivity(new Intent(getContext(), NewWalletActivity.class));
             }
         });
-
         static_layout_wallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), NewWalletActivity.class));
             }
         });
-
         btn_add_cash_wallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -174,97 +143,14 @@ public class HomeFragment extends Fragment {
         tv_name.setText(name);
         Picasso.get().load(image).into(profile_image);
 
-        img_calender.setOnClickListener(new View.OnClickListener() {
+        imgShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showFilterDialog();
+                shareIntent();
             }
         });
+
         return view;
-    }
-
-    private void showFilterDialog() {
-        LayoutInflater inflater = LayoutInflater.from(getContext());
-        View v = inflater.inflate(R.layout.dialog_for_filtering_expenses, null);
-
-        CheckBox cbDaily = v.findViewById(R.id.cbDaily);
-        CheckBox cbWeekly = v.findViewById(R.id.cbWeekly);
-        CheckBox cbMonthly = v.findViewById(R.id.cbMonthly);
-        CheckBox cbYearly = v.findViewById(R.id.cbYearly);
-        CheckBox cbAllTime = v.findViewById(R.id.cbAllTime);
-
-        RelativeLayout daily_layout = v.findViewById(R.id.daily_layout);
-        RelativeLayout weekly_layout = v.findViewById(R.id.weekly_layout);
-        RelativeLayout monthly_layout = v.findViewById(R.id.monthly_layout);
-        RelativeLayout yearly_layout = v.findViewById(R.id.yearly_layout);
-        RelativeLayout all_time_layout = v.findViewById(R.id.all_time_layout);
-
-        daily_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (cbDaily.isChecked()) {
-                    cbDaily.setChecked(false);
-                } else {
-                    cbDaily.setChecked(true);
-                }
-            }
-        });
-
-        weekly_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (cbWeekly.isChecked()) {
-                    cbWeekly.setChecked(false);
-                } else {
-                    cbWeekly.setChecked(true);
-                }
-            }
-        });
-
-        monthly_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (cbMonthly.isChecked()) {
-                    cbMonthly.setChecked(false);
-                } else {
-                    cbMonthly.setChecked(true);
-                }
-            }
-        });
-
-        yearly_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (cbYearly.isChecked()) {
-                    cbYearly.setChecked(false);
-                } else {
-                    cbYearly.setChecked(true);
-                }
-            }
-        });
-
-        all_time_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (cbAllTime.isChecked()) {
-                    cbAllTime.setChecked(false);
-                } else {
-                    cbAllTime.setChecked(true);
-                }
-            }
-        });
-
-        alertDialog = new AlertDialog.Builder(getContext()).setView(v).create();
-
-        Window window = alertDialog.getWindow();
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        WindowManager.LayoutParams wlp = window.getAttributes();
-
-        wlp.gravity = Gravity.BOTTOM;
-        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-        window.setAttributes(wlp);
-
-        alertDialog.show();
     }
 
     public void converSionAndSettingData() {
@@ -279,9 +165,7 @@ public class HomeFragment extends Fragment {
             tv_currency.setText(walletBean.currency);
             wallet_complete.setVisibility(View.VISIBLE);
             layout_no_data_found.setVisibility(View.GONE);
-
         } else {
-
             layout_no_data_found.setVisibility(View.VISIBLE);
             wallet_complete.setVisibility(View.GONE);
 
@@ -383,4 +267,17 @@ public class HomeFragment extends Fragment {
         barChart.setPinchZoom(false);
     }
 
+    private void shareIntent() {
+        try {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Xpendee");
+            String shareMessage = "Let me recommend you this application\n\n";
+            shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID;
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+            startActivity(Intent.createChooser(shareIntent, "Please select"));
+        } catch (Exception e) {
+            e.toString();
+        }
+    }
 }
