@@ -33,7 +33,6 @@ public class CategoriesAdapterForSelectCategoryBudget extends RecyclerView.Adapt
     CategoryBean categoryBean;
     ArrayList<CategoryBean> categoryBeanArrayList;
     public int selectedPos = -1;
-    List<CategoryBean> textList;
 
     public CategoriesAdapterForSelectCategoryBudget(Context context, ArrayList<CategoryBean> categoryBeanArrayList) {
         this.context = context;
@@ -61,35 +60,10 @@ public class CategoriesAdapterForSelectCategoryBudget extends RecyclerView.Adapt
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                textList = new ArrayList<CategoryBean>();
-                SharedPreferences.Editor prefsEditor = context.getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
-
                 if (holder.cbCategory.isChecked()) {
                     holder.cbCategory.setChecked(false);
                 } else {
                     holder.cbCategory.setChecked(true);
-                    int id = categoryBeanArrayList.get(position).id;
-                    String name = categoryBeanArrayList.get(position).categoryName;
-                    int categoryIcon = categoryBeanArrayList.get(position).categoryIcon;
-                    String categoryHashCode = categoryBeanArrayList.get(position).categoryHashCode;
-                    int catFlag = categoryBeanArrayList.get(position).catFlag;
-                    Log.d("item_clicked", "onItemClick: " + id + " , " + name);
-                    CategoryBean categoryBean = new CategoryBean(id, name, categoryIcon, categoryHashCode, 1);
-                    textList.add(categoryBean);
-
-                    //Set the values
-                    Gson gson = new Gson();
-                    String jsonText = gson.toJson(textList);
-                    prefsEditor.putString("selected_category_list", jsonText);
-                    prefsEditor.apply();
-
-                    /*//Retrieve the values
-                    SharedPreferences prefs = context.getSharedPreferences("MY_PREFS_NAME", Context.MODE_PRIVATE);
-                    Gson gson1 = new Gson();
-                    String jsonText1 = prefs.getString("selected_category_list", null);
-                    String[] text = gson1.fromJson(jsonText1, String[].class);  //EDIT: gso to gson*/
-
                 }
             }
         });
