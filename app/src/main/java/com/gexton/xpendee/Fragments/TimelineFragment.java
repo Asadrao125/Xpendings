@@ -1,6 +1,5 @@
 package com.gexton.xpendee.Fragments;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -42,10 +41,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class TimelineFragment extends Fragment {
+
     View view;
     LinearLayout listviewLayout;
     ListView sectionListView;
@@ -63,6 +65,9 @@ public class TimelineFragment extends Fragment {
     String filter_value;
     CheckBox cbDaily, cbWeekly, cbMonthly, cbYearly, cbAllTime;
     HorizontalCalendar horizontalCalendar;
+    Calendar defaultSelectedDate;
+    LinearLayout cashflow_layout;
+    View cashflow_layout_border;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,17 +83,26 @@ public class TimelineFragment extends Fragment {
         tvWealth = view.findViewById(R.id.tvWealth);
         expenseBeanArrayList = new ArrayList<>();
         img_calender = view.findViewById(R.id.img_calender);
+        cashflow_layout = view.findViewById(R.id.cashflow_layout);
+        cashflow_layout_border = view.findViewById(R.id.cashflow_layout_border);
         editor = getContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
         prefs = getContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
         filter_value = prefs.getString("filter", "");
 
-        /* end after 1 month from now */
-        Calendar endDate = Calendar.getInstance();
-        endDate.add(Calendar.MONTH, 1);
+        tvDailyCashFlow.setText("$0");
+
+        defaultSelectedDate = Calendar.getInstance();
 
         /* start before 1 month from now */
         Calendar startDate = Calendar.getInstance();
-        startDate.add(Calendar.MONTH, -1);
+        startDate.add(Calendar.MONTH, -2);
+
+        /* end after 1 month from now */
+        Calendar endDate = Calendar.getInstance();
+        endDate.add(Calendar.MONTH, 2);
+
+        Date c = Calendar.getInstance().getTime();
+        System.out.println("Current time => " + c);
 
         horizontalCalendar = new HorizontalCalendar.Builder(view, R.id.calendarView)
                 .range(startDate, endDate)
@@ -98,6 +112,7 @@ public class TimelineFragment extends Fragment {
                 .showBottomText(false)
                 .textSize(/*Top*/14, /*Middle*/16, /*Bottom*/14)
                 .end()
+                .defaultSelectedDate(defaultSelectedDate)
                 .build();
 
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
@@ -105,7 +120,6 @@ public class TimelineFragment extends Fragment {
             public void onDateSelected(Calendar date, int position) {
 
                 String dateNew = DateFormat.format("dd-MM-yyyy", date).toString();
-
                 expenseBeanArrayList = database.getAllDailyExpenses(dateNew);
                 dateBeanArrayList = database.getAllExpensesDates();
                 if (expenseBeanArrayList != null) {
@@ -113,15 +127,21 @@ public class TimelineFragment extends Fragment {
                     sumExpense(expenseBeanArrayList);
                     tvWealth.setText("-$" + sumExpense(expenseBeanArrayList));
 
+                    sectionListView.setVisibility(View.VISIBLE);
+                    no_data_layout.setVisibility(View.GONE);
+                    cashflow_layout.setVisibility(View.VISIBLE);
+                    cashflow_layout_border.setVisibility(View.VISIBLE);
+
                     editor.putString("filter", "daily");
                     editor.apply();
 
                 } else {
-                    Toast.makeText(getContext(), "No Record Found", Toast.LENGTH_SHORT).show();
-                    /*sectionListView.setVisibility(View.GONE);
-                    no_data_layout.setVisibility(View.VISIBLE);*/
+                    cashflow_layout.setVisibility(View.GONE);
+                    sectionListView.setVisibility(View.GONE);
+                    no_data_layout.setVisibility(View.VISIBLE);
+                    cashflow_layout_border.setVisibility(View.GONE);
+                    tvWealth.setText("$0");
                 }
-
             }
 
             @Override
