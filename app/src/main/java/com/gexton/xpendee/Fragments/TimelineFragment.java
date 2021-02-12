@@ -120,6 +120,7 @@ public class TimelineFragment extends Fragment {
                 if (expenseBeanArrayList != null) {
                     sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, dateBeanArrayList, getContext()));
                     tvWealth.setText("-$" + sumExpense(expenseBeanArrayList));
+                    tvDailyCashFlow.setText("$" + sumIncome(database.getAllIncome(2)));
 
                     sectionListView.setVisibility(View.VISIBLE);
                     no_data_layout.setVisibility(View.GONE);
@@ -132,6 +133,7 @@ public class TimelineFragment extends Fragment {
                     no_data_layout.setVisibility(View.VISIBLE);
                     cashflow_layout_border.setVisibility(View.GONE);
                     tvWealth.setText("$0");
+                    tvDailyCashFlow.setText("$0");
                 }
             }
 
@@ -156,6 +158,7 @@ public class TimelineFragment extends Fragment {
                     sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, dateBeanArrayList, getContext()));
                     sumExpense(expenseBeanArrayList);
                     tvWealth.setText("-$" + sumExpense(expenseBeanArrayList));
+                    tvDailyCashFlow.setText("$" + sumIncome(database.getAllIncome(2)));
                 }
                 //Toast.makeText(getContext(), "" + filter_value, Toast.LENGTH_SHORT).show();
             }
@@ -230,6 +233,7 @@ public class TimelineFragment extends Fragment {
             if (expenseBeanArrayList != null) {
                 Log.d("sum_of_expenses", "onCreateView: " + sumExpense(expenseBeanArrayList));
                 tvWealth.setText("-$" + sumExpense(expenseBeanArrayList));
+                tvDailyCashFlow.setText("$" + sumIncome(database.getAllIncome(2)));
             }
         } else {
             no_data_layout.setVisibility(View.VISIBLE);
@@ -243,6 +247,7 @@ public class TimelineFragment extends Fragment {
         if (expenseBeanArrayList.size() > 0 && database.getAllIncome(2).size() > 0) {
             Log.d("sum_of_expenses", "onCreateView: " + sumExpense(expenseBeanArrayList));
             tvWealth.setText("-$" + sumExpense(expenseBeanArrayList));
+            tvDailyCashFlow.setText("$" + sumIncome(database.getAllIncome(2)));
             getFilterSelection();
         }
     }
@@ -328,6 +333,7 @@ public class TimelineFragment extends Fragment {
                         sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, dateBeanArrayList, getContext()));
                         sumExpense(expenseBeanArrayList);
                         tvWealth.setText("-$" + sumExpense(expenseBeanArrayList));
+                        tvDailyCashFlow.setText("$" + sumIncome(database.getAllIncome(2)));
 
                         editor.putString("filter", "daily");
                         editor.apply();
@@ -454,13 +460,14 @@ public class TimelineFragment extends Fragment {
                     sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, dateBeanArrayList, getContext()));
                     sumExpense(expenseBeanArrayList);
                     tvWealth.setText("-$" + sumExpense(expenseBeanArrayList));
+                    tvDailyCashFlow.setText("$" + sumIncome(database.getAllIncome(2)));
                 }
-                Toast.makeText(getContext(), "" + filter_value, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "" + filter_value, Toast.LENGTH_SHORT).show();
             }
 
             if (filter_value.equals("all_time")) {
                 horizontalCalendar.getCalendarView().setVisibility(View.GONE);
-                Toast.makeText(getContext(), "" + filter_value, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "" + filter_value, Toast.LENGTH_SHORT).show();
                 settingAddapter();
             }
         }

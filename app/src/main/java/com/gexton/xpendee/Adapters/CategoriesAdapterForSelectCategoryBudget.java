@@ -33,6 +33,7 @@ public class CategoriesAdapterForSelectCategoryBudget extends RecyclerView.Adapt
     CategoryBean categoryBean;
     ArrayList<CategoryBean> categoryBeanArrayList;
     public int selectedPos = -1;
+    ArrayList<String> listIds;
 
     public CategoriesAdapterForSelectCategoryBudget(Context context, ArrayList<CategoryBean> categoryBeanArrayList) {
         this.context = context;
@@ -67,6 +68,24 @@ public class CategoriesAdapterForSelectCategoryBudget extends RecyclerView.Adapt
                 }
             }
         });
+
+        listIds = new ArrayList<>();
+
+        SharedPreferences prefs = context.getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String jsonText = prefs.getString("category_bean_id's", null);
+        String[] text = gson.fromJson(jsonText, String[].class);
+
+        /*for (int i = 0; i < text.length; i++) {
+            Toast.makeText(context, "" + text[i], Toast.LENGTH_SHORT).show();
+            int n = Integer.parseInt(text[i]);
+            if (n == categoryBeanArrayList.get(i).id) {
+                holder.cbCategory.setChecked(true);
+            } else {
+                holder.cbCategory.setChecked(false);
+            }
+        }*/
+
     }
 
     @Override

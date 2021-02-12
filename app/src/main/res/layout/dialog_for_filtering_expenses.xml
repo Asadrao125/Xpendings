@@ -40,6 +40,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/weekly_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,6 +66,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/monthly_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,6 +92,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/yearly_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
