@@ -1,5 +1,6 @@
 package com.gexton.xpendee.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -78,6 +79,7 @@ public class SectionListViewAdapter extends BaseAdapter {
         return i;
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null) {
@@ -94,7 +96,6 @@ public class SectionListViewAdapter extends BaseAdapter {
         switch (getItemViewType(i)) {
             case ITEM:
                 ImageView image_view = view.findViewById(R.id.image_view);
-                TextView tv_image_path = view.findViewById(R.id.tv_image_path);
                 TextView tv_expense_amount = view.findViewById(R.id.tv_expense_amount);
                 TextView tv_catName = view.findViewById(R.id.tv_catName);
                 TextView tv_description = view.findViewById(R.id.tv_description);
@@ -105,12 +106,19 @@ public class SectionListViewAdapter extends BaseAdapter {
 
                 String val = String.valueOf(((ExpenseBean) list.get(i)).expense);
 
-                tv_expense_amount.setText("PKR " + val);
+                //tv_expense_amount.setText("PKR " + val);
                 tv_catName.setText((list.get(i)).categoryName);
                 tv_description.setText((list.get(i)).description);
-                tv_image_path.setText((list.get(i)).imagePath);
                 image_view.setImageResource((list.get(i)).categoryIcon);
                 tv_date.setText((list.get(i)).currentDay);
+
+                if (list.get(i).flag == 1 /*Expense*/) {
+                    tv_expense_amount.setTextColor(Color.parseColor("#FF0000"));
+                    tv_expense_amount.setText("-PKR " + val);
+                } else if (list.get(i).flag == 2 /*Income*/) {
+                    tv_expense_amount.setTextColor(Color.parseColor("#24b554"));
+                    tv_expense_amount.setText("+PKR " + val);
+                }
 
                 if (!TextUtils.isEmpty((list.get(i)).colorCode)) {
                     GradientDrawable background = (GradientDrawable) lay1.getBackground();
@@ -121,7 +129,6 @@ public class SectionListViewAdapter extends BaseAdapter {
                 try {
                     if (TextUtils.isEmpty(list.get(i).imagePath)) {
                         image_path.setVisibility(View.GONE);
-                        //cvImage.setVisibility(View.GONE);
                     } else {
                         File file = new File(list.get(i).imagePath);
                         Picasso.get().load(file).into(image_path);

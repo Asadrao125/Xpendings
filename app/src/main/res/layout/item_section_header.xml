@@ -54,25 +54,12 @@
             <!--android:layout_centerVertical="true"-->
 
             <TextView
-                android:id="@+id/tv_image_path"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:layout_toEndOf="@+id/tv_expense_amount"
-                android:gravity="end"
-                android:text="image path"
-                android:visibility="gone" />
-
-            <TextView
                 android:id="@+id/tv_expense_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_catName"
                 android:layout_marginTop="5dp"
-                android:text="PKR -150"
-                android:textColor="@android:color/holo_red_dark" />
+                android:text="PKR -150" />
 
             <TextView
                 android:id="@+id/tv_description"

@@ -56,7 +56,7 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     public static ImageView img_1, img_2, img_3, img_4, img_5, img_6;
     public static String img_path1, img_path2, img_path3, img_path4, img_path5, img_path6;
-    String image_path, current_date, description, currency = "PKR", date, catName, color_code, user_selected_date, colorHex;
+    String image_path, current_date, description, currency = "PKR", date, catName, color_code, user_selected_date;
     RelativeLayout current_day_layout, select_image_layout, no_data_layout;
     EditText edt_description, edt_balance;
     int categoryIcon;
@@ -68,6 +68,8 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
     int pos;
     String expenseDate;
     TextView tvDelete;
+    String val;
+    TextView tvToolBarTitle, tv_expense;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,8 +104,10 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
         myCalendar = Calendar.getInstance();
         img_camera = findViewById(R.id.img_camera);
         tvDelete = findViewById(R.id.tvDelete);
+        val = getIntent().getStringExtra("val");
+        tvToolBarTitle = findViewById(R.id.tvToolBarTitle);
+        tv_expense = findViewById(R.id.tv_expense);
 
-        //Getting listview position from timeline fragmnet
         pos = getIntent().getIntExtra("position", 10000);
         Log.d("position", "onCreate: " + pos);
         TimelineFragment timelineFragment = new TimelineFragment();
@@ -194,8 +198,25 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
 
         categoryBeanArrayList = new ArrayList<>();
 
-        if (database.getAllCategories(1) != null) {
-            categoryBeanArrayList = database.getAllCategories(1);
+        if (val.equals("exp")) {
+            if (database.getAllCategories(1).size() > 0) {
+                //Toast.makeText(this, "EXP", Toast.LENGTH_SHORT).show();
+                categoryBeanArrayList = database.getAllCategories(1);
+                tvToolBarTitle.setText("Edit Expense");
+                tv_expense.setText("Expense");
+            }
+
+        } else if (val.equals("inc")) {
+            if (database.getAllCategories(2).size() > 0) {
+                //Toast.makeText(this, "INC", Toast.LENGTH_SHORT).show();
+                categoryBeanArrayList = database.getAllCategories(2);
+                tvToolBarTitle.setText("Edit Income");
+                tv_expense.setText("Income");
+            }
+        }
+
+        if (database.getAllCategories(1).size() > 0 && database.getAllCategories(1).size() > 0) {
+            //categoryBeanArrayList = database.getAllCategories(1);
             adapter = new CategoriesAdapterForExpense(this, categoryBeanArrayList);
             rvCategories.setAdapter(adapter);
             rvCategories.setVisibility(View.VISIBLE);
@@ -221,7 +242,7 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
                 catName = categoryBeanArrayList.get(position).categoryName;
                 categoryIcon = categoryBeanArrayList.get(position).categoryIcon;
                 color_code = categoryBeanArrayList.get(position).categoryHashCode;
-                colorHex = color_code;
+                //colorHex = color_code;
 
                 adapter.selectedPos = position;
                 adapter.notifyDataSetChanged();
@@ -266,9 +287,9 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
                     expense_amount = Double.parseDouble(expense);
 
                     if (expense_amount == exp_amt) {
-                        Toast.makeText(UpdateOrDeleteExpense.this, "" + currency + "\n" + expense_amount + "\n" + categoryIcon + "\n" + catName + "\n" + color_code, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(UpdateOrDeleteExpense.this, "" + currency + "\n" + expense_amount + "\n" + categoryIcon + "\n" + catName + "\n" + color_code, Toast.LENGTH_SHORT).show();
                         ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
-                                catName, user_selected_date, description, image_path, colorHex, 1);
+                                catName, user_selected_date, description, image_path, color_code, flag);
                         database.updateExpense(expenseBean, id);
 
                         onBackPressed();
@@ -286,7 +307,7 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
                         editor.apply();
 
                         ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
-                                catName, user_selected_date, description, image_path, colorHex, 1);
+                                catName, user_selected_date, description, image_path, color_code, 1);
                         database.updateExpense(expenseBean, id);
 
                         onBackPressed();
@@ -304,7 +325,7 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
                         editor.apply();
 
                         ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
-                                catName, user_selected_date, description, image_path, colorHex, 1);
+                                catName, user_selected_date, description, image_path, color_code, 1);
                         database.updateExpense(expenseBean, id);
 
                         onBackPressed();

@@ -211,9 +211,7 @@ public class AddExpenseActivity extends AppCompatActivity {
                     Toast.makeText(AddExpenseActivity.this, "Please enter date", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(description)) {
                     Toast.makeText(AddExpenseActivity.this, "Please enter description", Toast.LENGTH_SHORT).show();
-                }/* else if (TextUtils.isEmpty(image_path)) {
-                    Toast.makeText(AddExpenseActivity.this, "Please select image", Toast.LENGTH_SHORT).show();
-                }*/ else {
+                } else {
 
                     SharedPreferences prefs1 = getApplicationContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
                     String json = prefs1.getString("Wallet_Bean", "");
@@ -227,12 +225,14 @@ public class AddExpenseActivity extends AppCompatActivity {
                     expense_amount = Double.parseDouble(expense);
                     Double newBalance = balance - expense_amount;
                     if (walletBean.balance >= expense_amount) {
-                        Toast.makeText(AddExpenseActivity.this, "" + currency + "\n" + expense_amount + "\n" + categoryIcon + "\n" + catName + "\n" + color_code, Toast.LENGTH_SHORT).show();
+                        /*Toast.makeText(AddExpenseActivity.this, "" + currency + "\n" + expense_amount
+                                + "\n" + categoryIcon + "\n" + catName + "\n" + color_code, Toast.LENGTH_SHORT).show();*/
                         ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
                                 catName, user_selected_date, description, image_path, colorHex, 1);
-                        Toast.makeText(AddExpenseActivity.this, "Expense Added ! " + database.insertExpense(expenseBean), Toast.LENGTH_SHORT).show();
+                        database.insertExpense(expenseBean);
+                        Toast.makeText(AddExpenseActivity.this, "Expense Added ! " /*+ database.insertExpense(expenseBean)*/, Toast.LENGTH_SHORT).show();
 
-                        Toast.makeText(AddExpenseActivity.this, "Your new wallet amount is " + newBalance, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(AddExpenseActivity.this, "Your new wallet amount is " + newBalance, Toast.LENGTH_SHORT).show();
 
                         WalletBean newWalletBean = new WalletBean(newBalance, walletName, currency);
 
@@ -468,7 +468,6 @@ public class AddExpenseActivity extends AppCompatActivity {
 
         File file6 = new File(img_path6);
         Picasso.get().load(file6).into(img_6);
-        //
 
         Log.e("fatch in", "images");
         return galleryImageUrls;

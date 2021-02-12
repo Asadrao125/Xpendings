@@ -14,11 +14,13 @@
 
     <color name="splash_background_color">#f5fcfc</color>
     <color name="light_grey">#e3e5eb</color>
-    <color name="green">#24b554</color>
     <color name="dark_grey">#909090</color>
     <color name="fab_background_color">#607aae</color>
 
     <color name="transparent_green">#a5ffb7</color>
     <color name="dark_green">#0f992a</color>
+
+    <color name="red">#FF0000</color>
+    <color name="green">#24b554</color>
 
 </resources>
