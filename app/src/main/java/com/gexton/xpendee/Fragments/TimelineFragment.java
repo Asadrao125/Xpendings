@@ -225,7 +225,7 @@ public class TimelineFragment extends Fragment {
             Log.d("sum_of_expenses", "onCreateView: " + sumExpense(expenseBeanArrayList));
             tvWealth.setText("-$" + sumExpense(expenseBeanArrayList));
             tvDailyCashFlow.setText("$" + sumIncome(database.getAllIncome(2)));
-            getFilterSelection();
+            //getFilterSelection();
         }
     }
 
