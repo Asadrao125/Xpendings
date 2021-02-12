@@ -59,9 +59,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         AppEventsLogger.activateApp(getApplication());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.white, this.getTheme()));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.navy_blue, this.getTheme()));
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.black));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.navy_blue));
         }
 
         iv_google.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +74,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         iv_fb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //startActivity(new Intent(getApplicationContext(), DashbordActivity.class));
                 fbLogin2();
             }
         });
@@ -92,7 +91,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         String name = prefs.getString("name", "No name defined");
 
         if (name.equals("") || name.equals("No name defined")) {
-            Toast.makeText(this, "No Signed In User. Please Sign In", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please Sign In", Toast.LENGTH_SHORT).show();
         } else {
             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
             finish();
@@ -140,6 +139,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                 Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(intent);
+                finish();
 
                 mGoogleApiClient.disconnect();
             }
@@ -202,6 +202,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                                             startActivity(intent);
+                                            finish();
 
                                             LoginManager loginManager = LoginManager.getInstance();
                                             loginManager.logOut();

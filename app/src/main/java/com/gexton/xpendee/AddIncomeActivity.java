@@ -102,6 +102,13 @@ public class AddIncomeActivity extends AppCompatActivity {
         myCalendar = Calendar.getInstance();
         img_camera = findViewById(R.id.img_camera);
 
+        img_cross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
         Date d = new Date();
         String dayOfTheWeek = sdf.format(d);
@@ -277,8 +284,85 @@ public class AddIncomeActivity extends AppCompatActivity {
             }
         });
 
-        fetchGalleryImages(AddIncomeActivity.this);
+        img_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                img_1.setBackgroundResource(R.drawable.square_shape);
+                img_2.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_3.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_4.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_5.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_6.setBackgroundResource(R.drawable.cirrcle_empty);
+                image_path = img_path1;
+            }
+        });
 
+        img_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                img_1.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_2.setBackgroundResource(R.drawable.square_shape);
+                img_3.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_4.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_5.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_6.setBackgroundResource(R.drawable.cirrcle_empty);
+                image_path = img_path2;
+            }
+        });
+
+        img_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                img_1.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_2.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_3.setBackgroundResource(R.drawable.square_shape);
+                img_4.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_5.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_6.setBackgroundResource(R.drawable.cirrcle_empty);
+                image_path = img_path3;
+            }
+        });
+
+        img_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                img_1.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_2.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_3.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_4.setBackgroundResource(R.drawable.square_shape);
+                img_5.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_6.setBackgroundResource(R.drawable.cirrcle_empty);
+                image_path = img_path4;
+            }
+        });
+
+        img_5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                img_1.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_2.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_3.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_4.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_5.setBackgroundResource(R.drawable.square_shape);
+                img_6.setBackgroundResource(R.drawable.cirrcle_empty);
+                image_path = img_path5;
+            }
+        });
+
+        img_6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                img_1.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_2.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_3.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_4.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_5.setBackgroundResource(R.drawable.cirrcle_empty);
+                img_6.setBackgroundResource(R.drawable.square_shape);
+                image_path = img_path6;
+            }
+        });
+
+        fetchGalleryImages(AddIncomeActivity.this);
     }
 
     @Override
@@ -344,33 +428,37 @@ public class AddIncomeActivity extends AppCompatActivity {
             galleryImageUrls.add(imagecursor.getString(dataColumnIndex));//get Image from column index
         }
 
-        //Getting 6 gallery images
-        img_path1 = galleryImageUrls.get(0);
-        img_path2 = galleryImageUrls.get(1);
-        img_path3 = galleryImageUrls.get(2);
-        img_path4 = galleryImageUrls.get(3);
-        img_path5 = galleryImageUrls.get(4);
-        img_path6 = galleryImageUrls.get(5);
 
-        File file1 = new File(img_path1);
-        Picasso.get().load(file1).into(img_1);
+        if (galleryImageUrls.size() > 0 && galleryImageUrls != null) {
+            //Getting 6 gallery images
+            img_path1 = galleryImageUrls.get(0);
+            img_path2 = galleryImageUrls.get(1);
+            img_path3 = galleryImageUrls.get(2);
+            img_path4 = galleryImageUrls.get(3);
+            img_path5 = galleryImageUrls.get(4);
+            img_path6 = galleryImageUrls.get(5);
 
-        File file2 = new File(img_path2);
-        Picasso.get().load(file2).into(img_2);
+            File file1 = new File(img_path1);
+            Picasso.get().load(file1).into(img_1);
 
-        File file3 = new File(img_path3);
-        Picasso.get().load(file3).into(img_3);
+            File file2 = new File(img_path2);
+            Picasso.get().load(file2).into(img_2);
 
-        File file4 = new File(img_path4);
-        Picasso.get().load(file4).into(img_4);
+            File file3 = new File(img_path3);
+            Picasso.get().load(file3).into(img_3);
 
-        File file5 = new File(img_path5);
-        Picasso.get().load(file5).into(img_5);
+            File file4 = new File(img_path4);
+            Picasso.get().load(file4).into(img_4);
 
-        File file6 = new File(img_path6);
-        Picasso.get().load(file6).into(img_6);
+            File file5 = new File(img_path5);
+            Picasso.get().load(file5).into(img_5);
 
-        Log.e("fatch_in", "images: " + galleryImageUrls);
+            File file6 = new File(img_path6);
+            Picasso.get().load(file6).into(img_6);
+
+            Log.e("fatch_in", "images: " + galleryImageUrls);
+        }
+
         return galleryImageUrls;
     }
 

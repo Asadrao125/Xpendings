@@ -41,7 +41,6 @@ public class SectionListViewAdapter extends BaseAdapter {
     private static final int ITEM = 0;
     private static final int HEADER = 1;
     LayoutInflater inflater;
-    String stringPath;
 
     public SectionListViewAdapter(ArrayList<ExpenseBean> list, ArrayList<String> dateList, Context context) {
         this.list = list;
@@ -106,7 +105,6 @@ public class SectionListViewAdapter extends BaseAdapter {
 
                 String val = String.valueOf(((ExpenseBean) list.get(i)).expense);
 
-                //tv_expense_amount.setText("PKR " + val);
                 tv_catName.setText((list.get(i)).categoryName);
                 tv_description.setText((list.get(i)).description);
                 image_view.setImageResource((list.get(i)).categoryIcon);
@@ -129,10 +127,11 @@ public class SectionListViewAdapter extends BaseAdapter {
                 try {
                     if (TextUtils.isEmpty(list.get(i).imagePath)) {
                         image_path.setVisibility(View.GONE);
+                        cvImage.setVisibility(View.GONE);
                     } else {
                         File file = new File(list.get(i).imagePath);
                         Picasso.get().load(file).into(image_path);
-                        System.out.println("-- file path " + file.getAbsolutePath());
+                        cvImage.setVisibility(View.VISIBLE);
                         image_path.setVisibility(View.VISIBLE);
                     }
 

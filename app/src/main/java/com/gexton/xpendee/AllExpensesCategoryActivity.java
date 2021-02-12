@@ -36,6 +36,7 @@ public class AllExpensesCategoryActivity extends AppCompatActivity {
     SharedPreferences.Editor prefsEditor;
     ArrayList<String> arrayListId;
     SharedPreferences prefs;
+    TextView no_category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class AllExpensesCategoryActivity extends AppCompatActivity {
         rvCategories = findViewById(R.id.rvCategories);
         database = new Database(getApplicationContext());
         arrayListId = new ArrayList<>();
+        no_category = findViewById(R.id.no_category);
         prefsEditor = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
         prefs = getApplicationContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
 
@@ -62,6 +64,16 @@ public class AllExpensesCategoryActivity extends AppCompatActivity {
             categoryBeanArrayList = database.getAllCategories(1);
             adapter = new CategoriesAdapterForSelectCategoryBudget(this, categoryBeanArrayList);
             rvCategories.setAdapter(adapter);
+            rvCategories.setVisibility(View.VISIBLE);
+        } else {
+            rvCategories.setVisibility(View.GONE);
+        }
+
+        if (categoryBeanArrayList != null) {
+            rvCategories.setVisibility(View.GONE);
+            no_category.setVisibility(View.GONE);
+        } else {
+            no_category.setVisibility(View.VISIBLE);
             rvCategories.setVisibility(View.VISIBLE);
         }
 

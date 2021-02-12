@@ -72,7 +72,7 @@
 
                 <!--app:selectedDateBackground="@drawable/shape_drawable_calender"-->
                <devs.mulham.horizontalcalendar.HorizontalCalendarView
-                   android:visibility="visible"
+                   android:visibility="gone"
                    android:id="@+id/calendarView"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
@@ -81,6 +81,7 @@
                    app:textColorSelected="@android:color/white" />
 
                <LinearLayout
+                   android:visibility="gone"
                    android:padding="10dp"
                    android:baselineAligned="false"
                    android:weightSum="3"
@@ -107,7 +108,7 @@
                        <TextView
                            android:id="@+id/tvWealth"
                            android:layout_marginBottom="5dp"
-                           android:text="1500"
+                           android:text="-$0"
                            android:textSize="15sp"
                            android:layout_marginTop="5dp"
                            android:textColor="@android:color/holo_red_light"
@@ -161,6 +162,7 @@
                </LinearLayout>
 
                <View
+                   android:visibility="gone"
                    android:id="@+id/cashflow_layout_border"
                    android:layout_width="match_parent"
                    android:layout_height="10px"
