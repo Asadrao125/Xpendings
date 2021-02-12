@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.gexton.xpendee.Adapters.SectionListViewAdapter;
 import com.gexton.xpendee.AddExpenseActivity;
+import com.gexton.xpendee.HomeActivity;
 import com.gexton.xpendee.R;
 import com.gexton.xpendee.UpdateOrDeleteExpense;
 import com.gexton.xpendee.model.ExpenseBean;
@@ -160,12 +161,10 @@ public class TimelineFragment extends Fragment {
                     tvWealth.setText("-$" + sumExpense(expenseBeanArrayList));
                     tvDailyCashFlow.setText("$" + sumIncome(database.getAllIncome(2)));
                 }
-                //Toast.makeText(getContext(), "" + filter_value, Toast.LENGTH_SHORT).show();
             }
 
             if (filter_value.equals("all_time")) {
                 horizontalCalendar.getCalendarView().setVisibility(View.GONE);
-                //Toast.makeText(getContext(), "" + filter_value, Toast.LENGTH_SHORT).show();
                 settingAddapter();
             }
         }
@@ -200,27 +199,6 @@ public class TimelineFragment extends Fragment {
             }
         });
 
-        /* if (!TextUtils.isEmpty(filter_value)) {
-            if (filter_value.equals("daily")) {
-                horizontalCalendar.getCalendarView().setVisibility(View.VISIBLE);
-                String formattedDate = new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime());
-                expenseBeanArrayList = database.getAllDailyExpenses(formattedDate);
-                dateBeanArrayList = database.getAllExpensesDates();
-                if (expenseBeanArrayList != null) {
-                    sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, dateBeanArrayList, getContext()));
-                    sumExpense(expenseBeanArrayList);
-                    tvWealth.setText("-$" + sumExpense(expenseBeanArrayList));
-                }
-                Toast.makeText(getContext(), "" + filter_value, Toast.LENGTH_SHORT).show();
-            }
-
-            if (filter_value.equals("all_time")) {
-                horizontalCalendar.getCalendarView().setVisibility(View.GONE);
-                Toast.makeText(getContext(), "" + filter_value, Toast.LENGTH_SHORT).show();
-                settingAddapter();
-            }
-        }*/
-
         return view;
     }
 
@@ -243,7 +221,6 @@ public class TimelineFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
         if (expenseBeanArrayList.size() > 0 && database.getAllIncome(2).size() > 0) {
             Log.d("sum_of_expenses", "onCreateView: " + sumExpense(expenseBeanArrayList));
             tvWealth.setText("-$" + sumExpense(expenseBeanArrayList));
@@ -298,8 +275,6 @@ public class TimelineFragment extends Fragment {
             }
         }
 
-        //getFilterStatus();
-
         RelativeLayout daily_layout = v.findViewById(R.id.daily_layout);
         RelativeLayout weekly_layout = v.findViewById(R.id.weekly_layout);
         RelativeLayout monthly_layout = v.findViewById(R.id.monthly_layout);
@@ -339,6 +314,9 @@ public class TimelineFragment extends Fragment {
                         editor.apply();
 
                         horizontalCalendar.getCalendarView().setVisibility(View.VISIBLE);
+
+                        startActivity(new Intent(getContext(), HomeActivity.class));
+                        getActivity().finish();
 
                     } else {
                         Toast.makeText(getContext(), "No Record Found", Toast.LENGTH_SHORT).show();
@@ -413,13 +391,13 @@ public class TimelineFragment extends Fragment {
                     editor.apply();
                     settingAddapter();
                     horizontalCalendar.getCalendarView().setVisibility(View.GONE);
+                    startActivity(new Intent(getContext(), HomeActivity.class));
+                    getActivity().finish();
                 }
             }
         });
 
         alertDialog = new AlertDialog.Builder(getContext()).setView(v).create();
-
-        //getFilterStatus();
 
         Window window = alertDialog.getWindow();
         WindowManager.LayoutParams wlp = window.getAttributes();
@@ -462,12 +440,10 @@ public class TimelineFragment extends Fragment {
                     tvWealth.setText("-$" + sumExpense(expenseBeanArrayList));
                     tvDailyCashFlow.setText("$" + sumIncome(database.getAllIncome(2)));
                 }
-                //Toast.makeText(getContext(), "" + filter_value, Toast.LENGTH_SHORT).show();
             }
 
             if (filter_value.equals("all_time")) {
                 horizontalCalendar.getCalendarView().setVisibility(View.GONE);
-                //Toast.makeText(getContext(), "" + filter_value, Toast.LENGTH_SHORT).show();
                 settingAddapter();
             }
         }
