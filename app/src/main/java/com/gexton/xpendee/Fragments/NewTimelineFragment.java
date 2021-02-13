@@ -164,6 +164,23 @@ public class NewTimelineFragment extends Fragment {
                     fab_add_expense.setVisibility(View.VISIBLE);
                     horizontalCalendar.getCalendarView().setVisibility(View.VISIBLE);
                     sectionListView.setVisibility(View.VISIBLE);
+
+                    if (database.getAllDailyExpenses(currentDate) != null) {
+                        expenseBeanArrayList = database.getAllDailyExpenses(currentDate);
+                        sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, getContext()));
+                        sectionListView.setVisibility(View.VISIBLE);
+                        cashflow_layout.setVisibility(View.VISIBLE);
+                        tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
+                        tvDailyCashFlow.setText("$ " + sumIncome(expenseBeanArrayList));
+                        horizontalCalendar.getCalendarView().setVisibility(View.VISIBLE);
+                        no_data_layout.setVisibility(View.GONE);
+                    } else {
+                        no_data_layout.setVisibility(View.VISIBLE);
+                        sectionListView.setVisibility(View.GONE);
+                        cashflow_layout.setVisibility(View.GONE);
+                        horizontalCalendar.getCalendarView().setVisibility(View.GONE);
+                    }
+
                 }
             }
         });
@@ -182,6 +199,21 @@ public class NewTimelineFragment extends Fragment {
                     fab_add_expense.setVisibility(View.VISIBLE);
                     horizontalCalendar.getCalendarView().setVisibility(View.GONE);
                     sectionListView.setVisibility(View.VISIBLE);
+
+                    horizontalCalendar.getCalendarView().setVisibility(View.GONE);
+                    if (database.getAllExpenses() != null) {
+                        expenseBeanArrayList = database.getAllExpenses();
+                        sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, getContext()));
+                        sectionListView.setVisibility(View.VISIBLE);
+                        cashflow_layout.setVisibility(View.VISIBLE);
+                        tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
+                        tvDailyCashFlow.setText("$ " + sumIncome(expenseBeanArrayList));
+                        no_data_layout.setVisibility(View.GONE);
+                    } else {
+                        no_data_layout.setVisibility(View.VISIBLE);
+                        sectionListView.setVisibility(View.GONE);
+                        cashflow_layout.setVisibility(View.GONE);
+                    }
                 }
             }
         });
@@ -274,7 +306,7 @@ public class NewTimelineFragment extends Fragment {
 
             horizontalCalendar.getCalendarView().setVisibility(View.GONE);
             if (database.getAllExpenses() != null) {
-                expenseBeanArrayList = database.getAllDailyExpenses(currentDate);
+                expenseBeanArrayList = database.getAllExpenses();
                 sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, getContext()));
                 sectionListView.setVisibility(View.VISIBLE);
                 cashflow_layout.setVisibility(View.VISIBLE);
@@ -318,7 +350,7 @@ public class NewTimelineFragment extends Fragment {
         } else if (!TextUtils.isEmpty(filter_value) && filter_value.equals("all_time")) {
             horizontalCalendar.getCalendarView().setVisibility(View.GONE);
             if (database.getAllExpenses() != null) {
-                expenseBeanArrayList = database.getAllDailyExpenses(currentDate);
+                expenseBeanArrayList = database.getAllExpenses();
                 sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, getContext()));
                 sectionListView.setVisibility(View.VISIBLE);
                 cashflow_layout.setVisibility(View.VISIBLE);
