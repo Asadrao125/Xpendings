@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gexton.xpendee.Adapters.CategoriesAdapterForExpense;
+import com.gexton.xpendee.Fragments.NewTimelineFragment;
 import com.gexton.xpendee.Fragments.TimelineFragment;
 import com.gexton.xpendee.model.CategoryBean;
 import com.gexton.xpendee.model.ExpenseBean;
@@ -110,7 +111,7 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
 
         pos = getIntent().getIntExtra("position", 10000);
         Log.d("position", "onCreate: " + pos);
-        TimelineFragment timelineFragment = new TimelineFragment();
+        NewTimelineFragment timelineFragment = new NewTimelineFragment();
         image_path = timelineFragment.expenseBeanArrayList.get(pos).imagePath;
         catName = timelineFragment.expenseBeanArrayList.get(pos).categoryName;
         color_code = timelineFragment.expenseBeanArrayList.get(pos).colorCode;
@@ -465,8 +466,10 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
         img_path5 = galleryImageUrls.get(4);
         img_path6 = galleryImageUrls.get(5);
 
-        /*File file1 = new File(img_path1);
-        Picasso.get().load(file1).into(img_1);*/
+        if (TextUtils.isEmpty(image_path)) {
+            File file1 = new File(img_path1);
+            Picasso.get().load(file1).into(img_1);
+        }
 
         File file2 = new File(img_path2);
         Picasso.get().load(file2).into(img_2);

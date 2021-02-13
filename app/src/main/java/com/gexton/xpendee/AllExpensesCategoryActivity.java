@@ -1,6 +1,7 @@
 package com.gexton.xpendee;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -61,20 +62,17 @@ public class AllExpensesCategoryActivity extends AppCompatActivity {
         rvCategories.setLayoutManager(mLayoutManagerRVBP);
 
         if (database.getAllCategories(1) != null) {
+
+            Log.d("categories_list", "onCreate: " + database.getAllCategories(1));
             categoryBeanArrayList = database.getAllCategories(1);
             adapter = new CategoriesAdapterForSelectCategoryBudget(this, categoryBeanArrayList);
             rvCategories.setAdapter(adapter);
             rvCategories.setVisibility(View.VISIBLE);
-        } else {
-            rvCategories.setVisibility(View.GONE);
-        }
-
-        if (categoryBeanArrayList != null) {
-            rvCategories.setVisibility(View.GONE);
             no_category.setVisibility(View.GONE);
+
         } else {
+            rvCategories.setVisibility(View.GONE);
             no_category.setVisibility(View.VISIBLE);
-            rvCategories.setVisibility(View.VISIBLE);
         }
 
         rvCategories.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(),
@@ -91,6 +89,8 @@ public class AllExpensesCategoryActivity extends AppCompatActivity {
                 System.out.println("-- item long press pos: " + position);
             }
         }));
+
+        rvCategories.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
 
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +109,7 @@ public class AllExpensesCategoryActivity extends AppCompatActivity {
                     prefsEditor.putString("category_bean_id's", jsonText);
                     prefsEditor.apply();
                     Log.d("category_bean_id's", "Saving Data: Data Saved");
-                    Toast.makeText(AllExpensesCategoryActivity.this, "Id's Saved", Toast.LENGTH_SHORT).show();
+                    onBackPressed();
                 } else {
                     Toast.makeText(AllExpensesCategoryActivity.this, "Please select category", Toast.LENGTH_SHORT).show();
                 }

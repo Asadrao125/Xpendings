@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,8 +34,7 @@ public class ExpenceFragment extends Fragment {
     RelativeLayout no_data_layout;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_expence, container, false);
         tv_add_category = view.findViewById(R.id.tv_add_category);
@@ -80,6 +80,8 @@ public class ExpenceFragment extends Fragment {
             }
         }));
 
+        rvCategories.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+
         tv_add_category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,13 +90,14 @@ public class ExpenceFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (database.getAllCategories(2) != null) {
+        if (database.getAllCategories(1) != null) {
             categoryBeanArrayList = database.getAllCategories(1);
             adapter = new CategoriesListAdapter(getContext(), categoryBeanArrayList);
             rvCategories.setAdapter(adapter);

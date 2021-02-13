@@ -8,6 +8,7 @@ import android.Manifest;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.gexton.xpendee.Adapters.ViewPagerAdapter;
@@ -106,15 +107,17 @@ public class HomeActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         permissionCheck();
-        if (indexVal >= 0) {
-            if (indexVal == 1) {
-                viewPager.setCurrentItem(1, true);
+        if (indexVal == 0 || indexVal >= 0) {
+            if (indexVal == 0) {
+                //viewPager.setCurrentItem(0, true);
+            } else if (indexVal == 1) {
+                //viewPager.setCurrentItem(1, true);
             } else if (indexVal == 2) {
-                viewPager.setCurrentItem(2, true);
+                //viewPager.setCurrentItem(2, true);
             } else if (indexVal == 3) {
-                viewPager.setCurrentItem(3, true);
+                //viewPager.setCurrentItem(3, true);
             } else if (indexVal == 4) {
-                viewPager.setCurrentItem(4, true);
+                //viewPager.setCurrentItem(4, true);
             }
         }
     }
@@ -128,7 +131,8 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         if (report.areAllPermissionsGranted()) {
-                            Toast.makeText(HomeActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                            Log.d("TAG", "onPermissionsChecked: Permission Granted");
+                            //Toast.makeText(HomeActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
                         }
                     }
 

@@ -36,15 +36,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SectionListViewAdapter extends BaseAdapter {
     ArrayList<ExpenseBean> list;
-    ArrayList<String> dateList;
     Context context;
     private static final int ITEM = 0;
-    private static final int HEADER = 1;
     LayoutInflater inflater;
 
-    public SectionListViewAdapter(ArrayList<ExpenseBean> list, ArrayList<String> dateList, Context context) {
+    public SectionListViewAdapter(ArrayList<ExpenseBean> list , Context context) {
         this.list = list;
-        this.dateList = dateList;
         this.context = context;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -54,7 +51,7 @@ public class SectionListViewAdapter extends BaseAdapter {
         if (list.get(position) instanceof ExpenseBean) {
             return ITEM;
         } else {
-            return HEADER;
+            return ITEM;
         }
     }
 
@@ -85,9 +82,6 @@ public class SectionListViewAdapter extends BaseAdapter {
             switch (getItemViewType(i)) {
                 case ITEM:
                     view = inflater.inflate(R.layout.item_section_header, null);
-                    break;
-                case HEADER:
-                    view = inflater.inflate(R.layout.item_expense_header, null);
                     break;
             }
         }
@@ -148,11 +142,6 @@ public class SectionListViewAdapter extends BaseAdapter {
                 } else {
                     tv_date.setVisibility(View.VISIBLE);
                 }
-
-                break;
-            case HEADER:
-                TextView tv_date1 = view.findViewById(R.id.tv_date);
-                tv_date1.setText(((String) dateList.get(i)));
                 break;
         }
         return view;

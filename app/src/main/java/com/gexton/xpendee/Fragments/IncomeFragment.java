@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,8 +34,7 @@ public class IncomeFragment extends Fragment {
     RelativeLayout no_data_layout;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_income, container, false);
         tv_add_category = view.findViewById(R.id.tv_add_category);
@@ -78,6 +78,8 @@ public class IncomeFragment extends Fragment {
                 System.out.println("-- item long press pos: " + position);
             }
         }));
+
+        rvCategories.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
         tv_add_category.setOnClickListener(new View.OnClickListener() {
             @Override

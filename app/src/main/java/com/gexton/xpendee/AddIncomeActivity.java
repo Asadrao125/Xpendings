@@ -67,6 +67,7 @@ public class AddIncomeActivity extends AppCompatActivity {
     Calendar myCalendar;
     private ArrayList<Uri> photoPaths = new ArrayList<>();
     final int CUSTOM_REQUEST_CODE = 987;
+    SharedPreferences prefs1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -238,35 +239,42 @@ public class AddIncomeActivity extends AppCompatActivity {
                     Toast.makeText(AddIncomeActivity.this, "Please enter description", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    SharedPreferences prefs1 = getApplicationContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
-                    String json = prefs1.getString("Wallet_Bean", "");
-                    Gson gson = new Gson();
-                    WalletBean walletBean = gson.fromJson(json, WalletBean.class);
+                    prefs1 = getApplicationContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
 
-                    Double balance = walletBean.balance;
-                    String currency = walletBean.currency;
-                    String walletName = walletBean.wallet_name;
+                    if (!prefs1.getString("Wallet_Bean", "").equals("")) {
+                        String json = prefs1.getString("Wallet_Bean", "");
+                        Gson gson = new Gson();
+                        WalletBean walletBean = gson.fromJson(json, WalletBean.class);
 
-                    expense_amount = Double.parseDouble(expense);
-                    Double newBalance = balance + expense_amount;
+                        Double balance = walletBean.balance;
+                        String currency = walletBean.currency;
+                        String walletName = walletBean.wallet_name;
 
-                    //Toast.makeText(AddIncomeActivity.this, "" + currency + "\n" + expense_amount + "\n" + categoryIcon + "\n" + catName + "\n" + color_code, Toast.LENGTH_SHORT).show();
-                    ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
-                            catName, user_selected_date, description, image_path, colorHex, 2);
-                    database.insertExpense(expenseBean);
-                    Toast.makeText(AddIncomeActivity.this, "Income Added ! " /*+ database.insertExpense(expenseBean)*/, Toast.LENGTH_SHORT).show();
+                        expense_amount = Double.parseDouble(expense);
+                        Double newBalance = balance + expense_amount;
 
-                    //Toast.makeText(AddIncomeActivity.this, "Your new wallet amount is " + newBalance, Toast.LENGTH_SHORT).show();
-                    WalletBean newWalletBean = new WalletBean(newBalance, walletName, currency);
+                        //Toast.makeText(AddIncomeActivity.this, "" + currency + "\n" + expense_amount + "\n" + categoryIcon + "\n" + catName + "\n" + color_code, Toast.LENGTH_SHORT).show();
+                        ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
+                                catName, user_selected_date, description, image_path, colorHex, 2);
+                        database.insertExpense(expenseBean);
+                        //Toast.makeText(AddIncomeActivity.this, "Income Added ! " /*+ database.insertExpense(expenseBean)*/, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(AddIncomeActivity.this, "Your new wallet amount is " + newBalance, Toast.LENGTH_SHORT).show();
+                        WalletBean newWalletBean = new WalletBean(newBalance, walletName, currency);
 
-                    Gson newGson = new Gson();
-                    String newJson = newGson.toJson(newWalletBean);
+                        Gson newGson = new Gson();
+                        String newJson = newGson.toJson(newWalletBean);
 
-                    SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
-                    editor.putString("Wallet_Bean", newJson);
-                    editor.apply();
+                        SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
+                        editor.putString("Wallet_Bean", newJson);
+                        editor.apply();
 
-                    onBackPressed();
+                        onBackPressed();
+                    } else {
+                        Toast.makeText(AddIncomeActivity.this, "Please Add Wallet and Try Again", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                        finish();
+                    }
+
                 }
             }
         });

@@ -34,6 +34,7 @@
       </RelativeLayout>
 
       <TextView
+          android:visibility="gone"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginRight="20dp"
@@ -78,6 +79,7 @@
       </RelativeLayout>
 
       <RelativeLayout
+          android:visibility="gone"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="?attr/selectableItemBackground"
@@ -139,11 +141,12 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:textColor="@color/black"
-              android:text="Manual Wallets"/>
+              android:text="Add Income"/>
 
       </RelativeLayout>
 
       <RelativeLayout
+          android:visibility="gone"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="?attr/selectableItemBackground"

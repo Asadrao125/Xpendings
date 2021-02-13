@@ -54,7 +54,6 @@ public class TimelineFragment extends Fragment {
     ListView sectionListView;
     public static ArrayList<ExpenseBean> expenseBeanArrayList;
     Database database;
-    ArrayList<String> dateBeanArrayList;
     FloatingActionButton fab_add_expense;
     RelativeLayout no_data_layout;
     TextView tvDailyCashFlow, tvWealth;
@@ -117,11 +116,9 @@ public class TimelineFragment extends Fragment {
 
                 String dateNew = DateFormat.format("dd-MM-yyyy", date).toString();
                 expenseBeanArrayList = database.getAllDailyExpenses(dateNew);
-                dateBeanArrayList = database.getAllExpensesDates();
                 if (expenseBeanArrayList != null) {
-                    sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, dateBeanArrayList, getContext()));
+                    sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, getContext()));
                     tvWealth.setText("-$" + sumExpense(expenseBeanArrayList));
-                    //tvDailyCashFlow.setText("$" + sumIncome(database.getAllIncome(2)));
 
                     sectionListView.setVisibility(View.VISIBLE);
                     no_data_layout.setVisibility(View.GONE);
@@ -151,14 +148,13 @@ public class TimelineFragment extends Fragment {
 
         if (!TextUtils.isEmpty(filter_value)) {
             if (filter_value.equals("daily")) {
-                if (expenseBeanArrayList != null && dateBeanArrayList != null) {
+                if (expenseBeanArrayList != null) {
                     horizontalCalendar.getCalendarView().setVisibility(View.VISIBLE);
                     sectionListView.setVisibility(View.VISIBLE);
                     String formattedDate = new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime());
                     expenseBeanArrayList = database.getAllDailyExpenses(formattedDate);
-                    dateBeanArrayList = database.getAllExpensesDates();
 
-                    sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, dateBeanArrayList, getContext()));
+                    sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, getContext()));
                     sumExpense(expenseBeanArrayList);
                     tvWealth.setText("-$" + sumExpense(expenseBeanArrayList));
                     //tvDailyCashFlow.setText("$" + sumIncome(database.getAllIncome(2)));
@@ -204,10 +200,9 @@ public class TimelineFragment extends Fragment {
 
     private void settingAddapter() {
         horizontalCalendar.getCalendarView().setVisibility(View.GONE);
-        if (database.getAllExpensesFlag() != null && database.getAllExpensesDates() != null && expenseBeanArrayList != null) {
+        if (database.getAllExpensesFlag() != null && expenseBeanArrayList != null) {
             expenseBeanArrayList = database.getAllExpensesFlag();
-            dateBeanArrayList = database.getAllExpensesDates();
-            sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, dateBeanArrayList, getContext()));
+            sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, getContext()));
             if (expenseBeanArrayList != null) {
                 Log.d("sum_of_expenses", "onCreateView: " + sumExpense(expenseBeanArrayList));
                 tvWealth.setText("-$" + sumExpense(expenseBeanArrayList));
@@ -315,9 +310,8 @@ public class TimelineFragment extends Fragment {
 
                     String formattedDate = new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime());
                     expenseBeanArrayList = database.getAllDailyExpenses(formattedDate);
-                    dateBeanArrayList = database.getAllExpensesDates();
-                    if (expenseBeanArrayList != null && dateBeanArrayList != null) {
-                        sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, dateBeanArrayList, getContext()));
+                    if (expenseBeanArrayList != null) {
+                        sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, getContext()));
                         sumExpense(expenseBeanArrayList);
                         tvWealth.setText("-$" + sumExpense(expenseBeanArrayList));
                         //tvDailyCashFlow.setText("$" + sumIncome(database.getAllIncome(2)));
@@ -447,9 +441,8 @@ public class TimelineFragment extends Fragment {
                 horizontalCalendar.getCalendarView().setVisibility(View.VISIBLE);
                 String formattedDate = new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime());
                 expenseBeanArrayList = database.getAllDailyExpenses(formattedDate);
-                dateBeanArrayList = database.getAllExpensesDates();
                 if (expenseBeanArrayList != null) {
-                    sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, dateBeanArrayList, getContext()));
+                    sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, getContext()));
                     sumExpense(expenseBeanArrayList);
                     tvWealth.setText("-$" + sumExpense(expenseBeanArrayList));
                     tvDailyCashFlow.setText("$" + sumIncome(database.getAllIncome(2)));

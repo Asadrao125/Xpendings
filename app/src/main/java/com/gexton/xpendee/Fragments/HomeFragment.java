@@ -1,10 +1,8 @@
 package com.gexton.xpendee.Fragments;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -20,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gexton.xpendee.BuildConfig;
 import com.gexton.xpendee.NewWalletActivity;
@@ -39,14 +36,9 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.gson.Gson;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -68,6 +60,7 @@ public class HomeFragment extends Fragment {
     ArrayList<CategoryBean> allCatList;
     CardView cardView_pieChart, cardView_barChart;
     ImageView imgShare;
+    float totalExpense = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -105,7 +98,7 @@ public class HomeFragment extends Fragment {
             }
         }
 
-        if (allCatList != null) {
+        if (allCatList != null && totalExpense > 0) {
             settingPieChart(allCatList);
             settingBarChart(allCatList);
             cardView_barChart.setVisibility(View.VISIBLE);
@@ -123,12 +116,14 @@ public class HomeFragment extends Fragment {
                 startActivity(new Intent(getContext(), NewWalletActivity.class));
             }
         });
+
         static_layout_wallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), NewWalletActivity.class));
             }
         });
+
         btn_add_cash_wallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -179,15 +174,23 @@ public class HomeFragment extends Fragment {
         if (allCatList != null) {
             settingPieChart(allCatList);
             settingBarChart(allCatList);
+
+            if (totalExpense > 0) {
+                cardView_pieChart.setVisibility(View.VISIBLE);
+                cardView_barChart.setVisibility(View.VISIBLE);
+            } else {
+                cardView_pieChart.setVisibility(View.GONE);
+                cardView_barChart.setVisibility(View.GONE);
+            }
+
         }
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Dexter.withContext(getContext()).withPermissions(Manifest.permission.ACCESS_FINE_LOCATION,
+        /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Dexter.withContext(getContext()).withPermissions(
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_EXTERNAL_STORAGE)
                     .withListener(new MultiplePermissionsListener() {
@@ -204,16 +207,17 @@ public class HomeFragment extends Fragment {
                         }
 
                     }).check();
-        }
+        }*/
     }
 
     private void settingPieChart(ArrayList<CategoryBean> categoryBeans) {
 
         list.clear();
-        for (int i = 0; i < allCatList.size(); i++) {
-            CategoryBean categoryBean = allCatList.get(i);
+        totalExpense = 0;
+
+        for (int i = 0; i < categoryBeans.size(); i++) {
+            CategoryBean categoryBean = categoryBeans.get(i);
             ArrayList<ExpenseBean> expenseBeansInThisCat = categoryBean.listExpenseBean;
-            float totalExpense = 0;
             if (expenseBeansInThisCat != null) {
                 for (int j = 0; j < expenseBeansInThisCat.size(); j++) {
                     totalExpense = (float) (totalExpense + expenseBeansInThisCat.get(j).expense);
@@ -240,10 +244,10 @@ public class HomeFragment extends Fragment {
 
     public void settingBarChart(ArrayList<CategoryBean> categoryBeans) {
         listBarEntry.clear();
-        for (int i = 0; i < allCatList.size(); i++) {
-            CategoryBean categoryBean = allCatList.get(i);
+        totalExpense = 0;
+        for (int i = 0; i < categoryBeans.size(); i++) {
+            CategoryBean categoryBean = categoryBeans.get(i);
             ArrayList<ExpenseBean> expenseBeansInThisCat = categoryBean.listExpenseBean;
-            float totalExpense = 0;
             if (expenseBeansInThisCat != null) {
                 for (int j = 0; j < expenseBeansInThisCat.size(); j++) {
                     totalExpense = (float) (totalExpense + expenseBeansInThisCat.get(j).expense);

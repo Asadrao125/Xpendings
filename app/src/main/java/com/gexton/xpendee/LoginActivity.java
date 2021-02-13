@@ -91,7 +91,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         String name = prefs.getString("name", "No name defined");
 
         if (name.equals("") || name.equals("No name defined")) {
-            Toast.makeText(this, "Please Sign In", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Please Sign In", Toast.LENGTH_SHORT).show();
+            Log.d("TAG", "checkingIfUserSignedIn: Please Sign In");
         } else {
             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
             finish();
@@ -129,7 +130,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     imageUrl = acct.getPhotoUrl().toString();
                 }
                 String fullName = acct.getDisplayName();
-                Toast.makeText(this, "" + fullName, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "" + fullName, Toast.LENGTH_SHORT).show();
 
                 SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                 editor.putString("name", fullName);
@@ -186,13 +187,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                             String email = object.getString("email");
                                             String fullName = object.getString("name"); //
                                             String id = object.getString("id");
-                                            //String gender = object.getString("gender");
                                             String imageUrl = "";
                                             if (object.has("picture")) {
                                                 imageUrl = object.getJSONObject("picture").getJSONObject("data").getString("url");
                                                 System.out.println("image url: " + imageUrl);
                                             }
-                                            Toast.makeText(LoginActivity.this, "" + fullName, Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(LoginActivity.this, "" + fullName, Toast.LENGTH_SHORT).show();
 
                                             SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                                             editor.putString("name", fullName);

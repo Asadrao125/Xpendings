@@ -3,6 +3,7 @@ package com.gexton.xpendee.Adapters;
 import com.gexton.xpendee.Fragments.HomeFragment;
 import com.gexton.xpendee.Fragments.MoreFragment;
 import com.gexton.xpendee.Fragments.NewBudgetFragment;
+import com.gexton.xpendee.Fragments.NewTimelineFragment;
 import com.gexton.xpendee.Fragments.NotificationFragment;
 import com.gexton.xpendee.Fragments.TimelineFragment;
 
@@ -24,7 +25,7 @@ public class ViewPagerAdapterHome extends FragmentPagerAdapter {
         if (position == 0) {
             fragment = new HomeFragment();
         } else if (position == 1) {
-            fragment = new TimelineFragment();
+            fragment = new NewTimelineFragment();
         } else if (position == 2) {
             fragment = new NewBudgetFragment();
         } else if (position == 3) {
