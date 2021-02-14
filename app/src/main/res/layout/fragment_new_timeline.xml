@@ -89,6 +89,14 @@
 
     </LinearLayout> <!-- Cashflow Laoyt -->
 
+    <View
+        android:visibility="gone"
+        android:id="@+id/viewBelowCashFlowLayout"
+        android:layout_width="match_parent"
+        android:layout_height="10px"
+        android:background="@color/light_grey"
+        android:layout_below="@+id/cashflow_layout"/>
+
     <ListView
         android:id="@+id/sectionListView"
         android:layout_width="match_parent"

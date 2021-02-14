@@ -249,6 +249,7 @@ public class Database {
         open();
         ArrayList<ExpenseBean> expenseBean = new ArrayList<>();
         ExpenseBean temp;
+        //String query1 = "select * from expense  Order By current_day DESC";
         String query1 = "select * from expense  Order By current_day ASC";
 
         System.out.println("--query in getAllAttendance : " + query1);
@@ -458,7 +459,7 @@ public class Database {
         }
         close();
         return null;
-    }//======end getAllExpenses()===========
+    }//======end getAllExpensesFlag()===========
 
     public ArrayList<ExpenseBean> getAllIncome(int flag_value) {
         open();
@@ -495,7 +496,7 @@ public class Database {
         }
         close();
         return null;
-    }//======end getAllExpenses()===========
+    }//======end getAllIncome()===========
 
     public ArrayList<ExpenseBean> getAllDailyExpenses(String date) {
         open();

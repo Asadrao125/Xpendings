@@ -57,8 +57,9 @@ public class NewTimelineFragment extends Fragment {
     SharedPreferences prefs;
     ListView sectionListView;
     CheckBox cbDaily, cbAllTime;
-    LinearLayout cashflow_layout;
     Calendar defaultSelectedDate;
+    View viewBelowCashFlowLayout;
+    LinearLayout cashflow_layout;
     SharedPreferences.Editor editor;
     String MY_PREFS_NAME = "Xpendee";
     String TAG = "TimelineFragmentTag";
@@ -87,6 +88,7 @@ public class NewTimelineFragment extends Fragment {
                     sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, getContext()));
                     sectionListView.setVisibility(View.VISIBLE);
                     cashflow_layout.setVisibility(View.VISIBLE);
+                    viewBelowCashFlowLayout.setVisibility(View.VISIBLE);
                     tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
                     tvDailyCashFlow.setText("$ " + sumIncome(expenseBeanArrayList));
                     no_data_layout.setVisibility(View.GONE);
@@ -94,6 +96,7 @@ public class NewTimelineFragment extends Fragment {
                     no_data_layout.setVisibility(View.VISIBLE);
                     sectionListView.setVisibility(View.GONE);
                     cashflow_layout.setVisibility(View.GONE);
+                    viewBelowCashFlowLayout.setVisibility(View.GONE);
                 }
             }
 
@@ -170,6 +173,7 @@ public class NewTimelineFragment extends Fragment {
                         sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, getContext()));
                         sectionListView.setVisibility(View.VISIBLE);
                         cashflow_layout.setVisibility(View.VISIBLE);
+                        viewBelowCashFlowLayout.setVisibility(View.VISIBLE);
                         tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
                         tvDailyCashFlow.setText("$ " + sumIncome(expenseBeanArrayList));
                         horizontalCalendar.getCalendarView().setVisibility(View.VISIBLE);
@@ -178,6 +182,7 @@ public class NewTimelineFragment extends Fragment {
                         no_data_layout.setVisibility(View.VISIBLE);
                         sectionListView.setVisibility(View.GONE);
                         cashflow_layout.setVisibility(View.GONE);
+                        viewBelowCashFlowLayout.setVisibility(View.GONE);
                         horizontalCalendar.getCalendarView().setVisibility(View.GONE);
                     }
 
@@ -206,6 +211,7 @@ public class NewTimelineFragment extends Fragment {
                         sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, getContext()));
                         sectionListView.setVisibility(View.VISIBLE);
                         cashflow_layout.setVisibility(View.VISIBLE);
+                        viewBelowCashFlowLayout.setVisibility(View.VISIBLE);
                         tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
                         tvDailyCashFlow.setText("$ " + sumIncome(expenseBeanArrayList));
                         no_data_layout.setVisibility(View.GONE);
@@ -213,6 +219,7 @@ public class NewTimelineFragment extends Fragment {
                         no_data_layout.setVisibility(View.VISIBLE);
                         sectionListView.setVisibility(View.GONE);
                         cashflow_layout.setVisibility(View.GONE);
+                        viewBelowCashFlowLayout.setVisibility(View.GONE);
                     }
                 }
             }
@@ -258,6 +265,7 @@ public class NewTimelineFragment extends Fragment {
         sectionListView = view.findViewById(R.id.sectionListView);
         tvWealth = view.findViewById(R.id.tvWealth);
         tvDailyCashFlow = view.findViewById(R.id.tvDailyCashFlow);
+        viewBelowCashFlowLayout = view.findViewById(R.id.viewBelowCashFlowLayout);
 
         defaultSelectedDate = Calendar.getInstance();
 
@@ -290,6 +298,7 @@ public class NewTimelineFragment extends Fragment {
                 sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, getContext()));
                 sectionListView.setVisibility(View.VISIBLE);
                 cashflow_layout.setVisibility(View.VISIBLE);
+                viewBelowCashFlowLayout.setVisibility(View.VISIBLE);
                 tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
                 tvDailyCashFlow.setText("$ " + sumIncome(expenseBeanArrayList));
                 horizontalCalendar.getCalendarView().setVisibility(View.VISIBLE);
@@ -298,6 +307,7 @@ public class NewTimelineFragment extends Fragment {
                 no_data_layout.setVisibility(View.VISIBLE);
                 sectionListView.setVisibility(View.GONE);
                 cashflow_layout.setVisibility(View.GONE);
+                viewBelowCashFlowLayout.setVisibility(View.GONE);
                 horizontalCalendar.getCalendarView().setVisibility(View.GONE);
             }
             cbDaily.setChecked(true);
@@ -310,6 +320,7 @@ public class NewTimelineFragment extends Fragment {
                 sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, getContext()));
                 sectionListView.setVisibility(View.VISIBLE);
                 cashflow_layout.setVisibility(View.VISIBLE);
+                viewBelowCashFlowLayout.setVisibility(View.VISIBLE);
                 tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
                 tvDailyCashFlow.setText("$ " + sumIncome(expenseBeanArrayList));
                 no_data_layout.setVisibility(View.GONE);
@@ -317,6 +328,7 @@ public class NewTimelineFragment extends Fragment {
                 no_data_layout.setVisibility(View.VISIBLE);
                 sectionListView.setVisibility(View.GONE);
                 cashflow_layout.setVisibility(View.GONE);
+                viewBelowCashFlowLayout.setVisibility(View.GONE);
             }
             cbAllTime.setChecked(true);
 
@@ -335,6 +347,7 @@ public class NewTimelineFragment extends Fragment {
                 sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, getContext()));
                 sectionListView.setVisibility(View.VISIBLE);
                 cashflow_layout.setVisibility(View.VISIBLE);
+                viewBelowCashFlowLayout.setVisibility(View.VISIBLE);
                 tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
                 tvDailyCashFlow.setText("$ " + sumIncome(expenseBeanArrayList));
                 horizontalCalendar.getCalendarView().setVisibility(View.VISIBLE);
@@ -343,6 +356,7 @@ public class NewTimelineFragment extends Fragment {
                 no_data_layout.setVisibility(View.VISIBLE);
                 sectionListView.setVisibility(View.GONE);
                 cashflow_layout.setVisibility(View.GONE);
+                viewBelowCashFlowLayout.setVisibility(View.GONE);
                 horizontalCalendar.getCalendarView().setVisibility(View.GONE);
             }
             cbDaily.setChecked(true);
@@ -354,6 +368,7 @@ public class NewTimelineFragment extends Fragment {
                 sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, getContext()));
                 sectionListView.setVisibility(View.VISIBLE);
                 cashflow_layout.setVisibility(View.VISIBLE);
+                viewBelowCashFlowLayout.setVisibility(View.VISIBLE);
                 tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
                 tvDailyCashFlow.setText("$ " + sumIncome(expenseBeanArrayList));
                 no_data_layout.setVisibility(View.GONE);
@@ -361,6 +376,7 @@ public class NewTimelineFragment extends Fragment {
                 no_data_layout.setVisibility(View.VISIBLE);
                 sectionListView.setVisibility(View.GONE);
                 cashflow_layout.setVisibility(View.GONE);
+                viewBelowCashFlowLayout.setVisibility(View.GONE);
             }
             cbAllTime.setChecked(true);
             cbDaily.setChecked(false);
@@ -374,6 +390,7 @@ public class NewTimelineFragment extends Fragment {
                 sectionListView.setAdapter(new SectionListViewAdapter(expenseBeanArrayList, getContext()));
                 sectionListView.setVisibility(View.VISIBLE);
                 cashflow_layout.setVisibility(View.VISIBLE);
+                viewBelowCashFlowLayout.setVisibility(View.VISIBLE);
                 tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
                 tvDailyCashFlow.setText("$ " + sumIncome(expenseBeanArrayList));
                 no_data_layout.setVisibility(View.GONE);
@@ -381,6 +398,7 @@ public class NewTimelineFragment extends Fragment {
                 no_data_layout.setVisibility(View.VISIBLE);
                 sectionListView.setVisibility(View.GONE);
                 cashflow_layout.setVisibility(View.GONE);
+                viewBelowCashFlowLayout.setVisibility(View.GONE);
             }
         }
     }
@@ -397,14 +415,14 @@ public class NewTimelineFragment extends Fragment {
     }
 
     public double sumIncome(ArrayList<ExpenseBean> list) {
-        double sum2 = 0;
+        double sum = 0;
         for (ExpenseBean j : list) {
             if (j.flag == 2) {
-                sum2 = sum2 + j.expense;
-                Log.d(TAG, "sumIncome: " + sum2);
+                sum = sum + j.expense;
+                Log.d(TAG, "sumIncome: " + sum);
             }
         }
-        return sum2;
+        return sum;
     }
 
     public void permissionCheck() {
