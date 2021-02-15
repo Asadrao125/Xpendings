@@ -61,6 +61,7 @@ public class HomeFragment extends Fragment {
     CardView cardView_pieChart, cardView_barChart;
     ImageView imgShare;
     float totalExpense = 0;
+    float totalExpense2 = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -244,17 +245,17 @@ public class HomeFragment extends Fragment {
 
     public void settingBarChart(ArrayList<CategoryBean> categoryBeans) {
         listBarEntry.clear();
-        totalExpense = 0;
+        totalExpense2 = 0;
         for (int i = 0; i < categoryBeans.size(); i++) {
             CategoryBean categoryBean = categoryBeans.get(i);
             ArrayList<ExpenseBean> expenseBeansInThisCat = categoryBean.listExpenseBean;
             if (expenseBeansInThisCat != null) {
                 for (int j = 0; j < expenseBeansInThisCat.size(); j++) {
-                    totalExpense = (float) (totalExpense + expenseBeansInThisCat.get(j).expense);
+                    totalExpense2 = (float) (totalExpense2 + expenseBeansInThisCat.get(j).expense);
                 }//end inner loop
             }
 
-            listBarEntry.add(new BarEntry(i, totalExpense));
+            listBarEntry.add(new BarEntry(i, totalExpense2));
 
         }//end outer loop
 
