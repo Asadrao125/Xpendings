@@ -1,122 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:elevation="8dp"
+    app:cardMaxElevation="8dp"
+    app:cardElevation="8dp"
+    app:cardCornerRadius="8dp"
     android:layout_margin="10dp">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_date">
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_marginTop="10dp"
-            android:id="@+id/layout_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/tv_date">
 
-            <RelativeLayout
-                android:id="@+id/lay1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/circle_for_home_expense_list">
+           <RelativeLayout
+               android:layout_marginTop="10dp"
+               android:id="@+id/layout_icon"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="10dp"
+               android:layout_marginRight="10dp">
 
-                <ImageView
-                    android:id="@+id/image_view"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerInParent="true"
-                    android:src="@mipmap/shopping"
-                    app:tint="@color/white" />
+               <RelativeLayout
+                   android:id="@+id/lay1"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:background="@drawable/circle_for_home_expense_list">
 
-            </RelativeLayout>
+                   <ImageView
+                       android:id="@+id/image_view"
+                       android:layout_width="30dp"
+                       android:layout_height="30dp"
+                       android:layout_centerHorizontal="true"
+                       android:layout_centerInParent="true"
+                       android:src="@mipmap/shopping"
+                       app:tint="@color/white" />
 
-            <View
-                android:layout_width="3px"
-                android:layout_height="40dp"
-                android:layout_marginTop="5dp"
-                android:layout_below="@+id/lay1"
-                android:layout_centerHorizontal="true"
-                android:background="@color/light_grey" />
+               </RelativeLayout>
 
-        </RelativeLayout>
+               <View
+                   android:layout_width="3px"
+                   android:layout_height="40dp"
+                   android:layout_marginTop="5dp"
+                   android:layout_below="@+id/lay1"
+                   android:layout_centerHorizontal="true"
+                   android:background="@color/light_grey" />
 
-        <RelativeLayout
-            android:id="@+id/layout_side"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/layout_icon">
+           </RelativeLayout>
 
-            <!--android:layout_centerVertical="true"-->
+           <RelativeLayout
+               android:id="@+id/layout_side"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_toEndOf="@+id/layout_icon">
 
-            <TextView
-                android:id="@+id/tv_expense_amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_catName"
-                android:layout_marginTop="5dp"
-                android:text="PKR -150" />
+               <!--android:layout_centerVertical="true"-->
 
-            <TextView
-                android:id="@+id/tv_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_expense_amount"
-                android:layout_marginTop="5dp"
-                android:text="Description" />
+               <TextView
+                   android:id="@+id/tv_expense_amount"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_below="@+id/tv_catName"
+                   android:layout_marginTop="5dp"
+                   android:text="PKR -150" />
 
-            <TextView
-                android:id="@+id/tv_catName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Shopping"
-                android:layout_marginRight="10dp"
-                android:textColor="@color/black" />
+               <TextView
+                   android:id="@+id/tv_description"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_below="@+id/tv_expense_amount"
+                   android:layout_marginTop="5dp"
+                   android:text="Description" />
 
-            <ImageView
-                android:layout_marginTop="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/edit_category"
-                android:layout_toEndOf="@+id/tv_catName"/>
+               <TextView
+                   android:id="@+id/tv_catName"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="5dp"
+                   android:text="Shopping"
+                   android:layout_marginRight="10dp"
+                   android:textColor="@color/black" />
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/cvImage"
-                app:cardCornerRadius="8dp">
+               <ImageView
+                   android:layout_marginTop="5dp"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@mipmap/edit_category"
+                   android:layout_toEndOf="@+id/tv_catName"/>
 
-                <ImageView
-                    android:id="@+id/image_path"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:background="@color/white"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/ic_launcher" />
+               <androidx.cardview.widget.CardView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentEnd="true"
+                   android:layout_centerVertical="true"
+                   android:layout_marginLeft="5dp"
+                   android:layout_marginRight="10dp"
+                   android:id="@+id/cvImage"
+                   app:cardCornerRadius="8dp">
 
-            </androidx.cardview.widget.CardView>
+                   <ImageView
+                       android:id="@+id/image_path"
+                       android:layout_width="45dp"
+                       android:layout_height="45dp"
+                       android:background="@color/white"
+                       android:scaleType="centerCrop"
+                       android:src="@mipmap/ic_launcher" />
 
-        </RelativeLayout>
+               </androidx.cardview.widget.CardView>
 
-    </RelativeLayout>
+           </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:padding="10dp"
-        android:text="Date"
-        android:textColor="@color/black"
-        android:textSize="18sp" />
+       </RelativeLayout>
 
-</RelativeLayout>
+       <TextView
+           android:id="@+id/tv_date"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentTop="true"
+           android:padding="10dp"
+           android:text="Date"
+           android:textColor="@color/black"
+           android:textSize="18sp" />
+
+   </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

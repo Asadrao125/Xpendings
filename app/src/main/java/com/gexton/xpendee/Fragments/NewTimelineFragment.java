@@ -53,6 +53,7 @@ public class NewTimelineFragment extends Fragment {
     Database database;
     String currentDate;
     String filter_value;
+    View transparentView;
     ImageView img_calender;
     SharedPreferences prefs;
     ListView sectionListView;
@@ -89,9 +90,9 @@ public class NewTimelineFragment extends Fragment {
                     sectionListView.setVisibility(View.VISIBLE);
                     cashflow_layout.setVisibility(View.VISIBLE);
                     viewBelowCashFlowLayout.setVisibility(View.VISIBLE);
-                    tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
+                    tvWealth.setText("$ -" + sumExpense(expenseBeanArrayList));
 
-                    double newDailyCashFlow = sumExpense(expenseBeanArrayList) - sumIncome(expenseBeanArrayList);
+                    double newDailyCashFlow = sumIncome(expenseBeanArrayList) - sumExpense(expenseBeanArrayList);
 
                     tvDailyCashFlow.setText("$ " + newDailyCashFlow);
                     no_data_layout.setVisibility(View.GONE);
@@ -125,10 +126,24 @@ public class NewTimelineFragment extends Fragment {
             public void onClick(View view) {
                 if (filter_layout.isShown()) {
                     filter_layout.setVisibility(View.GONE);
+                    transparentView.setVisibility(View.GONE);
                     fab_add_expense.setVisibility(View.VISIBLE);
                 } else {
                     filter_layout.setVisibility(View.VISIBLE);
+                    transparentView.setVisibility(View.VISIBLE);
                     fab_add_expense.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        transparentView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (filter_layout.isShown()) {
+                    filter_layout.setVisibility(View.GONE);
+                    transparentView.setVisibility(View.GONE);
+                } else {
+                    transparentView.setVisibility(View.GONE);
                 }
             }
         });
@@ -137,6 +152,7 @@ public class NewTimelineFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 filter_layout.setVisibility(View.GONE);
+                transparentView.setVisibility(View.GONE);
                 fab_add_expense.setVisibility(View.VISIBLE);
             }
         });
@@ -145,6 +161,7 @@ public class NewTimelineFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 filter_layout.setVisibility(View.GONE);
+                transparentView.setVisibility(View.GONE);
                 fab_add_expense.setVisibility(View.VISIBLE);
             }
         });
@@ -167,6 +184,7 @@ public class NewTimelineFragment extends Fragment {
                     editor.putString("filter", "daily");
                     editor.apply();
                     filter_layout.setVisibility(View.GONE);
+                    transparentView.setVisibility(View.GONE);
                     fab_add_expense.setVisibility(View.VISIBLE);
                     horizontalCalendar.getCalendarView().setVisibility(View.VISIBLE);
                     sectionListView.setVisibility(View.VISIBLE);
@@ -180,9 +198,9 @@ public class NewTimelineFragment extends Fragment {
                         /*tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
                         tvDailyCashFlow.setText("$ " + sumIncome(expenseBeanArrayList));*/
 
-                        tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
+                        tvWealth.setText("$ -" + sumExpense(expenseBeanArrayList));
 
-                        double newDailyCashFlow = sumExpense(expenseBeanArrayList) - sumIncome(expenseBeanArrayList);
+                        double newDailyCashFlow = sumIncome(expenseBeanArrayList) - sumExpense(expenseBeanArrayList);
 
                         tvDailyCashFlow.setText("$ " + newDailyCashFlow);
 
@@ -211,6 +229,7 @@ public class NewTimelineFragment extends Fragment {
                     editor.putString("filter", "all_time");
                     editor.apply();
                     filter_layout.setVisibility(View.GONE);
+                    transparentView.setVisibility(View.GONE);
                     fab_add_expense.setVisibility(View.VISIBLE);
                     horizontalCalendar.getCalendarView().setVisibility(View.GONE);
                     sectionListView.setVisibility(View.VISIBLE);
@@ -225,9 +244,9 @@ public class NewTimelineFragment extends Fragment {
                       /*  tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
                         tvDailyCashFlow.setText("$ " + sumIncome(expenseBeanArrayList));*/
 
-                        tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
+                        tvWealth.setText("$ -" + sumExpense(expenseBeanArrayList));
 
-                        double newDailyCashFlow = sumExpense(expenseBeanArrayList) - sumIncome(expenseBeanArrayList);
+                        double newDailyCashFlow = sumIncome(expenseBeanArrayList) - sumExpense(expenseBeanArrayList);
 
                         tvDailyCashFlow.setText("$ " + newDailyCashFlow);
 
@@ -257,7 +276,6 @@ public class NewTimelineFragment extends Fragment {
                 }
             }
         });
-
     }
 
     @SuppressLint("CommitPrefEdits")
@@ -283,6 +301,7 @@ public class NewTimelineFragment extends Fragment {
         tvWealth = view.findViewById(R.id.tvWealth);
         tvDailyCashFlow = view.findViewById(R.id.tvDailyCashFlow);
         viewBelowCashFlowLayout = view.findViewById(R.id.viewBelowCashFlowLayout);
+        transparentView = view.findViewById(R.id.transparentView);
 
         defaultSelectedDate = Calendar.getInstance();
 
@@ -319,9 +338,9 @@ public class NewTimelineFragment extends Fragment {
                /* tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
                 tvDailyCashFlow.setText("$ " + sumIncome(expenseBeanArrayList));*/
 
-                tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
+                tvWealth.setText("$ -" + sumExpense(expenseBeanArrayList));
 
-                double newDailyCashFlow = sumExpense(expenseBeanArrayList) - sumIncome(expenseBeanArrayList);
+                double newDailyCashFlow = sumIncome(expenseBeanArrayList) - sumExpense(expenseBeanArrayList);
 
                 tvDailyCashFlow.setText("$ " + newDailyCashFlow);
 
@@ -348,9 +367,9 @@ public class NewTimelineFragment extends Fragment {
                 /*tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
                 tvDailyCashFlow.setText("$ " + sumIncome(expenseBeanArrayList));*/
 
-                tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
+                tvWealth.setText("$ -" + sumExpense(expenseBeanArrayList));
 
-                double newDailyCashFlow = sumExpense(expenseBeanArrayList) - sumIncome(expenseBeanArrayList);
+                double newDailyCashFlow = sumIncome(expenseBeanArrayList) - sumExpense(expenseBeanArrayList);
 
                 tvDailyCashFlow.setText("$ " + newDailyCashFlow);
 
@@ -372,6 +391,7 @@ public class NewTimelineFragment extends Fragment {
     public void onResume() {
         super.onResume();
         filter_layout.setVisibility(View.GONE);
+        transparentView.setVisibility(View.GONE);
         if (!TextUtils.isEmpty(filter_value) && filter_value.equals("daily")) {
             if (database.getAllDailyExpenses(currentDate) != null) {
                 expenseBeanArrayList = database.getAllDailyExpenses(currentDate);
@@ -382,9 +402,9 @@ public class NewTimelineFragment extends Fragment {
                 /*tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
                 tvDailyCashFlow.setText("$ " + sumIncome(expenseBeanArrayList));*/
 
-                tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
+                tvWealth.setText("$ -" + sumExpense(expenseBeanArrayList));
 
-                double newDailyCashFlow = sumExpense(expenseBeanArrayList) - sumIncome(expenseBeanArrayList);
+                double newDailyCashFlow = sumIncome(expenseBeanArrayList) - sumExpense(expenseBeanArrayList);
 
                 tvDailyCashFlow.setText("$ " + newDailyCashFlow);
 
@@ -410,9 +430,9 @@ public class NewTimelineFragment extends Fragment {
                 /*tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
                 tvDailyCashFlow.setText("$ " + sumIncome(expenseBeanArrayList));*/
 
-                tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
+                tvWealth.setText("$ -" + sumExpense(expenseBeanArrayList));
 
-                double newDailyCashFlow = sumExpense(expenseBeanArrayList) - sumIncome(expenseBeanArrayList);
+                double newDailyCashFlow = sumIncome(expenseBeanArrayList) - sumExpense(expenseBeanArrayList);
 
                 tvDailyCashFlow.setText("$ " + newDailyCashFlow);
 
@@ -439,9 +459,9 @@ public class NewTimelineFragment extends Fragment {
                /* tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
                 tvDailyCashFlow.setText("$ " + sumIncome(expenseBeanArrayList));*/
 
-                tvWealth.setText("-$ " + sumExpense(expenseBeanArrayList));
+                tvWealth.setText("$ -" + sumExpense(expenseBeanArrayList));
 
-                double newDailyCashFlow = sumExpense(expenseBeanArrayList) - sumIncome(expenseBeanArrayList);
+                double newDailyCashFlow = sumIncome(expenseBeanArrayList) - sumExpense(expenseBeanArrayList);
 
                 tvDailyCashFlow.setText("$ " + newDailyCashFlow);
 

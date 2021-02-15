@@ -28,7 +28,10 @@ import com.squareup.picasso.Picasso;
 import org.w3c.dom.Text;
 
 import java.io.File;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -40,7 +43,7 @@ public class SectionListViewAdapter extends BaseAdapter {
     private static final int ITEM = 0;
     LayoutInflater inflater;
 
-    public SectionListViewAdapter(ArrayList<ExpenseBean> list , Context context) {
+    public SectionListViewAdapter(ArrayList<ExpenseBean> list, Context context) {
         this.list = list;
         this.context = context;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -102,7 +105,19 @@ public class SectionListViewAdapter extends BaseAdapter {
                 tv_catName.setText((list.get(i)).categoryName);
                 tv_description.setText((list.get(i)).description);
                 image_view.setImageResource((list.get(i)).categoryIcon);
-                tv_date.setText((list.get(i)).currentDay);
+                //tv_date.setText((list.get(i)).currentDay);
+
+
+                //String actualDate = "2016-03-20";
+                DateTimeFormatter dtf = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH);
+                    DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.ENGLISH);
+                    LocalDate ld = LocalDate.parse(list.get(i).currentDay, dtf);
+                    String month_name = dtf2.format(ld);
+                    tv_date.setText(month_name);
+                }
+
 
                 if (list.get(i).flag == 1 /*Expense*/) {
                     tv_expense_amount.setTextColor(Color.parseColor("#FF0000"));
