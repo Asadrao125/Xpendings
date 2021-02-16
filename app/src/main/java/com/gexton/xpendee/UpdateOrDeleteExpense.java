@@ -49,7 +49,6 @@ import java.util.Locale;
 
 public class UpdateOrDeleteExpense extends AppCompatActivity {
     ArrayList<CategoryBean> categoryBeanArrayList;
-    ArrayList<CategoryBean> categoryBeanArrayListPD;
     CategoriesAdapterForExpense adapter = null;
     RecyclerView rvCategories;
     Database database;
@@ -107,7 +106,7 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
         val = getIntent().getStringExtra("val");
         tvToolBarTitle = findViewById(R.id.tvToolBarTitle);
         tv_expense = findViewById(R.id.tv_expense);
-        categoryBeanArrayListPD = new ArrayList<>();
+        //categoryBeanArrayListPD = new ArrayList<>();
 
         pos = getIntent().getIntExtra("position", 10000);
         Log.d("position", "onCreate: " + pos);
@@ -200,41 +199,16 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
         categoryBeanArrayList = new ArrayList<>();
 
         if (val.equals("exp")) {
-
-            categoryBeanArrayListPD.add(new CategoryBean(1, "Beauty", R.mipmap.beauty, "#123456", 1));
-            categoryBeanArrayListPD.add(new CategoryBean(2, "Bill", R.mipmap.bill, "#122134", 1));
-            categoryBeanArrayListPD.add(new CategoryBean(3, "Car", R.mipmap.car, "#987986", 1));
-            categoryBeanArrayListPD.add(new CategoryBean(4, "Education", R.mipmap.education, "#652731", 1));
-            categoryBeanArrayListPD.add(new CategoryBean(5, "Entertain", R.mipmap.entertainment, "#095685", 1));
-            categoryBeanArrayListPD.add(new CategoryBean(6, "Family", R.mipmap.family, "#123214", 1));
-            categoryBeanArrayListPD.add(new CategoryBean(7, "Food", R.mipmap.food, "#601382", 1));
-
             tvToolBarTitle.setText("Edit Expense");
             tv_expense.setText("Expense");
-
             if (database.getAllCategories(1) != null) {
                 categoryBeanArrayList = database.getAllCategories(1);
-                categoryBeanArrayList.addAll(categoryBeanArrayListPD);
-            } else {
-                categoryBeanArrayList = categoryBeanArrayListPD;
             }
-
         } else if (val.equals("inc")) {
-
-            categoryBeanArrayListPD.add(new CategoryBean(0, "Gift", R.mipmap.gift, "#957043", 2));
-            categoryBeanArrayListPD.add(new CategoryBean(0, "Grocery", R.mipmap.grocery, "#123456", 2));
-            categoryBeanArrayListPD.add(new CategoryBean(0, "Home", R.mipmap.home, "#654321", 2));
-            categoryBeanArrayListPD.add(new CategoryBean(0, "Others", R.mipmap.other, "#987654", 2));
-
             tvToolBarTitle.setText("Edit Income");
             tv_expense.setText("Income");
-
             if (database.getAllCategories(2) != null) {
                 categoryBeanArrayList = database.getAllCategories(2);
-                categoryBeanArrayList.addAll(categoryBeanArrayListPD);
-
-            } else {
-                categoryBeanArrayList = categoryBeanArrayListPD;
             }
         }
 
@@ -387,6 +361,13 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
 
         fetchGalleryImages(UpdateOrDeleteExpense.this);
 
+       /* for (int i = 0; i < categoryBeanArrayList.size(); i++) {
+            if (categoryBeanArrayList.get(i).id == id) {
+                Log.d("id_id_id", "onCreate: " + id);
+                tvDelete.setVisibility(View.GONE);
+            }
+        }*/
+
     }
 
     private void settingDataInFields() {
@@ -413,7 +394,6 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
                 try {
                     image_path = ContentUriUtils.INSTANCE.getFilePath(UpdateOrDeleteExpense.this, photoPaths.get(0));
                     if (image_path != null) {
-                        //Toast.makeText(AddIncomeActivity.this, image_path, Toast.LENGTH_SHORT).show();
                         File file = new File(image_path);
                         Picasso.get().load(file).into(img_1);
                         System.out.println("-- file path " + file.getAbsolutePath());

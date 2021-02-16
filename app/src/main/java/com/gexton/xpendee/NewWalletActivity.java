@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,12 +19,13 @@ import com.gexton.xpendee.model.WalletBean;
 import com.google.gson.Gson;
 
 public class NewWalletActivity extends AppCompatActivity {
-    TextView tv_save;
+    TextView tv_save, tvAllExpenses;
     EditText edt_balance, edt_wallet_name;
     String currency = "PKR";
     String balance, wallet_name;
     ImageView imgBack;
     double balance_new = 0.0;
+    RelativeLayout wallet_name_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,8 @@ public class NewWalletActivity extends AppCompatActivity {
         edt_balance = findViewById(R.id.edt_balance);
         edt_wallet_name = findViewById(R.id.edt_wallet_name);
         imgBack = findViewById(R.id.imgBack);
+        wallet_name_layout = findViewById(R.id.wallet_name_layout);
+        tvAllExpenses = findViewById(R.id.tvAllExpenses);
 
         settingDataInFields();
 

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gexton.xpendee.Adapters.CategoriesListAdapter;
 import com.gexton.xpendee.AddCategoryActivity;
@@ -31,7 +32,7 @@ public class ExpenceFragment extends Fragment {
     Database database;
     TextView tv_add_category;
     View view;
-    ArrayList<CategoryBean> categoryBeanArrayListPD;
+    //ArrayList<CategoryBean> categoryBeanArrayListPD;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,20 +44,20 @@ public class ExpenceFragment extends Fragment {
         database = new Database(getContext());
 
         categoryBeanArrayList = new ArrayList<>();
-        categoryBeanArrayListPD = new ArrayList<>();
+        //categoryBeanArrayListPD = new ArrayList<>();
 
-        categoryBeanArrayListPD.add(new CategoryBean(0, "Beauty", R.mipmap.beauty, "#123456", 1));
-        categoryBeanArrayListPD.add(new CategoryBean(0, "Bill", R.mipmap.bill, "#122134", 1));
-        categoryBeanArrayListPD.add(new CategoryBean(0, "Car", R.mipmap.car, "#987986", 1));
-        categoryBeanArrayListPD.add(new CategoryBean(0, "Education", R.mipmap.education, "#652731", 1));
-        categoryBeanArrayListPD.add(new CategoryBean(0, "Entertain", R.mipmap.entertainment, "#095685", 1));
-        categoryBeanArrayListPD.add(new CategoryBean(0, "Family", R.mipmap.family, "#123214", 1));
-        categoryBeanArrayListPD.add(new CategoryBean(0, "Food", R.mipmap.food, "#601382", 1));
+       /* categoryBeanArrayListPD.add(new CategoryBean(1, "Beauty", R.mipmap.beauty, "#123456", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(2, "Bill", R.mipmap.bill, "#122134", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(3, "Car", R.mipmap.car, "#987986", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(4, "Education", R.mipmap.education, "#652731", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(5, "Entertain", R.mipmap.entertainment, "#095685", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(6, "Family", R.mipmap.family, "#123214", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(7, "Food", R.mipmap.food, "#601382", 1));*/
 
         if (database.getAllCategories(1) != null) {
             categoryBeanArrayList.clear();
             categoryBeanArrayList = database.getAllCategories(1);
-            categoryBeanArrayList.addAll(categoryBeanArrayListPD);
+            //categoryBeanArrayList.addAll(categoryBeanArrayListPD);
             adapter = new CategoriesListAdapter(getContext(), categoryBeanArrayList);
             rvCategories.setAdapter(adapter);
         }
@@ -78,22 +79,8 @@ public class ExpenceFragment extends Fragment {
                     intent.putExtra("flag", flag);
                     intent.putExtra("position", position);
                     startActivity(intent);
-                } else {
-                    Intent intent = new Intent(getContext(), UpdateOrDeleteCategory.class);
-                    int id = categoryBeanArrayListPD.get(position).id;
-                    String category_name = categoryBeanArrayListPD.get(position).categoryName;
-                    int resID = categoryBeanArrayListPD.get(position).categoryIcon;
-                    String color_code = categoryBeanArrayListPD.get(position).categoryHashCode;
-                    int flag = categoryBeanArrayListPD.get(position).catFlag;
-                    intent.putExtra("id", id);
-                    intent.putExtra("category_name", category_name);
-                    intent.putExtra("resId", resID);
-                    intent.putExtra("color_code", color_code);
-                    intent.putExtra("flag", flag);
-                    intent.putExtra("position", position);
-                    startActivity(intent);
+                    Toast.makeText(getContext(), "" + id, Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override
@@ -102,7 +89,7 @@ public class ExpenceFragment extends Fragment {
             }
         }));
 
-        rvCategories.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        //rvCategories.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
         tv_add_category.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +100,7 @@ public class ExpenceFragment extends Fragment {
             }
         });
 
-        adapter = new CategoriesListAdapter(getContext(), categoryBeanArrayListPD);
+        adapter = new CategoriesListAdapter(getContext(), categoryBeanArrayList);
         rvCategories.setAdapter(adapter);
 
         return view;
@@ -125,11 +112,8 @@ public class ExpenceFragment extends Fragment {
         if (database.getAllCategories(1) != null) {
             categoryBeanArrayList.clear();
             categoryBeanArrayList = database.getAllCategories(1);
-            categoryBeanArrayList.addAll(categoryBeanArrayListPD);
+            //categoryBeanArrayList.addAll(categoryBeanArrayListPD);
             adapter = new CategoriesListAdapter(getContext(), categoryBeanArrayList);
-            rvCategories.setAdapter(adapter);
-        } else {
-            adapter = new CategoriesListAdapter(getContext(), categoryBeanArrayListPD);
             rvCategories.setAdapter(adapter);
         }
     }

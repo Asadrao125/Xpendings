@@ -60,7 +60,6 @@ import static java.security.AccessController.getContext;
 
 public class AddExpenseActivity extends AppCompatActivity {
     ArrayList<CategoryBean> categoryBeanArrayList;
-    ArrayList<CategoryBean> categoryBeanArrayListPD;
     CategoriesAdapterForExpense adapter = null;
     RecyclerView rvCategories;
     Database database;
@@ -68,7 +67,7 @@ public class AddExpenseActivity extends AppCompatActivity {
     public ImageView img_back, img_camera;
     @SuppressLint("StaticFieldLeak")
     public static ImageView img_1, img_2, img_3, img_4, img_5, img_6;
-    String image_path, current_date, description, currency = "PKR", date, catName, color_code, user_selected_date, colorHex;
+    String image_path, current_date, description, currency = "PKR", catName, color_code, user_selected_date, colorHex;
     RelativeLayout current_day_layout, select_image_layout, no_data_layout;
     EditText edt_description, edt_balance;
     int categoryIcon;
@@ -111,7 +110,6 @@ public class AddExpenseActivity extends AppCompatActivity {
         tv_details = findViewById(R.id.tv_details);
         myCalendar = Calendar.getInstance();
         img_camera = findViewById(R.id.img_camera);
-        categoryBeanArrayListPD = new ArrayList<>();
         categoryBeanArrayList = new ArrayList<>();
         database = new Database(getApplicationContext());
 
@@ -156,27 +154,11 @@ public class AddExpenseActivity extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManagerRVBP = new GridLayoutManager(getApplicationContext(), numberOfColumns);
         rvCategories.setLayoutManager(mLayoutManagerRVBP);
 
-        categoryBeanArrayListPD.add(new CategoryBean(1, "Beauty", R.mipmap.beauty, "#123456", 1));
-        categoryBeanArrayListPD.add(new CategoryBean(2, "Bill", R.mipmap.bill, "#122134", 1));
-        categoryBeanArrayListPD.add(new CategoryBean(3, "Car", R.mipmap.car, "#987986", 1));
-        categoryBeanArrayListPD.add(new CategoryBean(4, "Education", R.mipmap.education, "#652731", 1));
-        categoryBeanArrayListPD.add(new CategoryBean(5, "Entertain", R.mipmap.entertainment, "#095685", 1));
-        categoryBeanArrayListPD.add(new CategoryBean(6, "Family", R.mipmap.family, "#123214", 1));
-        categoryBeanArrayListPD.add(new CategoryBean(7, "Food", R.mipmap.food, "#601382", 1));
-
         if (database.getAllCategories(1) != null) {
             categoryBeanArrayList = database.getAllCategories(1);
-            categoryBeanArrayList.addAll(categoryBeanArrayListPD);
             adapter = new CategoriesAdapterForExpense(this, categoryBeanArrayList);
             rvCategories.setAdapter(adapter);
 
-            /*RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) tv_details.getLayoutParams();
-            params.addRule(RelativeLayout.BELOW, R.id.rvCategories);
-            tv_details.setLayoutParams(params);*/
-
-        } else {
-            adapter = new CategoriesAdapterForExpense(this, categoryBeanArrayListPD);
-            rvCategories.setAdapter(adapter);
         }
 
         rvCategories.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(),
@@ -188,11 +170,6 @@ public class AddExpenseActivity extends AppCompatActivity {
                     catName = categoryBeanArrayList.get(position).categoryName;
                     categoryIcon = categoryBeanArrayList.get(position).categoryIcon;
                     color_code = categoryBeanArrayList.get(position).categoryHashCode;
-                    colorHex = color_code;
-                } else {
-                    catName = categoryBeanArrayListPD.get(position).categoryName;
-                    categoryIcon = categoryBeanArrayListPD.get(position).categoryIcon;
-                    color_code = categoryBeanArrayListPD.get(position).categoryHashCode;
                     colorHex = color_code;
                 }
 
@@ -223,8 +200,6 @@ public class AddExpenseActivity extends AppCompatActivity {
                     Toast.makeText(AddExpenseActivity.this, "Please select category", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(user_selected_date)) {
                     Toast.makeText(AddExpenseActivity.this, "Please enter date", Toast.LENGTH_SHORT).show();
-                } else if (TextUtils.isEmpty(description)) {
-                    Toast.makeText(AddExpenseActivity.this, "Please enter description", Toast.LENGTH_SHORT).show();
                 } else {
 
                     prefs1 = getApplicationContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
@@ -240,7 +215,6 @@ public class AddExpenseActivity extends AppCompatActivity {
                         String walletName = walletBean.wallet_name;
 
                         Double newBalance = balance - expense_amount;
-                        //if (walletBean.balance >= expense_amount) {
                         ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
                                 catName, user_selected_date, description, image_path, colorHex, 1);
                         database.insertExpense(expenseBean);
@@ -252,12 +226,7 @@ public class AddExpenseActivity extends AppCompatActivity {
                         SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
                         editor.putString("Wallet_Bean", newJson);
                         editor.apply();
-
                         onBackPressed();
-
-                       /* } else {
-                            Toast.makeText(AddExpenseActivity.this, "Sorry, increase your wallet to add this expense", Toast.LENGTH_SHORT).show();
-                        }*/
                     } else {
                         Toast.makeText(AddExpenseActivity.this, "Please Add Wallet and Try Again", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(getApplicationContext(), HomeActivity.class));

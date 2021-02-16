@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gexton.xpendee.Adapters.CategoriesListAdapter;
 import com.gexton.xpendee.AddCategoryActivity;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 
 public class IncomeFragment extends Fragment {
     ArrayList<CategoryBean> categoryBeanArrayList;
-    ArrayList<CategoryBean> categoryBeanArrayListPD;
+    //ArrayList<CategoryBean> categoryBeanArrayListPD;
     CategoriesListAdapter adapter = null;
     RecyclerView rvCategories;
     Database database;
@@ -43,17 +44,16 @@ public class IncomeFragment extends Fragment {
         rvCategories.setLayoutManager(new LinearLayoutManager(getContext()));
         database = new Database(getContext());
         categoryBeanArrayList = new ArrayList<>();
-        categoryBeanArrayListPD = new ArrayList<>();
+        //categoryBeanArrayListPD = new ArrayList<>();
 
-        categoryBeanArrayListPD.add(new CategoryBean(0, "Gift", R.mipmap.gift, "#957043", 2));
-        categoryBeanArrayListPD.add(new CategoryBean(0, "Grocery", R.mipmap.grocery, "#123456", 2));
-        categoryBeanArrayListPD.add(new CategoryBean(0, "Home", R.mipmap.home, "#654321", 2));
-        categoryBeanArrayListPD.add(new CategoryBean(0, "Others", R.mipmap.other, "#987654", 2));
+       /* categoryBeanArrayListPD.add(new CategoryBean(8, "Gift", R.mipmap.gift, "#957043", 2));
+        categoryBeanArrayListPD.add(new CategoryBean(9, "Grocery", R.mipmap.grocery, "#123456", 2));
+        categoryBeanArrayListPD.add(new CategoryBean(10, "Home", R.mipmap.home, "#654321", 2));
+        categoryBeanArrayListPD.add(new CategoryBean(11, "Others", R.mipmap.other, "#987654", 2)); */
 
         if (database.getAllCategories(2) != null) {
-            categoryBeanArrayList.clear();
             categoryBeanArrayList = database.getAllCategories(2);
-            categoryBeanArrayList.addAll(categoryBeanArrayListPD);
+            //categoryBeanArrayList.addAll(categoryBeanArrayListPD);
             adapter = new CategoriesListAdapter(getContext(), categoryBeanArrayList);
             rvCategories.setAdapter(adapter);
         }
@@ -75,23 +75,8 @@ public class IncomeFragment extends Fragment {
                     intent.putExtra("color_code", color_code);
                     intent.putExtra("flag", flag);
                     startActivity(intent);
-
-                } else {
-                    Intent intent = new Intent(getContext(), UpdateOrDeleteCategory.class);
-                    int id = categoryBeanArrayListPD.get(position).id;
-                    String category_name = categoryBeanArrayListPD.get(position).categoryName;
-                    int resID = categoryBeanArrayListPD.get(position).categoryIcon;
-                    String color_code = categoryBeanArrayListPD.get(position).categoryHashCode;
-                    int flag = categoryBeanArrayListPD.get(position).catFlag;
-                    intent.putExtra("id", id);
-                    intent.putExtra("category_name", category_name);
-                    intent.putExtra("resId", resID);
-                    intent.putExtra("color_code", color_code);
-                    intent.putExtra("flag", flag);
-                    intent.putExtra("position", position);
-                    startActivity(intent);
+                    Toast.makeText(getContext(), "" + id, Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override
@@ -100,7 +85,7 @@ public class IncomeFragment extends Fragment {
             }
         }));
 
-        rvCategories.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        //rvCategories.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
         tv_add_category.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +97,7 @@ public class IncomeFragment extends Fragment {
         });
 
 
-        adapter = new CategoriesListAdapter(getContext(), categoryBeanArrayListPD);
+        adapter = new CategoriesListAdapter(getContext(), categoryBeanArrayList);
         rvCategories.setAdapter(adapter);
 
         return view;
@@ -125,11 +110,8 @@ public class IncomeFragment extends Fragment {
         if (database.getAllCategories(2) != null) {
             categoryBeanArrayList.clear();
             categoryBeanArrayList = database.getAllCategories(2);
-            categoryBeanArrayList.addAll(categoryBeanArrayListPD);
+            //categoryBeanArrayList.addAll(categoryBeanArrayListPD);
             adapter = new CategoriesListAdapter(getContext(), categoryBeanArrayList);
-            rvCategories.setAdapter(adapter);
-        } else {
-            adapter = new CategoriesListAdapter(getContext(), categoryBeanArrayListPD);
             rvCategories.setAdapter(adapter);
         }
     }

@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.gexton.xpendee.Adapters.ViewPagerAdapter;
 import com.gexton.xpendee.Adapters.ViewPagerAdapterHome;
 import com.gexton.xpendee.Fragments.HomeFragment;
+import com.gexton.xpendee.model.CategoryBean;
 import com.gexton.xpendee.util.Database;
 import com.google.android.material.tabs.TabLayout;
 import com.karumi.dexter.Dexter;
@@ -22,6 +23,7 @@ import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
@@ -32,6 +34,8 @@ public class HomeActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     SharedPreferences prefs;
     int indexVal;
+    ArrayList<CategoryBean> categoryBeanArrayListPD;
+    ArrayList<CategoryBean> newList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,9 @@ public class HomeActivity extends AppCompatActivity {
         database = new Database(HomeActivity.this);
         database.createDatabase();
         editor = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
+
+        categoryBeanArrayListPD = new ArrayList<>();
+        newList = new ArrayList<>();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.navy_blue, this.getTheme()));
@@ -92,6 +99,37 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+
+        //Saving Predefined Data
+
+        //Expense
+        categoryBeanArrayListPD.add(new CategoryBean(1, "Beauty", R.mipmap.beauty, "#123456", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(2, "Bill", R.mipmap.bill, "#122134", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(3, "Car", R.mipmap.car, "#987986", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(4, "Education", R.mipmap.education, "#652731", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(5, "Entertain", R.mipmap.entertainment, "#095685", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(6, "Family", R.mipmap.family, "#123214", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(7, "Food", R.mipmap.food, "#601382", 1));
+
+        //Income
+        categoryBeanArrayListPD.add(new CategoryBean(8, "Gift", R.mipmap.gift, "#957043", 2));
+        categoryBeanArrayListPD.add(new CategoryBean(9, "Grocery", R.mipmap.grocery, "#123456", 2));
+        categoryBeanArrayListPD.add(new CategoryBean(10, "Home", R.mipmap.home, "#654321", 2));
+        categoryBeanArrayListPD.add(new CategoryBean(11, "Others", R.mipmap.other, "#987654", 2));
+
+        if (database.getAllCategories(1) != null && database.getAllCategories(2) != null) {
+            newList = database.getAllCategories(2);
+            if (newList.get(3).id != 11) {
+                for (int i = 0; i < categoryBeanArrayListPD.size(); i++) {
+                    Log.d("predefined_data", "Data Inserted At: " + database.insertCategory(categoryBeanArrayListPD.get(i)));
+                }
+            }
+        } else {
+            for (int i = 0; i < categoryBeanArrayListPD.size(); i++) {
+                Log.d("predefined_data", "Data Inserted At: " + database.insertCategory(categoryBeanArrayListPD.get(i)));
+            }
+        }
+
     }
 
     @Override

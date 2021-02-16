@@ -49,7 +49,6 @@ import java.util.Locale;
 
 public class AddIncomeActivity extends AppCompatActivity {
     ArrayList<CategoryBean> categoryBeanArrayList;
-    ArrayList<CategoryBean> categoryBeanArrayListPD;
     CategoriesAdapterForExpense adapter = null;
     RecyclerView rvCategories;
     Database database;
@@ -103,7 +102,6 @@ public class AddIncomeActivity extends AppCompatActivity {
         no_data_layout = findViewById(R.id.no_data_layout);
         myCalendar = Calendar.getInstance();
         img_camera = findViewById(R.id.img_camera);
-        categoryBeanArrayListPD = new ArrayList<>();
 
         img_cross.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,23 +179,10 @@ public class AddIncomeActivity extends AppCompatActivity {
         rvCategories.setLayoutManager(mLayoutManagerRVBP);
 
         categoryBeanArrayList = new ArrayList<>();
-        categoryBeanArrayListPD.add(new CategoryBean(0, "Gift", R.mipmap.gift, "#957043", 2));
-        categoryBeanArrayListPD.add(new CategoryBean(0, "Grocery", R.mipmap.grocery, "#123456", 2));
-        categoryBeanArrayListPD.add(new CategoryBean(0, "Home", R.mipmap.home, "#654321", 2));
-        categoryBeanArrayListPD.add(new CategoryBean(0, "Others", R.mipmap.other, "#987654", 2));
 
         if (database.getAllCategories(2) != null) {
             categoryBeanArrayList = database.getAllCategories(2);
-            categoryBeanArrayList.addAll(categoryBeanArrayListPD);
             adapter = new CategoriesAdapterForExpense(this, categoryBeanArrayList);
-            rvCategories.setAdapter(adapter);
-
-            /*RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) tv_details.getLayoutParams();
-            params.addRule(RelativeLayout.BELOW, R.id.rvCategories);
-            tv_details.setLayoutParams(params);*/
-
-        } else {
-            adapter = new CategoriesAdapterForExpense(this, categoryBeanArrayListPD);
             rvCategories.setAdapter(adapter);
         }
 
@@ -211,16 +196,10 @@ public class AddIncomeActivity extends AppCompatActivity {
                     categoryIcon = categoryBeanArrayList.get(position).categoryIcon;
                     color_code = categoryBeanArrayList.get(position).categoryHashCode;
                     colorHex = color_code;
-                } else {
-                    catName = categoryBeanArrayListPD.get(position).categoryName;
-                    categoryIcon = categoryBeanArrayListPD.get(position).categoryIcon;
-                    color_code = categoryBeanArrayListPD.get(position).categoryHashCode;
-                    colorHex = color_code;
                 }
 
                 adapter.selectedPos = position;
                 adapter.notifyDataSetChanged();
-
             }
 
             @Override
@@ -246,8 +225,6 @@ public class AddIncomeActivity extends AppCompatActivity {
                     Toast.makeText(AddIncomeActivity.this, "Please select category", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(user_selected_date)) {
                     Toast.makeText(AddIncomeActivity.this, "Please enter date", Toast.LENGTH_SHORT).show();
-                } else if (TextUtils.isEmpty(description)) {
-                    Toast.makeText(AddIncomeActivity.this, "Please enter description", Toast.LENGTH_SHORT).show();
                 } else {
 
                     prefs1 = getApplicationContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);

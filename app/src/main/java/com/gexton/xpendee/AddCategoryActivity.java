@@ -176,12 +176,12 @@ public class AddCategoryActivity extends AppCompatActivity {
                     if (fragment_value.equals("EXPENCE")) {
                         CategoryBean categoryBean = new CategoryBean(0, catName, iconID, colorCode, 1);
                         database.insertCategory(categoryBean);
-                        Toast.makeText(AddCategoryActivity.this, "Expence Added !", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(AddCategoryActivity.this, "Expence Added !", Toast.LENGTH_SHORT).show();
                         onBackPressed();
                     } else if (fragment_value.equals("INCOME")) {
                         CategoryBean categoryBean = new CategoryBean(0, catName, iconID, colorCode, 2);
                         database.insertCategory(categoryBean);
-                        Toast.makeText(AddCategoryActivity.this, "Income Added !", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(AddCategoryActivity.this, "Income Added !", Toast.LENGTH_SHORT).show();
                         onBackPressed();
                     }
                 }

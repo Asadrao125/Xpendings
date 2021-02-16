@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -20,9 +21,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gexton.xpendee.Adapters.SectionAdapter2;
 import com.gexton.xpendee.Adapters.SectionListViewAdapter;
+import com.gexton.xpendee.model.CategoryBean;
 import com.gexton.xpendee.model.ExpenseBean;
 import com.gexton.xpendee.util.Database;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -39,6 +42,8 @@ public class SearchActivity extends AppCompatActivity {
     public static ArrayList<ExpenseBean> expenseBeanArrayList;
     ArrayList<ExpenseBean> filteredList = new ArrayList<>();
     SectionAdapter2 sectionAdapter;
+    ArrayList<CategoryBean> categoryBeanArrayListPD;
+    ArrayList<CategoryBean> newList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +61,8 @@ public class SearchActivity extends AppCompatActivity {
         no_data_layout = findViewById(R.id.no_data_layout);
         imgBack = findViewById(R.id.imgBack);
         edtSearch.requestFocus();
+        categoryBeanArrayListPD = new ArrayList<>();
+        newList = new ArrayList<>();
         sectionAdapter = new SectionAdapter2(SearchActivity.this, R.layout.item_section_header, expenseBeanArrayList);
 
         imgBack.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +110,34 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        //Expense
+        categoryBeanArrayListPD.add(new CategoryBean(1, "Beauty", R.mipmap.beauty, "#123456", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(2, "Bill", R.mipmap.bill, "#122134", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(3, "Car", R.mipmap.car, "#987986", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(4, "Education", R.mipmap.education, "#652731", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(5, "Entertain", R.mipmap.entertainment, "#095685", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(6, "Family", R.mipmap.family, "#123214", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(7, "Food", R.mipmap.food, "#601382", 1));
+
+        //Income
+        categoryBeanArrayListPD.add(new CategoryBean(8, "Gift", R.mipmap.gift, "#957043", 2));
+        categoryBeanArrayListPD.add(new CategoryBean(9, "Grocery", R.mipmap.grocery, "#123456", 2));
+        categoryBeanArrayListPD.add(new CategoryBean(10, "Home", R.mipmap.home, "#654321", 2));
+        categoryBeanArrayListPD.add(new CategoryBean(11, "Others", R.mipmap.other, "#987654", 2));
+
+        if (database.getAllCategories(1) != null && database.getAllCategories(2) != null) {
+            newList = database.getAllCategories(2);
+            if (newList.get(3).id != 11) {
+                for (int i = 0; i < categoryBeanArrayListPD.size(); i++) {
+                    Log.d("predefined_data", "Data Inserted At: " + database.insertCategory(categoryBeanArrayListPD.get(i)));
+                }
+            }
+        } else {
+            for (int i = 0; i < categoryBeanArrayListPD.size(); i++) {
+                Log.d("predefined_data", "Data Inserted At: " + database.insertCategory(categoryBeanArrayListPD.get(i)));
+            }
+        }
+
     }
 
     private void filter(String text) {
@@ -113,12 +148,6 @@ public class SearchActivity extends AppCompatActivity {
             }
         }
         listView.setAdapter(new SectionAdapter2(SearchActivity.this, R.layout.item_section_header, expenseBeanArrayList));
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //gettingTransactions();
     }
 
     private void gettingTransactions() {
