@@ -31,10 +31,13 @@ import com.gexton.xpendee.Adapters.SectionListViewAdapter;
 import com.gexton.xpendee.AddExpenseActivity;
 import com.gexton.xpendee.HomeActivity;
 import com.gexton.xpendee.R;
+import com.gexton.xpendee.SearchActivity;
 import com.gexton.xpendee.UpdateOrDeleteExpense;
 import com.gexton.xpendee.model.ExpenseBean;
+import com.gexton.xpendee.model.WalletBean;
 import com.gexton.xpendee.util.Database;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -50,10 +53,12 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class NewTimelineFragment extends Fragment {
     View view;
+    String json;
     Database database;
     String currentDate;
     String filter_value;
     View transparentView;
+    ImageView img_search;
     ImageView img_calender;
     SharedPreferences prefs;
     ListView sectionListView;
@@ -115,8 +120,22 @@ public class NewTimelineFragment extends Fragment {
             }
         });
 
+        checkWalletExistance();
+
         return view;
 
+    }
+
+    private void checkWalletExistance() {
+        SharedPreferences prefs1 = getContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
+        json = prefs1.getString("Wallet_Bean", "");
+        Gson gson = new Gson();
+        WalletBean walletBean = gson.fromJson(json, WalletBean.class);
+        if (walletBean != null) {
+            fab_add_expense.setVisibility(View.VISIBLE);
+        } else {
+            fab_add_expense.setVisibility(View.GONE);
+        }
     }
 
     private void listeners() {
@@ -276,6 +295,13 @@ public class NewTimelineFragment extends Fragment {
                 }
             }
         });
+
+        img_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), SearchActivity.class));
+            }
+        });
     }
 
     @SuppressLint("CommitPrefEdits")
@@ -302,6 +328,7 @@ public class NewTimelineFragment extends Fragment {
         tvDailyCashFlow = view.findViewById(R.id.tvDailyCashFlow);
         viewBelowCashFlowLayout = view.findViewById(R.id.viewBelowCashFlowLayout);
         transparentView = view.findViewById(R.id.transparentView);
+        img_search = view.findViewById(R.id.img_search);
 
         defaultSelectedDate = Calendar.getInstance();
 

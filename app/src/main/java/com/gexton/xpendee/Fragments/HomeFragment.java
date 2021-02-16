@@ -187,30 +187,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Dexter.withContext(getContext()).withPermissions(
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE)
-                    .withListener(new MultiplePermissionsListener() {
-                        @Override
-                        public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
-                            if (multiplePermissionsReport.areAllPermissionsGranted()) {
-                                Toast.makeText(getContext(), "All Permissions Are Granted", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onPermissionRationaleShouldBeShown(List<com.karumi.dexter.listener.PermissionRequest> list, PermissionToken permissionToken) {
-
-                        }
-
-                    }).check();
-        }*/
-    }
-
     private void settingPieChart(ArrayList<CategoryBean> categoryBeans) {
 
         list.clear();

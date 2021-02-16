@@ -2,6 +2,7 @@ package com.gexton.xpendee;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ public class NewWalletActivity extends AppCompatActivity {
     String currency = "PKR";
     String balance, wallet_name;
     ImageView imgBack;
+    double balance_new = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +51,18 @@ public class NewWalletActivity extends AppCompatActivity {
         tv_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 balance = edt_balance.getText().toString().trim();
                 wallet_name = edt_wallet_name.getText().toString().trim();
 
-                if (TextUtils.isEmpty(balance)) {
-                    Toast.makeText(NewWalletActivity.this, "Please enter wallet amount", Toast.LENGTH_SHORT).show();
-                } else if (TextUtils.isEmpty(wallet_name)) {
+                if (TextUtils.isEmpty(wallet_name)) {
                     Toast.makeText(NewWalletActivity.this, "Please enter wallet name", Toast.LENGTH_SHORT).show();
                 } else {
-                    Double balance_new = Double.valueOf(balance);
+
+
+                    if (!TextUtils.isEmpty(balance)) {
+                        balance_new = Double.valueOf(balance);
+                    }
 
                     WalletBean walletBean = new WalletBean(balance_new, wallet_name, currency);
                     Gson gson = new Gson();
@@ -71,7 +76,8 @@ public class NewWalletActivity extends AppCompatActivity {
                     edt_wallet_name.setText("");
                     edt_balance.setText("");
 
-                    onBackPressed();
+                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                    finish();
                 }
 
             }

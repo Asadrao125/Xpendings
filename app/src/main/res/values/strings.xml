@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Xpendee</string>
+    <string name="app_name">Xpendings</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -7,5 +7,5 @@
 
     <string name="fb_login_protocol_scheme">fb192519792590832</string>
     <string name="playstore_url"><![CDATA[" <string name=\"playstore_url\">https://play.google.com/store/apps/details?id=com.gexton.xpendee</string>"]]></string>
-
+    
 </resources>

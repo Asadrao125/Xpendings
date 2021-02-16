@@ -60,6 +60,7 @@ import static java.security.AccessController.getContext;
 
 public class AddExpenseActivity extends AppCompatActivity {
     ArrayList<CategoryBean> categoryBeanArrayList;
+    ArrayList<CategoryBean> categoryBeanArrayListPD;
     CategoriesAdapterForExpense adapter = null;
     RecyclerView rvCategories;
     Database database;
@@ -110,6 +111,9 @@ public class AddExpenseActivity extends AppCompatActivity {
         tv_details = findViewById(R.id.tv_details);
         myCalendar = Calendar.getInstance();
         img_camera = findViewById(R.id.img_camera);
+        categoryBeanArrayListPD = new ArrayList<>();
+        categoryBeanArrayList = new ArrayList<>();
+        database = new Database(getApplicationContext());
 
         ClickListeners();
 
@@ -148,40 +152,49 @@ public class AddExpenseActivity extends AppCompatActivity {
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
         current_date = df.format(c);//current date end
 
-        database = new Database(getApplicationContext());
-
         int numberOfColumns = 3;
         RecyclerView.LayoutManager mLayoutManagerRVBP = new GridLayoutManager(getApplicationContext(), numberOfColumns);
         rvCategories.setLayoutManager(mLayoutManagerRVBP);
 
-        categoryBeanArrayList = new ArrayList<>();
+        categoryBeanArrayListPD.add(new CategoryBean(1, "Beauty", R.mipmap.beauty, "#123456", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(2, "Bill", R.mipmap.bill, "#122134", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(3, "Car", R.mipmap.car, "#987986", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(4, "Education", R.mipmap.education, "#652731", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(5, "Entertain", R.mipmap.entertainment, "#095685", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(6, "Family", R.mipmap.family, "#123214", 1));
+        categoryBeanArrayListPD.add(new CategoryBean(7, "Food", R.mipmap.food, "#601382", 1));
 
         if (database.getAllCategories(1) != null) {
             categoryBeanArrayList = database.getAllCategories(1);
+            categoryBeanArrayList.addAll(categoryBeanArrayListPD);
             adapter = new CategoriesAdapterForExpense(this, categoryBeanArrayList);
             rvCategories.setAdapter(adapter);
-            rvCategories.setVisibility(View.VISIBLE);
-            tv_categories.setVisibility(View.VISIBLE);
-            no_data_layout.setVisibility(View.GONE);
 
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) tv_details.getLayoutParams();
+            /*RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) tv_details.getLayoutParams();
             params.addRule(RelativeLayout.BELOW, R.id.rvCategories);
-            tv_details.setLayoutParams(params);
+            tv_details.setLayoutParams(params);*/
 
         } else {
-            rvCategories.setVisibility(View.GONE);
-            tv_categories.setVisibility(View.GONE);
-            no_data_layout.setVisibility(View.VISIBLE);
+            adapter = new CategoriesAdapterForExpense(this, categoryBeanArrayListPD);
+            rvCategories.setAdapter(adapter);
         }
 
         rvCategories.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(),
                 rvCategories, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                catName = categoryBeanArrayList.get(position).categoryName;
-                categoryIcon = categoryBeanArrayList.get(position).categoryIcon;
-                color_code = categoryBeanArrayList.get(position).categoryHashCode;
-                colorHex = color_code;
+
+                if (database.getAllCategories(1) != null) {
+                    catName = categoryBeanArrayList.get(position).categoryName;
+                    categoryIcon = categoryBeanArrayList.get(position).categoryIcon;
+                    color_code = categoryBeanArrayList.get(position).categoryHashCode;
+                    colorHex = color_code;
+                } else {
+                    catName = categoryBeanArrayListPD.get(position).categoryName;
+                    categoryIcon = categoryBeanArrayListPD.get(position).categoryIcon;
+                    color_code = categoryBeanArrayListPD.get(position).categoryHashCode;
+                    colorHex = color_code;
+                }
 
                 adapter.selectedPos = position;
                 adapter.notifyDataSetChanged();
@@ -227,25 +240,24 @@ public class AddExpenseActivity extends AppCompatActivity {
                         String walletName = walletBean.wallet_name;
 
                         Double newBalance = balance - expense_amount;
-                        if (walletBean.balance >= expense_amount) {
-                            ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
-                                    catName, user_selected_date, description, image_path, colorHex, 1);
-                            database.insertExpense(expenseBean);
-                            //Toast.makeText(AddExpenseActivity.this, "Expense Added!", Toast.LENGTH_SHORT).show();
-                            WalletBean newWalletBean = new WalletBean(newBalance, walletName, currency);
+                        //if (walletBean.balance >= expense_amount) {
+                        ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
+                                catName, user_selected_date, description, image_path, colorHex, 1);
+                        database.insertExpense(expenseBean);
+                        WalletBean newWalletBean = new WalletBean(newBalance, walletName, currency);
 
-                            Gson newGson = new Gson();
-                            String newJson = newGson.toJson(newWalletBean);
+                        Gson newGson = new Gson();
+                        String newJson = newGson.toJson(newWalletBean);
 
-                            SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
-                            editor.putString("Wallet_Bean", newJson);
-                            editor.apply();
+                        SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
+                        editor.putString("Wallet_Bean", newJson);
+                        editor.apply();
 
-                            onBackPressed();
+                        onBackPressed();
 
-                        } else {
+                       /* } else {
                             Toast.makeText(AddExpenseActivity.this, "Sorry, increase your wallet to add this expense", Toast.LENGTH_SHORT).show();
-                        }
+                        }*/
                     } else {
                         Toast.makeText(AddExpenseActivity.this, "Please Add Wallet and Try Again", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(getApplicationContext(), HomeActivity.class));

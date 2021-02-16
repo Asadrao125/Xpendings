@@ -26,6 +26,8 @@ import com.gexton.xpendee.HomeActivity;
 import com.gexton.xpendee.LoginActivity;
 import com.gexton.xpendee.ManageCategories;
 import com.gexton.xpendee.R;
+import com.gexton.xpendee.model.WalletBean;
+import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -45,8 +47,10 @@ public class MoreFragment extends Fragment {
     View view;
     RelativeLayout logout_layout, about_app_layout, share_app_layout, rate_app_layout;
     SharedPreferences preferences;
+    String json;
 
     @Override
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_more, container, false);
@@ -173,4 +177,27 @@ public class MoreFragment extends Fragment {
                 .show();
     }
 
+    private void checkWalletExistance() {
+        SharedPreferences prefs1 = getContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
+        json = prefs1.getString("Wallet_Bean", "");
+        Gson gson = new Gson();
+        WalletBean walletBean = gson.fromJson(json, WalletBean.class);
+        if (walletBean != null) {
+            manual_wallets.setVisibility(View.VISIBLE);
+        } else {
+            manual_wallets.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkWalletExistance();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        checkWalletExistance();
+    }
 }

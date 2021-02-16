@@ -49,16 +49,17 @@ import java.util.Locale;
 
 public class UpdateOrDeleteExpense extends AppCompatActivity {
     ArrayList<CategoryBean> categoryBeanArrayList;
+    ArrayList<CategoryBean> categoryBeanArrayListPD;
     CategoriesAdapterForExpense adapter = null;
     RecyclerView rvCategories;
     Database database;
-    TextView tv_current_day, tv_date, tv_save, tv_reset, tv_categories, tv_details;
+    TextView tv_current_day, tv_date, tv_save, tv_reset, tv_details;
     ImageView img_back, img_camera;
     @SuppressLint("StaticFieldLeak")
     public static ImageView img_1, img_2, img_3, img_4, img_5, img_6;
     public static String img_path1, img_path2, img_path3, img_path4, img_path5, img_path6;
-    String image_path, current_date, description, currency = "PKR", date, catName, color_code, user_selected_date;
-    RelativeLayout current_day_layout, select_image_layout, no_data_layout;
+    String image_path, current_date, description, currency = "PKR", catName, color_code, user_selected_date;
+    RelativeLayout current_day_layout, select_image_layout;
     EditText edt_description, edt_balance;
     int categoryIcon;
     Double expense_amount;
@@ -99,8 +100,6 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
         tv_save = findViewById(R.id.tv_save);
         tv_reset = findViewById(R.id.tv_reset);
         img_back = findViewById(R.id.img_back);
-        tv_categories = findViewById(R.id.tv_categories);
-        no_data_layout = findViewById(R.id.no_data_layout);
         tv_details = findViewById(R.id.tv_details);
         myCalendar = Calendar.getInstance();
         img_camera = findViewById(R.id.img_camera);
@@ -108,6 +107,7 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
         val = getIntent().getStringExtra("val");
         tvToolBarTitle = findViewById(R.id.tvToolBarTitle);
         tv_expense = findViewById(R.id.tv_expense);
+        categoryBeanArrayListPD = new ArrayList<>();
 
         pos = getIntent().getIntExtra("position", 10000);
         Log.d("position", "onCreate: " + pos);
@@ -200,39 +200,46 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
         categoryBeanArrayList = new ArrayList<>();
 
         if (val.equals("exp")) {
-            if (database.getAllCategories(1).size() > 0) {
-                //Toast.makeText(this, "EXP", Toast.LENGTH_SHORT).show();
+
+            categoryBeanArrayListPD.add(new CategoryBean(1, "Beauty", R.mipmap.beauty, "#123456", 1));
+            categoryBeanArrayListPD.add(new CategoryBean(2, "Bill", R.mipmap.bill, "#122134", 1));
+            categoryBeanArrayListPD.add(new CategoryBean(3, "Car", R.mipmap.car, "#987986", 1));
+            categoryBeanArrayListPD.add(new CategoryBean(4, "Education", R.mipmap.education, "#652731", 1));
+            categoryBeanArrayListPD.add(new CategoryBean(5, "Entertain", R.mipmap.entertainment, "#095685", 1));
+            categoryBeanArrayListPD.add(new CategoryBean(6, "Family", R.mipmap.family, "#123214", 1));
+            categoryBeanArrayListPD.add(new CategoryBean(7, "Food", R.mipmap.food, "#601382", 1));
+
+            tvToolBarTitle.setText("Edit Expense");
+            tv_expense.setText("Expense");
+
+            if (database.getAllCategories(1) != null) {
                 categoryBeanArrayList = database.getAllCategories(1);
-                tvToolBarTitle.setText("Edit Expense");
-                tv_expense.setText("Expense");
+                categoryBeanArrayList.addAll(categoryBeanArrayListPD);
+            } else {
+                categoryBeanArrayList = categoryBeanArrayListPD;
             }
 
         } else if (val.equals("inc")) {
-            if (database.getAllCategories(2).size() > 0) {
-                //Toast.makeText(this, "INC", Toast.LENGTH_SHORT).show();
+
+            categoryBeanArrayListPD.add(new CategoryBean(0, "Gift", R.mipmap.gift, "#957043", 2));
+            categoryBeanArrayListPD.add(new CategoryBean(0, "Grocery", R.mipmap.grocery, "#123456", 2));
+            categoryBeanArrayListPD.add(new CategoryBean(0, "Home", R.mipmap.home, "#654321", 2));
+            categoryBeanArrayListPD.add(new CategoryBean(0, "Others", R.mipmap.other, "#987654", 2));
+
+            tvToolBarTitle.setText("Edit Income");
+            tv_expense.setText("Income");
+
+            if (database.getAllCategories(2) != null) {
                 categoryBeanArrayList = database.getAllCategories(2);
-                tvToolBarTitle.setText("Edit Income");
-                tv_expense.setText("Income");
+                categoryBeanArrayList.addAll(categoryBeanArrayListPD);
+
+            } else {
+                categoryBeanArrayList = categoryBeanArrayListPD;
             }
         }
 
-        if (database.getAllCategories(1).size() > 0 && database.getAllCategories(1).size() > 0) {
-            //categoryBeanArrayList = database.getAllCategories(1);
-            adapter = new CategoriesAdapterForExpense(this, categoryBeanArrayList);
-            rvCategories.setAdapter(adapter);
-            rvCategories.setVisibility(View.VISIBLE);
-            tv_categories.setVisibility(View.VISIBLE);
-            no_data_layout.setVisibility(View.GONE);
-
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) tv_details.getLayoutParams();
-            params.addRule(RelativeLayout.BELOW, R.id.rvCategories);
-            tv_details.setLayoutParams(params);
-
-        } else {
-            rvCategories.setVisibility(View.GONE);
-            tv_categories.setVisibility(View.GONE);
-            no_data_layout.setVisibility(View.VISIBLE);
-        }
+        adapter = new CategoriesAdapterForExpense(this, categoryBeanArrayList);
+        rvCategories.setAdapter(adapter);
 
         clickListeners();
 
@@ -391,8 +398,6 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
             File file = new File(image_path);
             Picasso.get().load(file).into(img_1);
         }
-        //adapter.selectedPos = pos;
-        //adapter.notifyDataSetChanged();
     }
 
     @Override

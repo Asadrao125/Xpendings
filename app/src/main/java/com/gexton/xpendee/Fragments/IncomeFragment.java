@@ -26,50 +26,71 @@ import java.util.ArrayList;
 
 public class IncomeFragment extends Fragment {
     ArrayList<CategoryBean> categoryBeanArrayList;
+    ArrayList<CategoryBean> categoryBeanArrayListPD;
     CategoriesListAdapter adapter = null;
     RecyclerView rvCategories;
     Database database;
     TextView tv_add_category;
     View view;
-    RelativeLayout no_data_layout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_income, container, false);
-        tv_add_category = view.findViewById(R.id.tv_add_category);
 
+        tv_add_category = view.findViewById(R.id.tv_add_category);
         rvCategories = view.findViewById(R.id.rvCategoriesList);
         rvCategories.setLayoutManager(new LinearLayoutManager(getContext()));
         database = new Database(getContext());
         categoryBeanArrayList = new ArrayList<>();
-        no_data_layout = view.findViewById(R.id.no_data_layout);
+        categoryBeanArrayListPD = new ArrayList<>();
+
+        categoryBeanArrayListPD.add(new CategoryBean(0, "Gift", R.mipmap.gift, "#957043", 2));
+        categoryBeanArrayListPD.add(new CategoryBean(0, "Grocery", R.mipmap.grocery, "#123456", 2));
+        categoryBeanArrayListPD.add(new CategoryBean(0, "Home", R.mipmap.home, "#654321", 2));
+        categoryBeanArrayListPD.add(new CategoryBean(0, "Others", R.mipmap.other, "#987654", 2));
 
         if (database.getAllCategories(2) != null) {
+            categoryBeanArrayList.clear();
             categoryBeanArrayList = database.getAllCategories(2);
+            categoryBeanArrayList.addAll(categoryBeanArrayListPD);
             adapter = new CategoriesListAdapter(getContext(), categoryBeanArrayList);
             rvCategories.setAdapter(adapter);
-            no_data_layout.setVisibility(View.GONE);
-        } else {
-            no_data_layout.setVisibility(View.VISIBLE);
         }
 
         rvCategories.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), rvCategories, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
 
-                Intent intent = new Intent(getContext(), UpdateOrDeleteCategory.class);
-                int id = categoryBeanArrayList.get(position).id;
-                String category_name = categoryBeanArrayList.get(position).categoryName;
-                int resID = categoryBeanArrayList.get(position).categoryIcon;
-                String color_code = categoryBeanArrayList.get(position).categoryHashCode;
-                int flag = categoryBeanArrayList.get(position).catFlag;
-                intent.putExtra("id", id);
-                intent.putExtra("category_name", category_name);
-                intent.putExtra("resId", resID);
-                intent.putExtra("color_code", color_code);
-                intent.putExtra("flag", flag);
-                startActivity(intent);
+                if (database.getAllCategories(2) != null) {
+                    Intent intent = new Intent(getContext(), UpdateOrDeleteCategory.class);
+                    int id = categoryBeanArrayList.get(position).id;
+                    String category_name = categoryBeanArrayList.get(position).categoryName;
+                    int resID = categoryBeanArrayList.get(position).categoryIcon;
+                    String color_code = categoryBeanArrayList.get(position).categoryHashCode;
+                    int flag = categoryBeanArrayList.get(position).catFlag;
+                    intent.putExtra("id", id);
+                    intent.putExtra("category_name", category_name);
+                    intent.putExtra("resId", resID);
+                    intent.putExtra("color_code", color_code);
+                    intent.putExtra("flag", flag);
+                    startActivity(intent);
+
+                } else {
+                    Intent intent = new Intent(getContext(), UpdateOrDeleteCategory.class);
+                    int id = categoryBeanArrayListPD.get(position).id;
+                    String category_name = categoryBeanArrayListPD.get(position).categoryName;
+                    int resID = categoryBeanArrayListPD.get(position).categoryIcon;
+                    String color_code = categoryBeanArrayListPD.get(position).categoryHashCode;
+                    int flag = categoryBeanArrayListPD.get(position).catFlag;
+                    intent.putExtra("id", id);
+                    intent.putExtra("category_name", category_name);
+                    intent.putExtra("resId", resID);
+                    intent.putExtra("color_code", color_code);
+                    intent.putExtra("flag", flag);
+                    intent.putExtra("position", position);
+                    startActivity(intent);
+                }
 
             }
 
@@ -90,19 +111,26 @@ public class IncomeFragment extends Fragment {
             }
         });
 
+
+        adapter = new CategoriesListAdapter(getContext(), categoryBeanArrayListPD);
+        rvCategories.setAdapter(adapter);
+
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        categoryBeanArrayList.clear();
         if (database.getAllCategories(2) != null) {
+            categoryBeanArrayList.clear();
             categoryBeanArrayList = database.getAllCategories(2);
+            categoryBeanArrayList.addAll(categoryBeanArrayListPD);
             adapter = new CategoriesListAdapter(getContext(), categoryBeanArrayList);
             rvCategories.setAdapter(adapter);
-            no_data_layout.setVisibility(View.GONE);
         } else {
-            no_data_layout.setVisibility(View.VISIBLE);
+            adapter = new CategoriesListAdapter(getContext(), categoryBeanArrayListPD);
+            rvCategories.setAdapter(adapter);
         }
     }
 

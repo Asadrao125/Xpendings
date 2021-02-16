@@ -69,7 +69,7 @@
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:layout_below="@+id/tv_name"
-               android:text="Welcome to Xpendee"
+               android:text="Welcome to Xpendings"
                android:textSize="14sp" />
 
            <de.hdodenhof.circleimageview.CircleImageView

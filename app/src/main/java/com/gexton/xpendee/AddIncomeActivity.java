@@ -49,6 +49,7 @@ import java.util.Locale;
 
 public class AddIncomeActivity extends AppCompatActivity {
     ArrayList<CategoryBean> categoryBeanArrayList;
+    ArrayList<CategoryBean> categoryBeanArrayListPD;
     CategoriesAdapterForExpense adapter = null;
     RecyclerView rvCategories;
     Database database;
@@ -102,6 +103,7 @@ public class AddIncomeActivity extends AppCompatActivity {
         no_data_layout = findViewById(R.id.no_data_layout);
         myCalendar = Calendar.getInstance();
         img_camera = findViewById(R.id.img_camera);
+        categoryBeanArrayListPD = new ArrayList<>();
 
         img_cross.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,33 +181,42 @@ public class AddIncomeActivity extends AppCompatActivity {
         rvCategories.setLayoutManager(mLayoutManagerRVBP);
 
         categoryBeanArrayList = new ArrayList<>();
+        categoryBeanArrayListPD.add(new CategoryBean(0, "Gift", R.mipmap.gift, "#957043", 2));
+        categoryBeanArrayListPD.add(new CategoryBean(0, "Grocery", R.mipmap.grocery, "#123456", 2));
+        categoryBeanArrayListPD.add(new CategoryBean(0, "Home", R.mipmap.home, "#654321", 2));
+        categoryBeanArrayListPD.add(new CategoryBean(0, "Others", R.mipmap.other, "#987654", 2));
 
         if (database.getAllCategories(2) != null) {
             categoryBeanArrayList = database.getAllCategories(2);
+            categoryBeanArrayList.addAll(categoryBeanArrayListPD);
             adapter = new CategoriesAdapterForExpense(this, categoryBeanArrayList);
             rvCategories.setAdapter(adapter);
-            rvCategories.setVisibility(View.VISIBLE);
-            tv_categories.setVisibility(View.VISIBLE);
-            no_data_layout.setVisibility(View.GONE);
 
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) tv_details.getLayoutParams();
+            /*RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) tv_details.getLayoutParams();
             params.addRule(RelativeLayout.BELOW, R.id.rvCategories);
-            tv_details.setLayoutParams(params);
+            tv_details.setLayoutParams(params);*/
 
         } else {
-            rvCategories.setVisibility(View.GONE);
-            tv_categories.setVisibility(View.GONE);
-            no_data_layout.setVisibility(View.VISIBLE);
+            adapter = new CategoriesAdapterForExpense(this, categoryBeanArrayListPD);
+            rvCategories.setAdapter(adapter);
         }
 
         rvCategories.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(),
                 rvCategories, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                catName = categoryBeanArrayList.get(position).categoryName;
-                categoryIcon = categoryBeanArrayList.get(position).categoryIcon;
-                color_code = categoryBeanArrayList.get(position).categoryHashCode;
-                colorHex = color_code;
+
+                if (database.getAllCategories(2) != null) {
+                    catName = categoryBeanArrayList.get(position).categoryName;
+                    categoryIcon = categoryBeanArrayList.get(position).categoryIcon;
+                    color_code = categoryBeanArrayList.get(position).categoryHashCode;
+                    colorHex = color_code;
+                } else {
+                    catName = categoryBeanArrayListPD.get(position).categoryName;
+                    categoryIcon = categoryBeanArrayListPD.get(position).categoryIcon;
+                    color_code = categoryBeanArrayListPD.get(position).categoryHashCode;
+                    colorHex = color_code;
+                }
 
                 adapter.selectedPos = position;
                 adapter.notifyDataSetChanged();
@@ -253,12 +264,9 @@ public class AddIncomeActivity extends AppCompatActivity {
                         expense_amount = Double.parseDouble(expense);
                         Double newBalance = balance + expense_amount;
 
-                        //Toast.makeText(AddIncomeActivity.this, "" + currency + "\n" + expense_amount + "\n" + categoryIcon + "\n" + catName + "\n" + color_code, Toast.LENGTH_SHORT).show();
                         ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
                                 catName, user_selected_date, description, image_path, colorHex, 2);
                         database.insertExpense(expenseBean);
-                        //Toast.makeText(AddIncomeActivity.this, "Income Added ! " /*+ database.insertExpense(expenseBean)*/, Toast.LENGTH_SHORT).show();
-                        //Toast.makeText(AddIncomeActivity.this, "Your new wallet amount is " + newBalance, Toast.LENGTH_SHORT).show();
                         WalletBean newWalletBean = new WalletBean(newBalance, walletName, currency);
 
                         Gson newGson = new Gson();
@@ -469,5 +477,4 @@ public class AddIncomeActivity extends AppCompatActivity {
 
         return galleryImageUrls;
     }
-
 }
