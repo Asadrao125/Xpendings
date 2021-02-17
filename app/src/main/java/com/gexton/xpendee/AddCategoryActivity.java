@@ -1,38 +1,26 @@
 package com.gexton.xpendee;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.gexton.xpendee.Adapters.ColorsAdapter;
-import com.gexton.xpendee.Adapters.ImageAdapter;
+import com.gexton.xpendee.adapters.ColorsAdapter;
+import com.gexton.xpendee.adapters.ImageAdapter;
 import com.gexton.xpendee.model.CategoryBean;
 import com.gexton.xpendee.util.Database;
 import com.gexton.xpendee.util.RecyclerItemClickListener;
-
-import java.util.ArrayList;
 
 public class AddCategoryActivity extends AppCompatActivity {
     ImageView img_cross, img_tick, image_view_selected;
@@ -46,22 +34,22 @@ public class AddCategoryActivity extends AppCompatActivity {
     String fragment_value;
 
     int[] programImages = {
-            R.mipmap.beauty,
-            R.mipmap.bill,
-            R.mipmap.car,
-            R.mipmap.education,
-            R.mipmap.entertainment,
-            R.mipmap.family,
-            R.mipmap.food,
-            R.mipmap.gift,
-            R.mipmap.grocery,
-            R.mipmap.home,
-            R.mipmap.other,
-            R.mipmap.shopping,
-            R.mipmap.sport,
-            R.mipmap.transport,
-            R.mipmap.travel,
-            R.mipmap.work
+            R.drawable.beauty,
+            R.drawable.bill,
+            R.drawable.car,
+            R.drawable.education,
+            R.drawable.entertainment,
+            R.drawable.family,
+            R.drawable.food,
+            R.drawable.gift,
+            R.drawable.grocery,
+            R.drawable.home,
+            R.drawable.other,
+            R.drawable.shopping,
+            R.drawable.sport,
+            R.drawable.transport,
+            R.drawable.travel,
+            R.drawable.work
     };
 
     String[] colorArray = {
@@ -95,6 +83,8 @@ public class AddCategoryActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(getResources().getColor(R.color.navy_blue, this.getTheme()));
         }
 
+        fragment_value = getIntent().getStringExtra("farment_value");
+
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
 
@@ -103,8 +93,8 @@ public class AddCategoryActivity extends AppCompatActivity {
 
         etName = findViewById(R.id.etName);
 
-        if (!TextUtils.isEmpty(getIntent().getStringExtra("farment_value"))) {
-            fragment_value = getIntent().getStringExtra("farment_value");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().setStatusBarColor(Color.parseColor("#3D5AFE"));
         }
 
         ImageAdapter imageAdapter = new ImageAdapter(this, programImages);
@@ -121,7 +111,7 @@ public class AddCategoryActivity extends AppCompatActivity {
             }
         });
 
-        int numberOfColumns = 3;
+        int numberOfColumns = 4;
         RecyclerView.LayoutManager mLayoutManagerRVBP = new GridLayoutManager(AddCategoryActivity.this, numberOfColumns);
         recyclerView.setLayoutManager(mLayoutManagerRVBP);
 
@@ -152,6 +142,10 @@ public class AddCategoryActivity extends AppCompatActivity {
                 layout_complete.setBackground(new ColorDrawable(Color.parseColor(color_code)));
                 colorCode = color_code;
 
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    getWindow().setStatusBarColor(Color.parseColor(colorCode));
+                }
+
             }
 
             @Override
@@ -174,14 +168,14 @@ public class AddCategoryActivity extends AppCompatActivity {
                     Toast.makeText(AddCategoryActivity.this, "Please select color for the category", Toast.LENGTH_LONG).show();
                 } else {
                     if (fragment_value.equals("EXPENCE")) {
-                        CategoryBean categoryBean = new CategoryBean(0, catName, iconID, colorCode, 1);
+                        CategoryBean categoryBean = new CategoryBean(0, catName, iconID, colorCode, 1, 1);
                         database.insertCategory(categoryBean);
-                        //Toast.makeText(AddCategoryActivity.this, "Expence Added !", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(AddCategoryActivity.this, "" + database.insertCategory(categoryBean), Toast.LENGTH_SHORT).show();
                         onBackPressed();
                     } else if (fragment_value.equals("INCOME")) {
-                        CategoryBean categoryBean = new CategoryBean(0, catName, iconID, colorCode, 2);
+                        CategoryBean categoryBean = new CategoryBean(0, catName, iconID, colorCode, 2, 1);
                         database.insertCategory(categoryBean);
-                        //Toast.makeText(AddCategoryActivity.this, "Income Added !", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(AddCategoryActivity.this, "" + database.insertCategory(categoryBean), Toast.LENGTH_SHORT).show();
                         onBackPressed();
                     }
                 }

@@ -8,6 +8,7 @@
     tools:context=".LoginActivity">
 
     <LinearLayout
+        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -22,7 +23,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/cartoon_login"
+            android:src="@drawable/cartoon_login"
             android:layout_gravity="center"/>
 
         <TextView
@@ -40,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Please sign in to continue"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:layout_marginTop="20dp"
             android:layout_gravity="center"
             android:textColor="@android:color/holo_blue_dark" />
@@ -64,14 +65,14 @@
                     android:layout_margin="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/google"/>
+                    android:src="@drawable/google"/>
 
                 <ImageView
                     android:id="@+id/iv_fb"
                     android:layout_margin="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/fb"/>
+                    android:src="@drawable/fb"/>
 
                 <ImageView
                     android:id="@+id/iv_apple"
@@ -79,7 +80,7 @@
                     android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/apple"/>
+                    android:src="@drawable/apple"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -88,7 +89,7 @@
                     android:textColor="@android:color/holo_blue_dark"
                     android:text="By using Xpendings you agree with Terms of Use and Privacy Policy"
                     android:id="@+id/tv_skip"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:layout_marginTop="50dp"/>
 
             </LinearLayout>

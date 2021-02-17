@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragments.MoreFragment">
+    tools:context=".fragments.MoreFragment">
 
   <LinearLayout
       android:layout_width="match_parent"
@@ -93,7 +93,7 @@
               android:layout_marginRight="20dp"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:src="@mipmap/changepwd_more"/>
+              android:src="@drawable/changepwd_more"/>
 
           <TextView
               android:layout_toRightOf="@+id/img_password"
@@ -133,7 +133,7 @@
               android:layout_marginRight="20dp"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:src="@mipmap/wallet_more"/>
+              android:src="@drawable/wallet_more"/>
 
           <TextView
               android:layout_toRightOf="@+id/img_password"
@@ -160,7 +160,7 @@
               android:layout_marginRight="20dp"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:src="@mipmap/curency_more"/>
+              android:src="@drawable/curency_more"/>
 
           <TextView
               android:layout_toRightOf="@+id/img_password"
@@ -187,7 +187,7 @@
               android:layout_marginRight="20dp"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:src="@mipmap/sign_out"/>
+              android:src="@drawable/sign_out"/>
 
           <TextView
               android:layout_toRightOf="@+id/img_password"
@@ -227,7 +227,7 @@
               android:layout_marginRight="20dp"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:src="@mipmap/info_more"/>
+              android:src="@drawable/info_more"/>
 
           <TextView
               android:layout_toRightOf="@+id/img_password"
@@ -254,7 +254,7 @@
               android:layout_marginRight="20dp"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:src="@mipmap/share_more"/>
+              android:src="@drawable/share_more"/>
 
           <TextView
               android:layout_toRightOf="@+id/img_password"
@@ -281,7 +281,7 @@
               android:layout_marginRight="20dp"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:src="@mipmap/star_more"/>
+              android:src="@drawable/star_more"/>
 
           <TextView
               android:layout_toRightOf="@+id/img_password"
@@ -308,7 +308,7 @@
               android:layout_marginRight="20dp"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:src="@mipmap/sign_out"/>
+              android:src="@drawable/sign_out"/>
 
           <TextView
               android:layout_toRightOf="@+id/img_password"

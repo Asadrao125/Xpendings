@@ -2,27 +2,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/home_home"
-        android:icon="@mipmap/home_grey"
+        android:icon="@drawable/home_grey"
         android:title="Home" />
 
     <item
         android:id="@+id/timeline"
-        android:icon="@mipmap/timeline_grey"
+        android:icon="@drawable/timeline_grey"
         android:title="Timeline" />
 
     <item
         android:id="@+id/new_budget"
-        android:icon="@mipmap/budget_grey"
+        android:icon="@drawable/budget_grey"
         android:title="New Budget" />
 
     <item
         android:id="@+id/notifications"
-        android:icon="@mipmap/notification_grey"
+        android:icon="@drawable/notification_grey"
         android:title="Notifications" />
 
     <item
         android:id="@+id/more"
-        android:icon="@mipmap/more_grey"
+        android:icon="@drawable/more_grey"
         android:title="More" />
 
 </menu>

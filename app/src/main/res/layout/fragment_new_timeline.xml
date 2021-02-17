@@ -5,7 +5,7 @@
     android:id="@+id/parentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.NewTimelineFragment">
+    tools:context=".fragments.NewTimelineFragment">
 
     <LinearLayout
         android:id="@+id/cashflow_layout"
@@ -237,7 +237,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_toLeftOf="@+id/img_calender"
-                android:src="@mipmap/wallet_top" />
+                android:src="@drawable/wallet_top" />
 
             <ImageView
                 android:id="@+id/img_calender"
@@ -245,7 +245,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_toLeftOf="@+id/img_search"
-                android:src="@mipmap/calendar_top" />
+                android:src="@drawable/calendar_top" />
 
             <ImageView
                 android:id="@+id/img_search"
@@ -254,7 +254,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"
-                android:src="@mipmap/search_top" />
+                android:src="@drawable/search_top" />
 
             <TextView
                 android:layout_width="wrap_content"

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragments.HomeFragment">
+    tools:context=".fragments.HomeFragment">
 
    <RelativeLayout
        android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:layout_gravity="center"
-               android:src="@mipmap/wallet" />
+               android:src="@drawable/wallet" />
 
            <TextView
                android:layout_width="wrap_content"
@@ -111,14 +111,14 @@
                        android:layout_height="wrap_content"
                        android:layout_centerVertical="true"
                        android:layout_marginRight="10dp"
-                       android:src="@mipmap/wallet_green" />
+                       android:src="@drawable/wallet_green" />
 
                    <ImageView
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:layout_alignParentEnd="true"
                        android:layout_centerVertical="true"
-                       android:src="@mipmap/forward_arrow" />
+                       android:src="@drawable/forward_arrow" />
 
                    <TextView
                        android:layout_width="wrap_content"
@@ -208,8 +208,8 @@
                    android:layout_alignParentEnd="true"
                    android:layout_marginLeft="20dp"
                    android:layout_marginRight="10dp"
-                   android:src="@mipmap/share_more"
-                   android:tint="@color/white"/>
+                   android:src="@drawable/share_more"
+                   app:tint="@color/white"/>
 
                <TextView
                    android:layout_width="wrap_content"

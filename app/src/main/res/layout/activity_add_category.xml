@@ -9,12 +9,13 @@
 
     <RelativeLayout
         android:id="@+id/layout_complete"
-        android:padding="20dp"
-        android:background="@color/navy_blue"
+        android:padding="10dp"
+        android:background="#3D5AFE"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <RelativeLayout
+            android:layout_marginBottom="10dp"
             android:id="@+id/layout_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -25,7 +26,7 @@
                 android:id="@+id/img_cross"
                 android:background="?attr/selectableItemBackground"
                 android:src="@drawable/ic_cross"
-                android:padding="10dp"
+                android:padding="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -36,18 +37,18 @@
                 android:id="@+id/tv_add_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:text="Add Category"/>
 
             <ImageView
                 android:layout_centerVertical="true"
                 android:id="@+id/img_tick"
                 android:background="?attr/selectableItemBackground"
-                android:src="@mipmap/tick"
+                android:src="@drawable/tick"
                 android:layout_alignParentEnd="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"/>
+                android:padding="5dp"/>
 
         </RelativeLayout>
 
@@ -67,9 +68,10 @@
                <ImageView
                    android:id="@+id/image_view_selected"
                    android:layout_centerInParent="true"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:src="@mipmap/home_grey"/>
+                   android:layout_width="20dp"
+                   android:layout_height="20dp"
+                   app:tint="@color/white"
+                   android:src="@drawable/beauty"/>
 
            </RelativeLayout>
 
@@ -82,7 +84,7 @@
                android:layout_marginLeft="10dp"
                android:layout_toRightOf="@+id/layout_circle"
                android:layout_width="match_parent"
-               android:textSize="20dp"
+               android:textSize="16sp"
                android:focusable="true"
                android:layout_height="wrap_content"
                android:hint="Category Name"/>
@@ -94,6 +96,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvColors"
         android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

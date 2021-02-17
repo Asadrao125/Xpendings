@@ -1,30 +1,25 @@
 package com.gexton.xpendee;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gexton.xpendee.Adapters.CategoriesAdapterForExpense;
-import com.gexton.xpendee.Adapters.CategoriesAdapterForSelectCategoryBudget;
+import com.gexton.xpendee.adapters.CategoriesAdapterForSelectCategoryBudget;
 import com.gexton.xpendee.model.CategoryBean;
 import com.gexton.xpendee.util.Database;
 import com.gexton.xpendee.util.RecyclerItemClickListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class AllExpensesCategoryActivity extends AppCompatActivity {
     ImageView img_back;
@@ -89,8 +84,6 @@ public class AllExpensesCategoryActivity extends AppCompatActivity {
                 System.out.println("-- item long press pos: " + position);
             }
         }));
-
-        rvCategories.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
 
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -15,8 +15,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,7 +29,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gexton.xpendee.Adapters.CategoriesAdapterForExpense;
+import com.gexton.xpendee.adapters.CategoriesAdapterForExpense;
 import com.gexton.xpendee.model.CategoryBean;
 import com.gexton.xpendee.model.ExpenseBean;
 import com.gexton.xpendee.model.WalletBean;
@@ -180,8 +178,8 @@ public class AddIncomeActivity extends AppCompatActivity {
 
         categoryBeanArrayList = new ArrayList<>();
 
-        if (database.getAllCategories(2) != null) {
-            categoryBeanArrayList = database.getAllCategories(2);
+        if (database.getAllCategoriesVisiblity(2, 1) != null) {
+            categoryBeanArrayList = database.getAllCategoriesVisiblity(2, 1);
             adapter = new CategoriesAdapterForExpense(this, categoryBeanArrayList);
             rvCategories.setAdapter(adapter);
         }

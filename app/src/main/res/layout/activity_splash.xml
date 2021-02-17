@@ -18,6 +18,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:src="@mipmap/cartoon_splash" />
+        android:src="@drawable/cartoon_splash" />
 
 </RelativeLayout>

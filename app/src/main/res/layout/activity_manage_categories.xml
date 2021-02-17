@@ -20,7 +20,7 @@
             android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_margin="10dp"
-            android:src="@mipmap/back" />
+            android:src="@drawable/back" />
 
         <TextView
             android:layout_width="wrap_content"

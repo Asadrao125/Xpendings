@@ -8,9 +8,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.gexton.xpendee.Adapters.ViewPagerAdapter;
+import com.gexton.xpendee.adapters.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 public class ManageCategories extends AppCompatActivity {

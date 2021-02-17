@@ -28,7 +28,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
                     android:padding="10dp"
-                    android:src="@mipmap/back" />
+                    android:src="@drawable/back" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -146,7 +146,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_currency_new"
                     android:layout_margin="5dp"
-                    android:src="@mipmap/budget_addbudget" />
+                    android:src="@drawable/budget_addbudget" />
 
                 <TextView
                     android:id="@+id/tv_currency_new"
@@ -178,7 +178,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/forward_arrow" />
+                android:src="@drawable/forward_arrow" />
 
             <TextView
                 android:id="@+id/tv_all_expenses"
@@ -213,7 +213,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/forward_arrow" />
+                android:src="@drawable/forward_arrow" />
 
             <TextView
                 android:id="@+id/tv_monthly"
@@ -248,7 +248,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/forward_arrow" />
+                android:src="@drawable/forward_arrow" />
 
             <TextView
                 android:id="@+id/tv_today"

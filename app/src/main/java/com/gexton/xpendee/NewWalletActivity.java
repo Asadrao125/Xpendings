@@ -14,8 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gexton.xpendee.Fragments.HomeFragment;
 import com.gexton.xpendee.model.WalletBean;
+import com.gexton.xpendee.util.Database;
 import com.google.gson.Gson;
 
 public class NewWalletActivity extends AppCompatActivity {
@@ -25,7 +25,8 @@ public class NewWalletActivity extends AppCompatActivity {
     String balance, wallet_name;
     ImageView imgBack;
     double balance_new = 0.0;
-    RelativeLayout wallet_name_layout;
+    Database database;
+    RelativeLayout wallet_name_layout, category_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,8 @@ public class NewWalletActivity extends AppCompatActivity {
         imgBack = findViewById(R.id.imgBack);
         wallet_name_layout = findViewById(R.id.wallet_name_layout);
         tvAllExpenses = findViewById(R.id.tvAllExpenses);
+        category_layout = findViewById(R.id.category_layout);
+        database = new Database(getApplicationContext());
 
         settingDataInFields();
 
@@ -87,6 +90,17 @@ public class NewWalletActivity extends AppCompatActivity {
             }
         });
 
+        category_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), VisiblistyActivityForCategories.class));
+            }
+        });
+
+        if (database.getAllVisibleCategories(1) != null) {
+            tvAllExpenses.setText("" + database.getAllVisibleCategories(1).size());
+        }
+
     }
 
     private void settingDataInFields() {
@@ -101,4 +115,11 @@ public class NewWalletActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (database.getAllVisibleCategories(1) != null) {
+            tvAllExpenses.setText("" + database.getAllVisibleCategories(1).size());
+        }
+    }
 }

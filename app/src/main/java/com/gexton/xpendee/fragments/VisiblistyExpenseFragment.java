@@ -1,0 +1,58 @@
+package com.gexton.xpendee.fragments;
+
+import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.gexton.xpendee.adapters.VisiblistyCategoriesListAdapter;
+import com.gexton.xpendee.R;
+import com.gexton.xpendee.model.CategoryBean;
+import com.gexton.xpendee.util.Database;
+
+import java.util.ArrayList;
+
+public class VisiblistyExpenseFragment extends Fragment {
+    View view;
+    Database database;
+    RecyclerView rvCategories;
+    VisiblistyCategoriesListAdapter VisiblistyCategoriesListAdapter = null;
+    ArrayList<CategoryBean> categoryBeanArrayList;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_visiblisty_expense, container, false);
+
+        rvCategories = view.findViewById(R.id.rvCategoriesList);
+        rvCategories.setLayoutManager(new LinearLayoutManager(getContext()));
+        database = new Database(getContext());
+
+        if (database.getAllCategories(1) != null) {
+            categoryBeanArrayList = database.getAllCategories(1);
+            VisiblistyCategoriesListAdapter = new VisiblistyCategoriesListAdapter(getContext(), categoryBeanArrayList);
+            rvCategories.setAdapter(VisiblistyCategoriesListAdapter);
+        }
+
+        VisiblistyCategoriesListAdapter = new VisiblistyCategoriesListAdapter(getContext(), categoryBeanArrayList);
+        rvCategories.setAdapter(VisiblistyCategoriesListAdapter);
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (database.getAllCategories(1) != null) {
+            categoryBeanArrayList.clear();
+            categoryBeanArrayList = database.getAllCategories(1);
+            VisiblistyCategoriesListAdapter = new VisiblistyCategoriesListAdapter(getContext(), categoryBeanArrayList);
+            rvCategories.setAdapter(VisiblistyCategoriesListAdapter);
+        }
+    }
+
+}

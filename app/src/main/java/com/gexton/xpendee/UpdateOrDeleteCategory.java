@@ -18,8 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gexton.xpendee.Adapters.ColorsAdapter;
-import com.gexton.xpendee.Adapters.ImageAdapter;
+import com.gexton.xpendee.adapters.ColorsAdapter;
+import com.gexton.xpendee.adapters.ImageAdapter;
 import com.gexton.xpendee.model.CategoryBean;
 import com.gexton.xpendee.util.Database;
 import com.gexton.xpendee.util.RecyclerItemClickListener;
@@ -38,24 +38,25 @@ public class UpdateOrDeleteCategory extends AppCompatActivity {
     //Getting Intent data
     int id, resID, flag, pos;
     String category_name, color_code;
+    ImageAdapter imageAdapter;
 
     int[] programImages = {
-            R.mipmap.beauty,
-            R.mipmap.bill,
-            R.mipmap.car,
-            R.mipmap.education,
-            R.mipmap.entertainment,
-            R.mipmap.family,
-            R.mipmap.food,
-            R.mipmap.gift,
-            R.mipmap.grocery,
-            R.mipmap.home,
-            R.mipmap.other,
-            R.mipmap.shopping,
-            R.mipmap.sport,
-            R.mipmap.transport,
-            R.mipmap.travel,
-            R.mipmap.work
+            R.drawable.beauty,
+            R.drawable.bill,
+            R.drawable.car,
+            R.drawable.education,
+            R.drawable.entertainment,
+            R.drawable.family,
+            R.drawable.food,
+            R.drawable.gift,
+            R.drawable.grocery,
+            R.drawable.home,
+            R.drawable.other,
+            R.drawable.shopping,
+            R.drawable.sport,
+            R.drawable.transport,
+            R.drawable.travel,
+            R.drawable.work
     };
 
     String[] colorArray = {
@@ -93,10 +94,6 @@ public class UpdateOrDeleteCategory extends AppCompatActivity {
 
         etName = findViewById(R.id.etName);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.navy_blue, this.getTheme()));
-        }
-
         id = getIntent().getIntExtra("id", 10000);
         resID = getIntent().getIntExtra("resId", 10000);
         flag = getIntent().getIntExtra("flag", 10000);
@@ -105,12 +102,15 @@ public class UpdateOrDeleteCategory extends AppCompatActivity {
         category_name = getIntent().getStringExtra("category_name");
         color_code = getIntent().getStringExtra("color_code");
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().setStatusBarColor(Color.parseColor(color_code));
+        }
 
         catName = category_name;
         iconID = resID;
         colorCode = color_code;
 
-        ImageAdapter imageAdapter = new ImageAdapter(this, programImages);
+        imageAdapter = new ImageAdapter(this, programImages);
         recyclerView.setAdapter(imageAdapter);
         img_cross = findViewById(R.id.img_cross);
         img_tick = findViewById(R.id.img_tick);
@@ -159,6 +159,11 @@ public class UpdateOrDeleteCategory extends AppCompatActivity {
                 String color_code = colorArray[position];
                 layout_complete.setBackgroundColor(Color.parseColor(color_code));
                 colorCode = color_code;
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    getWindow().setStatusBarColor(Color.parseColor(colorCode));
+                }
+
             }
 
             @Override
@@ -181,7 +186,7 @@ public class UpdateOrDeleteCategory extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please select color for the category", Toast.LENGTH_LONG).show();
                 } else {
 
-                    CategoryBean categoryBean = new CategoryBean(0, catName, iconID, colorCode, flag);
+                    CategoryBean categoryBean = new CategoryBean(0, catName, iconID, colorCode, flag, 1);
                     database.updateCategory(categoryBean, id);
                     Toast.makeText(getApplicationContext(), "Updated Successfully !", Toast.LENGTH_SHORT).show();
                     onBackPressed();

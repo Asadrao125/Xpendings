@@ -1,7 +1,6 @@
 package com.gexton.xpendee;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
@@ -9,11 +8,8 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.gexton.xpendee.Adapters.ViewPagerAdapter;
-import com.gexton.xpendee.Adapters.ViewPagerAdapterHome;
-import com.gexton.xpendee.Fragments.HomeFragment;
+import com.gexton.xpendee.adapters.ViewPagerAdapterHome;
 import com.gexton.xpendee.model.CategoryBean;
 import com.gexton.xpendee.util.Database;
 import com.google.android.material.tabs.TabLayout;
@@ -102,27 +98,28 @@ public class HomeActivity extends AppCompatActivity {
 
         //Saving Predefined Data
 
-        //Expense
-        categoryBeanArrayListPD.add(new CategoryBean(1, "Beauty", R.mipmap.beauty, "#123456", 1));
-        categoryBeanArrayListPD.add(new CategoryBean(2, "Bill", R.mipmap.bill, "#122134", 1));
-        categoryBeanArrayListPD.add(new CategoryBean(3, "Car", R.mipmap.car, "#987986", 1));
-        categoryBeanArrayListPD.add(new CategoryBean(4, "Education", R.mipmap.education, "#652731", 1));
-        categoryBeanArrayListPD.add(new CategoryBean(5, "Entertain", R.mipmap.entertainment, "#095685", 1));
-        categoryBeanArrayListPD.add(new CategoryBean(6, "Family", R.mipmap.family, "#123214", 1));
-        categoryBeanArrayListPD.add(new CategoryBean(7, "Food", R.mipmap.food, "#601382", 1));
+        //drawable
+        categoryBeanArrayListPD.add(new CategoryBean(1, "Beauty", R.drawable.beauty, "#7944d0", 1, 1));
+        categoryBeanArrayListPD.add(new CategoryBean(2, "Entertainment", R.drawable.entertainment, "#ffa801", 1, 1));
+        categoryBeanArrayListPD.add(new CategoryBean(3, "Food and Drink", R.drawable.food, "#ffa801", 1, 1));
+        categoryBeanArrayListPD.add(new CategoryBean(4, "Gifts", R.drawable.gift, "#18b272", 1, 1));
+        categoryBeanArrayListPD.add(new CategoryBean(5, "Groceries", R.drawable.grocery, "#dd8138", 1, 1));
+        categoryBeanArrayListPD.add(new CategoryBean(6, "Health Care", R.drawable.family, "#e16476", 1, 1));
+        categoryBeanArrayListPD.add(new CategoryBean(7, "Home", R.drawable.home, "#b6985c", 1, 1));
+        categoryBeanArrayListPD.add(new CategoryBean(7, "Sport & Hobbies", R.drawable.sport, "#60d0ca", 1, 1));
+        categoryBeanArrayListPD.add(new CategoryBean(7, "Transport", R.drawable.travel, "#fcce00", 1, 1));
+        categoryBeanArrayListPD.add(new CategoryBean(7, "Work", R.drawable.work, "#6d6e8a", 1, 1));
 
         //Income
-        categoryBeanArrayListPD.add(new CategoryBean(8, "Gift", R.mipmap.gift, "#957043", 2));
-        categoryBeanArrayListPD.add(new CategoryBean(9, "Grocery", R.mipmap.grocery, "#123456", 2));
-        categoryBeanArrayListPD.add(new CategoryBean(10, "Home", R.mipmap.home, "#654321", 2));
-        categoryBeanArrayListPD.add(new CategoryBean(11, "Others", R.mipmap.other, "#987654", 2));
+        categoryBeanArrayListPD.add(new CategoryBean(8, "Business", R.drawable.gift, "#ffa200", 2, 1));
+        categoryBeanArrayListPD.add(new CategoryBean(9, "Extra Income", R.drawable.grocery, "#72c541", 2, 1));
+        categoryBeanArrayListPD.add(new CategoryBean(10, "Insurance Payout", R.drawable.home, "#18b272", 2, 1));
+        categoryBeanArrayListPD.add(new CategoryBean(11, "Loan", R.drawable.other, "#45a7e6", 2, 1));
 
         if (database.getAllCategories(1) != null && database.getAllCategories(2) != null) {
             newList = database.getAllCategories(2);
-            if (newList.get(3).id != 11) {
-                for (int i = 0; i < categoryBeanArrayListPD.size(); i++) {
-                    Log.d("predefined_data", "Data Inserted At: " + database.insertCategory(categoryBeanArrayListPD.get(i)));
-                }
+            if (newList.get(3).id == 11) {
+                Log.d("kdkjdkkjdk", "onCreate: nckldlklklsklksljkkn");
             }
         } else {
             for (int i = 0; i < categoryBeanArrayListPD.size(); i++) {

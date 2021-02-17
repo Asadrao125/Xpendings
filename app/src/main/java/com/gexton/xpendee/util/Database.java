@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.util.Log;
 import android.widget.Toast;
 
 
@@ -112,22 +111,27 @@ public class Database {
 
     //============================start custom methods / Crud for category table ====================================
 
-    /*CREATE TABLE "category" (
-	"id" INTEGER,
-	"category_name" TEXT,
-	"color_code" TEXT,
-	"icon_id" INTEGER, PRIMARY KEY("id" AUTOINCREMENT) )*/
+    /*
+    * CREATE TABLE "category" (
+	"id"	INTEGER,
+	"category_name"	TEXT,
+	"color_code"	TEXT,
+	"icon_id"	INTEGER,
+	"flag"	INTEGER,
+	"visiblity"	INTEGER,
+	PRIMARY KEY("id" AUTOINCREMENT));
+    */
 
     public long insertCategory(CategoryBean categoryBean) {
         long rowId = -1;
         try {
             open();
             ContentValues cv = new ContentValues();
-            //cv.put("id",    "");
             cv.put("category_name", categoryBean.categoryName);
             cv.put("color_code", categoryBean.categoryHashCode);
             cv.put("icon_id", categoryBean.categoryIcon);
             cv.put("flag", categoryBean.catFlag);
+            cv.put("visiblity", categoryBean.visiblity);
 
             rowId = sqLiteDatabase.insert("category", null, cv);
 
@@ -158,8 +162,9 @@ public class Database {
                 String colorCode = cursor.getString(cursor.getColumnIndex("color_code"));
                 int iconId = cursor.getInt(cursor.getColumnIndex("icon_id"));
                 int flag = cursor.getInt(cursor.getColumnIndex("flag"));
+                int visiblity = cursor.getInt(cursor.getColumnIndex("visiblity"));
 
-                temp = new CategoryBean(id, catName, iconId, colorCode, flag);
+                temp = new CategoryBean(id, catName, iconId, colorCode, flag, visiblity);
 
                 categoryBeans.add(temp);
                 temp = null;
@@ -187,6 +192,7 @@ public class Database {
         dataToUpdate.put("color_code", categoryBean.categoryHashCode);
         dataToUpdate.put("icon_id", categoryBean.categoryIcon);
         dataToUpdate.put("flag", categoryBean.catFlag);
+        dataToUpdate.put("visiblity", categoryBean.visiblity);
 
         //String where = "id" + "=" + "'"+categoryBean.id+"'" + " AND dateof" + "=" + "'"+dateof+"'" + " AND type" + "=" + "'checking'"; // id is string
         String where = "id" + "=" + "'" + id + "'"; //One WHERE clause
@@ -200,11 +206,75 @@ public class Database {
         close();
     }//end updateCategory
 
+    public ArrayList<CategoryBean> getAllCategoriesVisiblity(int flag_value, int visiblityyyy) {
+        open();
+        ArrayList<CategoryBean> categoryBeans = new ArrayList<>();
+        CategoryBean temp;
+        String query1 = "select * from category WHERE flag = '" + flag_value + "' AND visiblity = '" + visiblityyyy + "'";
+
+        System.out.println("--query in getAllAttendance : " + query1);
+        Cursor cursor = sqLiteDatabase.rawQuery(query1, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                int id = cursor.getInt(cursor.getColumnIndex("id"));
+                String catName = cursor.getString(cursor.getColumnIndex("category_name"));
+                String colorCode = cursor.getString(cursor.getColumnIndex("color_code"));
+                int iconId = cursor.getInt(cursor.getColumnIndex("icon_id"));
+                int flag = cursor.getInt(cursor.getColumnIndex("flag"));
+                int visiblity = cursor.getInt(cursor.getColumnIndex("visiblity"));
+
+                temp = new CategoryBean(id, catName, iconId, colorCode, flag, visiblity);
+
+                categoryBeans.add(temp);
+                temp = null;
+            }
+            while (cursor.moveToNext());
+            close();
+            return categoryBeans;
+        }
+        close();
+        return null;
+    }//======end getAllCategoriesVisiblity()===========
+
+    public ArrayList<CategoryBean> getAllVisibleCategories(int visiblityyyy) {
+        open();
+        ArrayList<CategoryBean> categoryBeans = new ArrayList<>();
+        CategoryBean temp;
+        String query1 = "select * from category WHERE visiblity = '" + visiblityyyy + "'";
+
+        System.out.println("--query in getAllAttendance : " + query1);
+        Cursor cursor = sqLiteDatabase.rawQuery(query1, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                int id = cursor.getInt(cursor.getColumnIndex("id"));
+                String catName = cursor.getString(cursor.getColumnIndex("category_name"));
+                String colorCode = cursor.getString(cursor.getColumnIndex("color_code"));
+                int iconId = cursor.getInt(cursor.getColumnIndex("icon_id"));
+                int flag = cursor.getInt(cursor.getColumnIndex("flag"));
+                int visiblity = cursor.getInt(cursor.getColumnIndex("visiblity"));
+
+                temp = new CategoryBean(id, catName, iconId, colorCode, flag, visiblity);
+
+                categoryBeans.add(temp);
+                temp = null;
+            }
+            while (cursor.moveToNext());
+            close();
+            return categoryBeans;
+        }
+        close();
+        return null;
+    }//======end getAllCategoriesVisiblity()===========
+
 
     //============================start custom methods / Crud for Expense table ====================================
 
-    /*  CREATE TABLE "expense" (
-	"id"	INTEGER,
+    /*  CREATE TABLE "expense"
+    ("id"	INTEGER,
 	"expense_currency"	TEXT,
 	"expense_amount"	REAL,
 	"expense_category_icon"	INTEGER,
@@ -534,52 +604,4 @@ public class Database {
         return null;
     }//======end getAllDailyExpenses()===========
 
-    public ArrayList<ExpenseBean> getAllMonthlyExpenses(String startDate, String endDate) {
-        open();
-        ArrayList<ExpenseBean> expenseBean = new ArrayList<>();
-        ExpenseBean temp;
-        //String query111 = "select * from expense WHERE current_day <'" + startDate + "'AND current_day >" + endDate;
-
-        Log.d("date_range", "start Date: " + startDate);
-        Log.d("date_range", "end Date: " + endDate);
-
-        //String query111 = "select * from expense where current_day >= " + endDate + " and current_day <= " + startDate;
-
-        //String query111 = "select * from expense where current_day <= " + startDate + " and current_day >= " + endDate;
-
-        //String query111 = "SELECT * FROM expense WHERE DATE_FORMAT(current_day,'%Y-%m-%d') BETWEEN '2021-01-11' AND '2021-02-11'";
-
-        String query111 = "SELECT * FROM expense WHERE DATE(current_day) BETWEEN '11-01-2021' AND '11-02-2021'";
-
-        /* 11-02-2021 */
-        /* 11-01-2021 */
-
-        System.out.println("--query in getAllDailyExpenses : " + query111);
-        Cursor cursor = sqLiteDatabase.rawQuery(query111, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-
-                int id = cursor.getInt(cursor.getColumnIndex("id"));
-                String currency = cursor.getString(cursor.getColumnIndex("expense_currency"));
-                Double amount = cursor.getDouble(cursor.getColumnIndex("expense_amount"));
-                int icon = cursor.getInt(cursor.getColumnIndex("expense_category_icon"));
-                String category_name = cursor.getString(cursor.getColumnIndex("expense_category_name"));
-                String current_day = cursor.getString(cursor.getColumnIndex("current_day"));
-                String expense_description = cursor.getString(cursor.getColumnIndex("expense_description"));
-                String image_path = cursor.getString(cursor.getColumnIndex("image_path"));
-                String color_code = cursor.getString(cursor.getColumnIndex("color_code"));
-
-                temp = new ExpenseBean(id, currency, amount, icon, category_name, current_day, expense_description, image_path, color_code, 1);
-
-                expenseBean.add(temp);
-                temp = null;
-            }
-            while (cursor.moveToNext());
-            close();
-            return expenseBean;
-        }
-        close();
-        return null;
-    }//======end getAllDailyExpenses()===========
 }

@@ -30,7 +30,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
                     android:padding="5dp"
-                    android:src="@mipmap/back" />
+                    android:src="@drawable/back" />
 
                 <TextView
                     android:id="@+id/tv_add_category"
@@ -138,7 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:src="@mipmap/calendar_addexpense" />
+                android:src="@drawable/calendar_addexpense" />
 
             <TextView
                 android:id="@+id/tv_date"
@@ -184,7 +184,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="20dp"
-                android:src="@mipmap/title_addexpense" />
+                android:src="@drawable/title_addexpense" />
 
         </RelativeLayout>
 
@@ -206,14 +206,14 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="20dp"
-                android:src="@mipmap/image_addexpense" />
+                android:src="@drawable/image_addexpense" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/forward_arrow" />
+                android:src="@drawable/forward_arrow" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -251,7 +251,7 @@
                         android:layout_marginRight="20dp"
                         android:background="@drawable/current_day_background"
                         android:padding="20dp"
-                        android:src="@mipmap/camera__addexpense" />
+                        android:src="@drawable/camera__addexpense" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -365,8 +365,7 @@
             android:layout_below="@+id/galery_images_layout"
             android:layout_margin="20dp"
             android:text="RESET"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textSize="16sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCategories"

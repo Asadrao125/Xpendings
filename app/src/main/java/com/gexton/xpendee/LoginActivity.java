@@ -59,9 +59,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         AppEventsLogger.activateApp(getApplication());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.navy_blue, this.getTheme()));
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.navy_blue));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.white, this.getTheme()));
         }
 
         iv_google.setOnClickListener(new View.OnClickListener() {

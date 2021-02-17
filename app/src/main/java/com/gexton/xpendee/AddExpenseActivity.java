@@ -3,7 +3,6 @@ package com.gexton.xpendee;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import droidninja.filepicker.FilePickerBuilder;
 import droidninja.filepicker.FilePickerConst;
@@ -12,23 +11,17 @@ import droidninja.filepicker.utils.ContentUriUtils;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,12 +29,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gexton.xpendee.Adapters.CategoriesAdapterForExpense;
-import com.gexton.xpendee.Adapters.CategoriesListAdapter;
-import com.gexton.xpendee.Adapters.ImageBeanAdapter;
+import com.gexton.xpendee.adapters.CategoriesAdapterForExpense;
 import com.gexton.xpendee.model.CategoryBean;
 import com.gexton.xpendee.model.ExpenseBean;
-import com.gexton.xpendee.model.ImageBean;
 import com.gexton.xpendee.model.WalletBean;
 import com.gexton.xpendee.util.Database;
 import com.gexton.xpendee.util.RecyclerItemClickListener;
@@ -49,14 +39,11 @@ import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
-import static java.security.AccessController.getContext;
 
 public class AddExpenseActivity extends AppCompatActivity {
     ArrayList<CategoryBean> categoryBeanArrayList;
@@ -154,11 +141,10 @@ public class AddExpenseActivity extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManagerRVBP = new GridLayoutManager(getApplicationContext(), numberOfColumns);
         rvCategories.setLayoutManager(mLayoutManagerRVBP);
 
-        if (database.getAllCategories(1) != null) {
-            categoryBeanArrayList = database.getAllCategories(1);
+        if (database.getAllCategoriesVisiblity(1, 1) != null) {
+            categoryBeanArrayList = database.getAllCategoriesVisiblity(1, 1);
             adapter = new CategoriesAdapterForExpense(this, categoryBeanArrayList);
             rvCategories.setAdapter(adapter);
-
         }
 
         rvCategories.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(),

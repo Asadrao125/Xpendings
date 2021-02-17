@@ -29,9 +29,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gexton.xpendee.Adapters.CategoriesAdapterForExpense;
-import com.gexton.xpendee.Fragments.NewTimelineFragment;
-import com.gexton.xpendee.Fragments.TimelineFragment;
+import com.gexton.xpendee.adapters.CategoriesAdapterForExpense;
+import com.gexton.xpendee.fragments.NewTimelineFragment;
 import com.gexton.xpendee.model.CategoryBean;
 import com.gexton.xpendee.model.ExpenseBean;
 import com.gexton.xpendee.model.WalletBean;
@@ -106,7 +105,6 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
         val = getIntent().getStringExtra("val");
         tvToolBarTitle = findViewById(R.id.tvToolBarTitle);
         tv_expense = findViewById(R.id.tv_expense);
-        //categoryBeanArrayListPD = new ArrayList<>();
 
         pos = getIntent().getIntExtra("position", 10000);
         Log.d("position", "onCreate: " + pos);
@@ -201,14 +199,14 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
         if (val.equals("exp")) {
             tvToolBarTitle.setText("Edit Expense");
             tv_expense.setText("Expense");
-            if (database.getAllCategories(1) != null) {
-                categoryBeanArrayList = database.getAllCategories(1);
+            if (database.getAllCategoriesVisiblity(1, 1) != null) {
+                categoryBeanArrayList = database.getAllCategoriesVisiblity(1, 1);
             }
         } else if (val.equals("inc")) {
             tvToolBarTitle.setText("Edit Income");
             tv_expense.setText("Income");
-            if (database.getAllCategories(2) != null) {
-                categoryBeanArrayList = database.getAllCategories(2);
+            if (database.getAllCategoriesVisiblity(2, 1) != null) {
+                categoryBeanArrayList = database.getAllCategoriesVisiblity(2, 1);
             }
         }
 
@@ -224,7 +222,6 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
                 catName = categoryBeanArrayList.get(position).categoryName;
                 categoryIcon = categoryBeanArrayList.get(position).categoryIcon;
                 color_code = categoryBeanArrayList.get(position).categoryHashCode;
-                //colorHex = color_code;
 
                 adapter.selectedPos = position;
                 adapter.notifyDataSetChanged();
@@ -360,13 +357,6 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
         });
 
         fetchGalleryImages(UpdateOrDeleteExpense.this);
-
-       /* for (int i = 0; i < categoryBeanArrayList.size(); i++) {
-            if (categoryBeanArrayList.get(i).id == id) {
-                Log.d("id_id_id", "onCreate: " + id);
-                tvDelete.setVisibility(View.GONE);
-            }
-        }*/
 
     }
 

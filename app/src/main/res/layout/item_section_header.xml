@@ -6,7 +6,6 @@
     android:elevation="8dp"
     app:cardMaxElevation="8dp"
     app:cardElevation="8dp"
-    app:cardCornerRadius="8dp"
     android:layout_margin="10dp">
 
    <RelativeLayout
@@ -34,11 +33,11 @@
 
                    <ImageView
                        android:id="@+id/image_view"
-                       android:layout_width="30dp"
-                       android:layout_height="30dp"
+                       android:layout_width="20dp"
+                       android:layout_height="20dp"
                        android:layout_centerHorizontal="true"
                        android:layout_centerInParent="true"
-                       android:src="@mipmap/shopping"
+                       android:src="@drawable/shopping"
                        app:tint="@color/white" />
 
                </RelativeLayout>
@@ -90,7 +89,7 @@
                    android:layout_marginTop="5dp"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:src="@mipmap/edit_category"
+                   android:src="@drawable/edit_category"
                    android:layout_toEndOf="@+id/tv_catName"/>
 
                <androidx.cardview.widget.CardView
@@ -124,8 +123,7 @@
            android:layout_alignParentTop="true"
            android:padding="10dp"
            android:text="Date"
-           android:textColor="@color/black"
-           android:textSize="18sp" />
+           android:textColor="@color/black" />
 
    </RelativeLayout>
 

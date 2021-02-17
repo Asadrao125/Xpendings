@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.NewBudgetFragment">
+    tools:context=".fragments.NewBudgetFragment">
 
     <LinearLayout
         android:visibility="gone"
@@ -21,7 +21,7 @@
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/budget"/>
+            android:src="@drawable/budget"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -96,14 +96,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:src="@mipmap/budget_green" />
+                    android:src="@drawable/budget_green" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_alignParentEnd="true"
-                    android:src="@mipmap/forward_arrow" />
+                    android:src="@drawable/forward_arrow" />
 
                 <TextView
                     android:layout_width="wrap_content"
