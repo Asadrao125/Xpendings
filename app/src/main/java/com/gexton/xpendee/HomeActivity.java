@@ -1,10 +1,12 @@
 package com.gexton.xpendee;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -97,8 +99,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         //Saving Predefined Data
-
-        //drawable
+        // Expense
         categoryBeanArrayListPD.add(new CategoryBean(1, "Beauty", R.drawable.beauty, "#7944d0", 1, 1));
         categoryBeanArrayListPD.add(new CategoryBean(2, "Entertainment", R.drawable.entertainment, "#ffa801", 1, 1));
         categoryBeanArrayListPD.add(new CategoryBean(3, "Food and Drink", R.drawable.food, "#ffa801", 1, 1));
@@ -142,26 +143,21 @@ public class HomeActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         permissionCheck();
-        if (indexVal == 0 || indexVal >= 0) {
-            if (indexVal == 0) {
-                //viewPager.setCurrentItem(0, true);
-            } else if (indexVal == 1) {
-                //viewPager.setCurrentItem(1, true);
-            } else if (indexVal == 2) {
-                //viewPager.setCurrentItem(2, true);
-            } else if (indexVal == 3) {
-                //viewPager.setCurrentItem(3, true);
-            } else if (indexVal == 4) {
-                //viewPager.setCurrentItem(4, true);
-            }
-        }
     }
 
     public void permissionCheck() {
+
+        boolean shouldShowRequestPersmissionRational = ActivityCompat.shouldShowRequestPermissionRationale(HomeActivity.this,
+                Manifest.permission.READ_EXTERNAL_STORAGE);
+        System.out.println("-- shouldShowRequestPersmissionRational: "+shouldShowRequestPersmissionRational);
+
+        boolean isPermissionGranted = ActivityCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED;
+
+        System.out.println("-- isPermissionGranted: "+isPermissionGranted);
+
         Dexter.withContext(this)
-                .withPermissions(
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
                 .withListener(new MultiplePermissionsListener() {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
@@ -177,5 +173,4 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 }).check();
     }
-
 }

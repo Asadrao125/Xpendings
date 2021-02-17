@@ -71,16 +71,6 @@ public class CategoriesAdapterForSelectCategoryBudget extends RecyclerView.Adapt
         String jsonText = prefs.getString("category_bean_id's", null);
         String[] text = gson.fromJson(jsonText, String[].class);
 
-        /*for (int i = 0; i < text.length; i++) {
-            Toast.makeText(context, "" + text[i], Toast.LENGTH_SHORT).show();
-            int n = Integer.parseInt(text[i]);
-            if (n == categoryBeanArrayList.get(i).id) {
-                holder.cbCategory.setChecked(true);
-            } else {
-                holder.cbCategory.setChecked(false);
-            }
-        }*/
-
     }
 
     @Override

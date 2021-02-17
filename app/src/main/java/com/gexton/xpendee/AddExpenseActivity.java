@@ -2,6 +2,8 @@ package com.gexton.xpendee;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import droidninja.filepicker.FilePickerBuilder;
@@ -15,6 +17,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,9 +28,11 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.gexton.xpendee.adapters.CategoriesAdapterForExpense;
 import com.gexton.xpendee.model.CategoryBean;
@@ -46,15 +51,17 @@ import java.util.Date;
 import java.util.Locale;
 
 public class AddExpenseActivity extends AppCompatActivity {
-    ArrayList<CategoryBean> categoryBeanArrayList;
+    ArrayList<CategoryBean> categoryBeanArrayListExpense;
+    ArrayList<CategoryBean> categoryBeanArrayListIncome;
     CategoriesAdapterForExpense adapter = null;
-    RecyclerView rvCategories;
+    CategoriesAdapterForExpense adapterIncome = null;
     Database database;
     TextView tv_current_day, tv_date, tv_save, tv_reset, tv_categories, tv_details;
     public ImageView img_back, img_camera;
     @SuppressLint("StaticFieldLeak")
     public static ImageView img_1, img_2, img_3, img_4, img_5, img_6;
     String image_path, current_date, description, currency = "PKR", catName, color_code, user_selected_date, colorHex;
+    int flag = 0;
     RelativeLayout current_day_layout, select_image_layout, no_data_layout;
     EditText edt_description, edt_balance;
     int categoryIcon;
@@ -64,6 +71,16 @@ public class AddExpenseActivity extends AppCompatActivity {
     final int CUSTOM_REQUEST_CODE = 987;
     public static String img_path1, img_path2, img_path3, img_path4, img_path5, img_path6;
     SharedPreferences prefs1;
+    ViewFlipper vfCategories;
+    TextView tvExpense, tvIncome;
+    RecyclerView rvCategoriesExpense, rvCategoriesIncome;
+    ImageView imgTick, imgSetting;
+    CardView parentLayoutCategories;
+    View transpareView;
+    TextView tv_add_category, tv_expense;
+    ImageView imageview_Category;
+    RelativeLayout layout_complete;
+    ImageView img_calendar, img_title_add_expense, img_select_imagee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +92,6 @@ public class AddExpenseActivity extends AppCompatActivity {
         }
 
         database = new Database(AddExpenseActivity.this);
-
-        rvCategories = findViewById(R.id.rvCategories);
         tv_current_day = findViewById(R.id.tv_current_day);
         img_1 = findViewById(R.id.img_1);
         img_2 = findViewById(R.id.img_2);
@@ -97,8 +112,25 @@ public class AddExpenseActivity extends AppCompatActivity {
         tv_details = findViewById(R.id.tv_details);
         myCalendar = Calendar.getInstance();
         img_camera = findViewById(R.id.img_camera);
-        categoryBeanArrayList = new ArrayList<>();
         database = new Database(getApplicationContext());
+        vfCategories = findViewById(R.id.vfCategories);
+        tvExpense = findViewById(R.id.tvExpense);
+        tvIncome = findViewById(R.id.tvIncome);
+        rvCategoriesExpense = findViewById(R.id.rvCategoriesExpense);
+        rvCategoriesIncome = findViewById(R.id.rvCategoriesIncome);
+        imgTick = findViewById(R.id.imgTick);
+        imgSetting = findViewById(R.id.imgSetting);
+        parentLayoutCategories = findViewById(R.id.parentLayoutCategories);
+        transpareView = findViewById(R.id.transpareView);
+        tv_add_category = findViewById(R.id.tv_add_category);
+        tv_expense = findViewById(R.id.tv_expense);
+        categoryBeanArrayListIncome = new ArrayList<>();
+        categoryBeanArrayListExpense = new ArrayList<>();
+        imageview_Category = findViewById(R.id.imageview_Category);
+        layout_complete = findViewById(R.id.layout_complete);
+        img_calendar = findViewById(R.id.img_calendar);
+        img_title_add_expense = findViewById(R.id.img_title_add_expense);
+        img_select_imagee = findViewById(R.id.img_select_imagee);
 
         ClickListeners();
 
@@ -137,28 +169,80 @@ public class AddExpenseActivity extends AppCompatActivity {
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
         current_date = df.format(c);//current date end
 
-        int numberOfColumns = 3;
-        RecyclerView.LayoutManager mLayoutManagerRVBP = new GridLayoutManager(getApplicationContext(), numberOfColumns);
-        rvCategories.setLayoutManager(mLayoutManagerRVBP);
+        // Income Recycler View
+        RecyclerView.LayoutManager mLayoutManagerRVBP = new GridLayoutManager(getApplicationContext(), 3);
+        rvCategoriesIncome.setLayoutManager(mLayoutManagerRVBP);
 
-        if (database.getAllCategoriesVisiblity(1, 1) != null) {
-            categoryBeanArrayList = database.getAllCategoriesVisiblity(1, 1);
-            adapter = new CategoriesAdapterForExpense(this, categoryBeanArrayList);
-            rvCategories.setAdapter(adapter);
+        if (database.getAllCategoriesVisiblity(2, 1) != null) {
+            categoryBeanArrayListIncome = database.getAllCategoriesVisiblity(2, 1);
+            adapterIncome = new CategoriesAdapterForExpense(this, categoryBeanArrayListIncome);
+            rvCategoriesIncome.setAdapter(adapterIncome);
         }
 
-        rvCategories.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(),
-                rvCategories, new RecyclerItemClickListener.OnItemClickListener() {
+        rvCategoriesIncome.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(),
+                rvCategoriesIncome, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
-                if (database.getAllCategories(1) != null) {
-                    catName = categoryBeanArrayList.get(position).categoryName;
-                    categoryIcon = categoryBeanArrayList.get(position).categoryIcon;
-                    color_code = categoryBeanArrayList.get(position).categoryHashCode;
+                if (database.getAllCategoriesVisiblity(2, 1) != null) {
+                    categoryBeanArrayListIncome = database.getAllCategoriesVisiblity(2, 1);
+                    catName = categoryBeanArrayListIncome.get(position).categoryName;
+                    categoryIcon = categoryBeanArrayListIncome.get(position).categoryIcon;
+                    color_code = categoryBeanArrayListIncome.get(position).categoryHashCode;
                     colorHex = color_code;
+                    flag = categoryBeanArrayListIncome.get(position).catFlag;
+                    parentLayoutCategories.setVisibility(View.GONE);
+                    imageview_Category.setImageResource(categoryIcon);
+                    imageview_Category.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
+                    layout_complete.setBackgroundColor(Color.parseColor(colorHex));
+                    img_calendar.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
+                    img_title_add_expense.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
+                    img_select_imagee.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        getWindow().setStatusBarColor(Color.parseColor(colorHex));
+                    }
                 }
+                adapterIncome.selectedPos = position;
+                adapterIncome.notifyDataSetChanged();
+            }
 
+            @Override
+            public void onItemLongClick(View view, int position) {
+                System.out.println("-- item long press pos: " + position);
+            }
+        }));
+
+        // Expense Recycler View
+        RecyclerView.LayoutManager mLayoutManagerRVBP2 = new GridLayoutManager(getApplicationContext(), 3);
+        rvCategoriesExpense.setLayoutManager(mLayoutManagerRVBP2);
+
+        if (database.getAllCategoriesVisiblity(1, 1) != null) {
+            categoryBeanArrayListExpense = database.getAllCategoriesVisiblity(1, 1);
+            adapter = new CategoriesAdapterForExpense(this, categoryBeanArrayListExpense);
+            rvCategoriesExpense.setAdapter(adapter);
+        }
+
+        rvCategoriesExpense.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(),
+                rvCategoriesExpense, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                categoryBeanArrayListExpense = database.getAllCategoriesVisiblity(1, 1);
+                if (database.getAllCategoriesVisiblity(1, 1) != null) {
+                    catName = categoryBeanArrayListExpense.get(position).categoryName;
+                    categoryIcon = categoryBeanArrayListExpense.get(position).categoryIcon;
+                    color_code = categoryBeanArrayListExpense.get(position).categoryHashCode;
+                    colorHex = color_code;
+                    flag = categoryBeanArrayListExpense.get(position).catFlag;
+                    parentLayoutCategories.setVisibility(View.GONE);
+                    layout_complete.setBackgroundColor(Color.parseColor(colorHex));
+                    imageview_Category.setImageResource(categoryIcon);
+                    imageview_Category.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
+                    img_calendar.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
+                    img_title_add_expense.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
+                    img_select_imagee.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        getWindow().setStatusBarColor(Color.parseColor(colorHex));
+                    }
+                }
                 adapter.selectedPos = position;
                 adapter.notifyDataSetChanged();
             }
@@ -202,7 +286,7 @@ public class AddExpenseActivity extends AppCompatActivity {
 
                         Double newBalance = balance - expense_amount;
                         ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
-                                catName, user_selected_date, description, image_path, colorHex, 1);
+                                catName, user_selected_date, description, image_path, colorHex, flag);
                         database.insertExpense(expenseBean);
                         WalletBean newWalletBean = new WalletBean(newBalance, walletName, currency);
 
@@ -266,7 +350,6 @@ public class AddExpenseActivity extends AppCompatActivity {
                 String formattedDate = new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime());
                 tv_date.setText(formattedDate);
                 user_selected_date = formattedDate;
-
             }
         });
 
@@ -345,6 +428,82 @@ public class AddExpenseActivity extends AppCompatActivity {
                 img_5.setBackgroundResource(R.drawable.cirrcle_empty);
                 img_6.setBackgroundResource(R.drawable.square_shape);
                 image_path = img_path6;
+            }
+        });
+
+        tvExpense.setTextColor(Color.BLACK);
+
+        tvExpense.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                vfCategories.setDisplayedChild(0);
+                tvExpense.setTextColor(Color.BLACK);
+                tvIncome.setTextColor(Color.LTGRAY);
+                final int sdk = android.os.Build.VERSION.SDK_INT;
+                if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                    tvExpense.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.curve_for_transaction_category));
+                } else {
+                    tvExpense.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.curve_for_transaction_category));
+                }
+                tvIncome.setBackgroundResource(0);
+                tv_add_category.setText("Add Expense");
+                tv_expense.setText("Add Expense");
+            }
+        });
+
+        tvIncome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                vfCategories.setDisplayedChild(1);
+                tvIncome.setTextColor(Color.BLACK);
+                tvExpense.setTextColor(Color.LTGRAY);
+                final int sdk = android.os.Build.VERSION.SDK_INT;
+                if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                    tvIncome.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.curve_for_transaction_category));
+                } else {
+                    tvIncome.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.curve_for_transaction_category));
+                }
+                tvExpense.setBackgroundResource(0);
+                tv_add_category.setText("Add Income");
+                tv_expense.setText("Add Income");
+            }
+        });
+
+        imgTick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                parentLayoutCategories.setVisibility(View.GONE);
+            }
+        });
+
+        imgSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                parentLayoutCategories.setVisibility(View.GONE);
+                startActivity(new Intent(getApplicationContext(), VisiblistyActivityForCategories.class));
+            }
+        });
+
+        transpareView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (parentLayoutCategories.isShown()) {
+                    parentLayoutCategories.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        parentLayoutCategories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        imageview_Category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                parentLayoutCategories.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -441,5 +600,23 @@ public class AddExpenseActivity extends AppCompatActivity {
 
         Log.e("fatch in", "images");
         return galleryImageUrls;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Income
+        if (database.getAllCategoriesVisiblity(2, 1) != null) {
+            categoryBeanArrayListIncome = database.getAllCategoriesVisiblity(2, 1);
+            adapterIncome = new CategoriesAdapterForExpense(this, categoryBeanArrayListIncome);
+            rvCategoriesIncome.setAdapter(adapterIncome);
+        }
+
+        // Expense
+        if (database.getAllCategoriesVisiblity(1, 1) != null) {
+            categoryBeanArrayListExpense = database.getAllCategoriesVisiblity(1, 1);
+            adapter = new CategoriesAdapterForExpense(this, categoryBeanArrayListExpense);
+            rvCategoriesExpense.setAdapter(adapter);
+        }
     }
 }

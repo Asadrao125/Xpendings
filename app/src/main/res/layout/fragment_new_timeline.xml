@@ -14,15 +14,15 @@
         android:layout_below="@+id/calendarView"
         android:baselineAligned="false"
         android:orientation="horizontal"
-        android:padding="10dp"
         android:visibility="gone"
-        android:weightSum="3">
+        android:weightSum="2">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:padding="10dp"
             android:orientation="vertical">
 
             <TextView
@@ -45,26 +45,17 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="3px"
-                android:layout_height="40dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/light_grey" />
-
-        </LinearLayout>
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:padding="10dp"
             android:orientation="vertical">
 
             <TextView

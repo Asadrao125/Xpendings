@@ -234,6 +234,13 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
             }
         }));
 
+        for (int i = 0; i < database.getAllExpenseCategories().size(); i++) {
+            if (catName.equals(categoryBeanArrayList.get(i).categoryName)) {
+                adapter.selectedPos = pos;
+                adapter.notifyDataSetChanged();
+            }
+        }
+
         tv_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -193,9 +193,7 @@
             android:layout_width="match_parent"
             android:visibility="visible"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_categories"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp" />
+            android:layout_below="@+id/tv_categories" />
 
         <RelativeLayout
             android:id="@+id/write_description_layout"

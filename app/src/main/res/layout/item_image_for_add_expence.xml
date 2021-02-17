@@ -9,7 +9,9 @@
 
     <RelativeLayout
         android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:id="@+id/layout_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,7 +19,7 @@
 
         <ImageView
             android:id="@+id/image_view"
-            android:tint="@color/white"
+            app:tint="@color/white"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerHorizontal="true"
@@ -28,15 +30,17 @@
 
     <TextView
         android:id="@+id/tvCatName"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout_layout"
-        android:text="Name"
+        android:text="Insurance Payout"
         android:ellipsize="end"
-        android:singleLine="true"
+        android:maxLength="20"
+        android:maxLines="2"
+        android:minLines="2"
+        android:gravity="center"
         android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
-        android:textAlignment="center"
-        android:textSize="16sp" />
+        android:textAlignment="center" />
 
 </RelativeLayout>

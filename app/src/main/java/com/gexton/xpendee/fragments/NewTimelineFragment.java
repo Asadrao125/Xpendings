@@ -180,7 +180,7 @@ public class NewTimelineFragment extends Fragment {
             public void onClick(View view) {
                 filter_layout.setVisibility(View.GONE);
                 transparentView.setVisibility(View.GONE);
-                fab_add_expense.setVisibility(View.VISIBLE);
+                //fab_add_expense.setVisibility(View.VISIBLE);
             }
         });
 
@@ -510,7 +510,6 @@ public class NewTimelineFragment extends Fragment {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         if (report.areAllPermissionsGranted()) {
-                            //Toast.makeText(getContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getContext(), AddExpenseActivity.class));
                         }
                     }
@@ -521,5 +520,4 @@ public class NewTimelineFragment extends Fragment {
                     }
                 }).check();
     }
-
 }
