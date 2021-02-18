@@ -7,5 +7,6 @@
 
     <string name="fb_login_protocol_scheme">fb192519792590832</string>
     <string name="playstore_url"><![CDATA[" <string name=\"playstore_url\">https://play.google.com/store/apps/details?id=com.gexton.xpendee</string>"]]></string>
+    <string name="this_feature_will_be_available_in_near_future_thankyou_for_using_xpendings">This feature will be available in near future. Thankyou for using Xpendings</string>
 
 </resources>

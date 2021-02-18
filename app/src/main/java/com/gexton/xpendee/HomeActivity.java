@@ -5,12 +5,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
+import android.app.Application;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.gexton.xpendee.adapters.ViewPagerAdapterHome;
 import com.gexton.xpendee.model.CategoryBean;
 import com.gexton.xpendee.util.Database;
