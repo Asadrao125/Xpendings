@@ -39,7 +39,7 @@ public class MoreFragment extends Fragment {
     String MY_PREFS_NAME = "Xpendee";
     TextView tv_username, tv_email;
     CircleImageView profile_image;
-    RelativeLayout manage_categories, manual_wallets;
+    RelativeLayout manage_categories, add_income;
     View view;
     RelativeLayout logout_layout, about_app_layout, share_app_layout, rate_app_layout;
     SharedPreferences preferences;
@@ -55,7 +55,7 @@ public class MoreFragment extends Fragment {
         tv_email = view.findViewById(R.id.tv_email);
         profile_image = view.findViewById(R.id.profile_image);
         manage_categories = view.findViewById(R.id.manage_categories);
-        manual_wallets = view.findViewById(R.id.manual_wallets);
+        add_income = view.findViewById(R.id.add_income);
         logout_layout = view.findViewById(R.id.logout_layout);
         about_app_layout = view.findViewById(R.id.about_app_layout);
         share_app_layout = view.findViewById(R.id.share_app_layout);
@@ -69,7 +69,7 @@ public class MoreFragment extends Fragment {
             }
         });
 
-        manual_wallets.setOnClickListener(new View.OnClickListener() {
+        add_income.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 permissionCheck();
@@ -179,21 +179,21 @@ public class MoreFragment extends Fragment {
         Gson gson = new Gson();
         WalletBean walletBean = gson.fromJson(json, WalletBean.class);
         if (walletBean != null) {
-            manual_wallets.setVisibility(View.VISIBLE);
+            add_income.setVisibility(View.VISIBLE);
         } else {
-            manual_wallets.setVisibility(View.GONE);
+            add_income.setVisibility(View.GONE);
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        checkWalletExistance();
+        //checkWalletExistance();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        checkWalletExistance();
+        //checkWalletExistance();
     }
 }

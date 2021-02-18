@@ -95,11 +95,11 @@
                 <EditText
                     android:layout_centerVertical="true"
                     android:id="@+id/edt_balance"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:background="@null"
                     android:hint="e.g 1500"
+                    android:background="@null"
                     android:imeOptions="actionDone"
                     android:inputType="numberDecimal"
                     android:maxLength="10"
@@ -107,8 +107,8 @@
                     android:layout_margin="5dp"
                     android:layout_below="@+id/tv_expense"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/dark_grey"
-                    android:textColorHint="@color/dark_grey" />
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/light_grey" />
 
                 <ImageView
                     android:id="@+id/imageview_Category"
@@ -121,7 +121,7 @@
 
             </RelativeLayout>
 
-        </RelativeLayout>
+        </RelativeLayout> <!-- Toolbar Layout -->
 
         <TextView
             android:id="@+id/tv_details"
@@ -176,7 +176,7 @@
                 android:paddingTop="5dp"
                 android:text="Tuesday" />
 
-        </RelativeLayout>
+        </RelativeLayout> <!-- Calendar Layout -->
 
         <RelativeLayout
             android:id="@+id/write_description_layout"
@@ -201,7 +201,7 @@
                 android:layout_marginRight="10dp"
                 android:src="@drawable/title_addexpense" />
 
-        </RelativeLayout>
+        </RelativeLayout> <!-- Write Description Layout -->
 
         <RelativeLayout
             android:id="@+id/select_image_layout"
@@ -238,7 +238,7 @@
                 android:text="Select Image"
                 android:textSize="16sp" />
 
-        </RelativeLayout>
+        </RelativeLayout> <!-- Select Image Layout -->
 
         <RelativeLayout
             android:id="@+id/galery_images_layout"
@@ -327,7 +327,7 @@
 
             </HorizontalScrollView>
 
-        </RelativeLayout>
+        </RelativeLayout> <!-- Gallery Images Layut -->
 
         <RelativeLayout
             android:id="@+id/no_data_layout"
@@ -345,7 +345,7 @@
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
-        </RelativeLayout>
+        </RelativeLayout> <!-- No Data Layout -->
 
         <TextView
             android:id="@+id/tv_categories"

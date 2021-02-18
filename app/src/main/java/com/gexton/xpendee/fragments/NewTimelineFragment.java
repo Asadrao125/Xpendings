@@ -187,7 +187,8 @@ public class NewTimelineFragment extends Fragment {
         fab_add_expense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                permissionCheck();
+                //permissionCheck();
+                startActivity(new Intent(getContext(), AddExpenseActivity.class));
             }
         });
 

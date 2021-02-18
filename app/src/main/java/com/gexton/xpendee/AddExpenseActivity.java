@@ -3,6 +3,7 @@ package com.gexton.xpendee;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,12 +11,14 @@ import droidninja.filepicker.FilePickerBuilder;
 import droidninja.filepicker.FilePickerConst;
 import droidninja.filepicker.utils.ContentUriUtils;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -51,36 +54,37 @@ import java.util.Date;
 import java.util.Locale;
 
 public class AddExpenseActivity extends AppCompatActivity {
-    ArrayList<CategoryBean> categoryBeanArrayListExpense;
-    ArrayList<CategoryBean> categoryBeanArrayListIncome;
-    CategoriesAdapterForExpense adapter = null;
-    CategoriesAdapterForExpense adapterIncome = null;
-    Database database;
-    TextView tv_current_day, tv_date, tv_save, tv_reset, tv_categories, tv_details;
-    public ImageView img_back, img_camera;
-    @SuppressLint("StaticFieldLeak")
-    public static ImageView img_1, img_2, img_3, img_4, img_5, img_6;
-    String image_path, current_date, description, currency = "PKR", catName, color_code, user_selected_date, colorHex;
     int flag = 0;
-    RelativeLayout current_day_layout, select_image_layout, no_data_layout;
-    EditText edt_description, edt_balance;
     int categoryIcon;
-    Double expense_amount;
+    Database database;
+    View transpareView;
     Calendar myCalendar;
-    private ArrayList<Uri> photoPaths = new ArrayList<>();
-    final int CUSTOM_REQUEST_CODE = 987;
-    public static String img_path1, img_path2, img_path3, img_path4, img_path5, img_path6;
-    SharedPreferences prefs1;
+    Double expense_amount;
     ViewFlipper vfCategories;
     TextView tvExpense, tvIncome;
-    RecyclerView rvCategoriesExpense, rvCategoriesIncome;
-    ImageView imgTick, imgSetting;
-    CardView parentLayoutCategories;
-    View transpareView;
-    TextView tv_add_category, tv_expense;
     ImageView imageview_Category;
-    RelativeLayout layout_complete;
+    ImageView imgTick, imgSetting;
+    SharedPreferences prefs1, prefs;
+    CardView parentLayoutCategories;
+    final int CUSTOM_REQUEST_CODE = 987;
+    public ImageView img_back, img_camera;
+    EditText edt_description, edt_balance;
+    TextView tv_add_category, tv_expense;
+    CategoriesAdapterForExpense adapter = null;
+    String MY_PREFS_NAME = "MY_PREFS_NAME", expense;
+    CategoriesAdapterForExpense adapterIncome = null;
+    ArrayList<CategoryBean> categoryBeanArrayListIncome;
+    ArrayList<CategoryBean> categoryBeanArrayListExpense;
+    private ArrayList<Uri> photoPaths = new ArrayList<>();
+    RecyclerView rvCategoriesExpense, rvCategoriesIncome;
+    RelativeLayout layout_complete, galery_images_layout;
     ImageView img_calendar, img_title_add_expense, img_select_imagee;
+    public static ImageView img_1, img_2, img_3, img_4, img_5, img_6;
+    RelativeLayout current_day_layout, select_image_layout, no_data_layout;
+    @SuppressLint("StaticFieldLeak")
+    TextView tv_current_day, tv_date, tv_save, tv_reset, tv_categories, tv_details;
+    public static String img_path1, img_path2, img_path3, img_path4, img_path5, img_path6;
+    String image_path, current_date, description, currency = "PKR", catName, color_code, user_selected_date, colorHex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,46 +95,7 @@ public class AddExpenseActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(getResources().getColor(R.color.navy_blue, this.getTheme()));
         }
 
-        database = new Database(AddExpenseActivity.this);
-        tv_current_day = findViewById(R.id.tv_current_day);
-        img_1 = findViewById(R.id.img_1);
-        img_2 = findViewById(R.id.img_2);
-        img_3 = findViewById(R.id.img_3);
-        img_4 = findViewById(R.id.img_4);
-        img_5 = findViewById(R.id.img_5);
-        img_6 = findViewById(R.id.img_6);
-        current_day_layout = findViewById(R.id.current_day_layout);
-        tv_date = findViewById(R.id.tv_date);
-        edt_description = findViewById(R.id.edt_description);
-        select_image_layout = findViewById(R.id.select_image_layout);
-        edt_balance = findViewById(R.id.edt_balance);
-        tv_save = findViewById(R.id.tv_save);
-        tv_reset = findViewById(R.id.tv_reset);
-        img_back = findViewById(R.id.img_back);
-        tv_categories = findViewById(R.id.tv_categories);
-        no_data_layout = findViewById(R.id.no_data_layout);
-        tv_details = findViewById(R.id.tv_details);
-        myCalendar = Calendar.getInstance();
-        img_camera = findViewById(R.id.img_camera);
-        database = new Database(getApplicationContext());
-        vfCategories = findViewById(R.id.vfCategories);
-        tvExpense = findViewById(R.id.tvExpense);
-        tvIncome = findViewById(R.id.tvIncome);
-        rvCategoriesExpense = findViewById(R.id.rvCategoriesExpense);
-        rvCategoriesIncome = findViewById(R.id.rvCategoriesIncome);
-        imgTick = findViewById(R.id.imgTick);
-        imgSetting = findViewById(R.id.imgSetting);
-        parentLayoutCategories = findViewById(R.id.parentLayoutCategories);
-        transpareView = findViewById(R.id.transpareView);
-        tv_add_category = findViewById(R.id.tv_add_category);
-        tv_expense = findViewById(R.id.tv_expense);
-        categoryBeanArrayListIncome = new ArrayList<>();
-        categoryBeanArrayListExpense = new ArrayList<>();
-        imageview_Category = findViewById(R.id.imageview_Category);
-        layout_complete = findViewById(R.id.layout_complete);
-        img_calendar = findViewById(R.id.img_calendar);
-        img_title_add_expense = findViewById(R.id.img_title_add_expense);
-        img_select_imagee = findViewById(R.id.img_select_imagee);
+        initialise();
 
         ClickListeners();
 
@@ -257,7 +222,7 @@ public class AddExpenseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String expense = edt_balance.getText().toString().trim();
+                expense = edt_balance.getText().toString().trim();
                 description = edt_description.getText().toString().trim();
 
                 if (TextUtils.isEmpty(expense)) {
@@ -271,37 +236,67 @@ public class AddExpenseActivity extends AppCompatActivity {
                 } else if (TextUtils.isEmpty(user_selected_date)) {
                     Toast.makeText(AddExpenseActivity.this, "Please enter date", Toast.LENGTH_SHORT).show();
                 } else {
+                    if (flag == 1) {
+                        prefs1 = getApplicationContext().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                        if (!prefs1.getString("Wallet_Bean", "").equals("")) {
+                            String json = prefs1.getString("Wallet_Bean", "");
+                            Gson gson = new Gson();
+                            WalletBean walletBean = gson.fromJson(json, WalletBean.class);
 
-                    prefs1 = getApplicationContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
-                    if (!prefs1.getString("Wallet_Bean", "").equals("")) {
-                        String json = prefs1.getString("Wallet_Bean", "");
+                            expense_amount = Double.parseDouble(expense);
+
+                            Double balance = walletBean.balance;
+                            String currency = walletBean.currency;
+                            String walletName = walletBean.wallet_name;
+
+                            Double newBalance = balance - expense_amount;
+                            WalletBean newWalletBean = new WalletBean(newBalance, walletName, currency);
+
+                            Gson newGson = new Gson();
+                            String newJson = newGson.toJson(newWalletBean);
+
+                            SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
+                            editor.putString("Wallet_Bean", newJson);
+                            editor.apply();
+
+                            ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
+                                    catName, user_selected_date, description, image_path, colorHex, 1);
+                            database.insertExpense(expenseBean);
+
+                            onBackPressed();
+                        }
+                    }
+
+                    if (flag == 2) {
+
+                        prefs = getApplicationContext().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+
+                        String json = prefs.getString("Wallet_Bean", "");
                         Gson gson = new Gson();
                         WalletBean walletBean = gson.fromJson(json, WalletBean.class);
-
-                        expense_amount = Double.parseDouble(expense);
 
                         Double balance = walletBean.balance;
                         String currency = walletBean.currency;
                         String walletName = walletBean.wallet_name;
 
-                        Double newBalance = balance - expense_amount;
-                        ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
-                                catName, user_selected_date, description, image_path, colorHex, flag);
-                        database.insertExpense(expenseBean);
-                        WalletBean newWalletBean = new WalletBean(newBalance, walletName, currency);
+                        expense_amount = Double.parseDouble(expense);
+                        Double newBalance = balance + expense_amount;
 
+                        WalletBean newWalletBean = new WalletBean(newBalance, walletName, currency);
                         Gson newGson = new Gson();
                         String newJson = newGson.toJson(newWalletBean);
 
-                        SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
+                        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                         editor.putString("Wallet_Bean", newJson);
                         editor.apply();
+
+                        ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
+                                catName, user_selected_date, description, image_path, colorHex, 2);
+                        database.insertExpense(expenseBean);
+
                         onBackPressed();
-                    } else {
-                        Toast.makeText(AddExpenseActivity.this, "Please Add Wallet and Try Again", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                        finish();
                     }
+
                 }
             }
         });
@@ -319,7 +314,62 @@ public class AddExpenseActivity extends AppCompatActivity {
             }
         });
 
-        fetchGalleryImages(AddExpenseActivity.this);
+        boolean isPermissionGranted = ActivityCompat.checkSelfPermission(AddExpenseActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED;
+
+        if (isPermissionGranted) {
+            fetchGalleryImages(AddExpenseActivity.this);
+            select_image_layout.setVisibility(View.VISIBLE);
+            galery_images_layout.setVisibility(View.VISIBLE);
+        } else {
+            select_image_layout.setVisibility(View.GONE);
+            galery_images_layout.setVisibility(View.GONE);
+        }
+
+    }
+
+    private void initialise() {
+        database = new Database(AddExpenseActivity.this);
+        tv_current_day = findViewById(R.id.tv_current_day);
+        img_1 = findViewById(R.id.img_1);
+        img_2 = findViewById(R.id.img_2);
+        img_3 = findViewById(R.id.img_3);
+        img_4 = findViewById(R.id.img_4);
+        img_5 = findViewById(R.id.img_5);
+        img_6 = findViewById(R.id.img_6);
+        current_day_layout = findViewById(R.id.current_day_layout);
+        tv_date = findViewById(R.id.tv_date);
+        edt_description = findViewById(R.id.edt_description);
+        select_image_layout = findViewById(R.id.select_image_layout);
+        edt_balance = findViewById(R.id.edt_balance);
+        tv_save = findViewById(R.id.tv_save);
+        tv_reset = findViewById(R.id.tv_reset);
+        img_back = findViewById(R.id.img_back);
+        tv_categories = findViewById(R.id.tv_categories);
+        no_data_layout = findViewById(R.id.no_data_layout);
+        tv_details = findViewById(R.id.tv_details);
+        myCalendar = Calendar.getInstance();
+        img_camera = findViewById(R.id.img_camera);
+        database = new Database(getApplicationContext());
+        vfCategories = findViewById(R.id.vfCategories);
+        tvExpense = findViewById(R.id.tvExpense);
+        tvIncome = findViewById(R.id.tvIncome);
+        rvCategoriesExpense = findViewById(R.id.rvCategoriesExpense);
+        rvCategoriesIncome = findViewById(R.id.rvCategoriesIncome);
+        imgTick = findViewById(R.id.imgTick);
+        imgSetting = findViewById(R.id.imgSetting);
+        parentLayoutCategories = findViewById(R.id.parentLayoutCategories);
+        transpareView = findViewById(R.id.transpareView);
+        tv_add_category = findViewById(R.id.tv_add_category);
+        tv_expense = findViewById(R.id.tv_expense);
+        categoryBeanArrayListIncome = new ArrayList<>();
+        categoryBeanArrayListExpense = new ArrayList<>();
+        imageview_Category = findViewById(R.id.imageview_Category);
+        layout_complete = findViewById(R.id.layout_complete);
+        img_calendar = findViewById(R.id.img_calendar);
+        img_title_add_expense = findViewById(R.id.img_title_add_expense);
+        img_select_imagee = findViewById(R.id.img_select_imagee);
+        galery_images_layout = findViewById(R.id.galery_images_layout);
     }
 
     private void ClickListeners() {
@@ -521,7 +571,6 @@ public class AddExpenseActivity extends AppCompatActivity {
                 try {
                     image_path = ContentUriUtils.INSTANCE.getFilePath(AddExpenseActivity.this, photoPaths.get(0));
                     if (image_path != null) {
-                        //Toast.makeText(AddIncomeActivity.this, image_path, Toast.LENGTH_SHORT).show();
                         File file = new File(image_path);
                         Picasso.get().load(file).into(img_1);
                         System.out.println("-- file path " + file.getAbsolutePath());
@@ -556,7 +605,6 @@ public class AddExpenseActivity extends AppCompatActivity {
 
     public ArrayList<String> fetchGalleryImages(Activity context) {
         ArrayList<String> galleryImageUrls;
-        ArrayList<String> newImageBeanList;
         final String[] columns = {MediaStore.Images.Media.DATA, MediaStore.Images.Media._ID};//get all columns of type images
         final String orderBy = MediaStore.Images.Media.DATE_TAKEN;//order data by date
 

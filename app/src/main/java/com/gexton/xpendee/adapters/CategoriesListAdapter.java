@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.gexton.xpendee.R;
 import com.gexton.xpendee.model.CategoryBean;
+import com.gexton.xpendee.util.Database;
 
 import java.util.ArrayList;
 
@@ -22,10 +23,12 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
     Context context;
     CategoryBean categoryBean;
     ArrayList<CategoryBean> categoryBeanArrayList;
+    Database database;
 
     public CategoriesListAdapter(Context context, ArrayList<CategoryBean> categoryBeanArrayList) {
         this.context = context;
         this.categoryBeanArrayList = categoryBeanArrayList;
+        database = new Database(context);
     }
 
     @NonNull
@@ -45,6 +48,16 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
 
         GradientDrawable background = (GradientDrawable) holder.layout.getBackground();
         background.setColor(Color.parseColor(categoryBean.categoryHashCode));
+
+        if (database.getExpenseByName(categoryBean.categoryName) != null) {
+            if (database.getExpenseByName(categoryBean.categoryName).size() == 1) {
+                holder.tvTransactionSize.setText(database.getExpenseByName(categoryBean.categoryName).size() + " transaction in 1 wallet");
+            } else {
+                holder.tvTransactionSize.setText(database.getExpenseByName(categoryBean.categoryName).size() + " transactions in 1 wallet");
+            }
+        } else {
+            holder.tvTransactionSize.setText("0 transactions in 0 wallets");
+        }
     }
 
     @Override
@@ -56,12 +69,14 @@ public class CategoriesListAdapter extends RecyclerView.Adapter<CategoriesListAd
         private TextView tv_cat_name;
         private RelativeLayout layout;
         private ImageView icon;
+        private TextView tvTransactionSize;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_cat_name = itemView.findViewById(R.id.tvCatName);
             layout = itemView.findViewById(R.id.layout_layout);
             icon = itemView.findViewById(R.id.image_view);
+            tvTransactionSize = itemView.findViewById(R.id.tvTransactionSize);
         }
     }
 

@@ -119,7 +119,8 @@
           android:textSize="16sp" />
 
       <RelativeLayout
-          android:id="@+id/manual_wallets"
+          android:visibility="gone"
+          android:id="@+id/add_income"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="?attr/selectableItemBackground"

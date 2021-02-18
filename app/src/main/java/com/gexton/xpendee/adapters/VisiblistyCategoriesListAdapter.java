@@ -15,6 +15,8 @@ import com.gexton.xpendee.R;
 import com.gexton.xpendee.model.CategoryBean;
 import com.gexton.xpendee.util.Database;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
@@ -90,6 +92,16 @@ public class VisiblistyCategoriesListAdapter extends RecyclerView.Adapter<Visibl
             holder.visiblity.setImageResource(R.drawable.hide_visiblity);
         }
 
+        if (database.getExpenseByName(categoryBean.categoryName) != null) {
+            if (database.getExpenseByName(categoryBean.categoryName).size() == 1) {
+                holder.tvTransactionSize.setText(database.getExpenseByName(categoryBean.categoryName).size() + " transaction in 1 wallet");
+            } else {
+                holder.tvTransactionSize.setText(database.getExpenseByName(categoryBean.categoryName).size() + " transactions in 1 wallet");
+            }
+        } else {
+            holder.tvTransactionSize.setText("0 transactions in 0 wallets");
+        }
+
     }
 
     @Override
@@ -101,6 +113,7 @@ public class VisiblistyCategoriesListAdapter extends RecyclerView.Adapter<Visibl
         private TextView tv_cat_name;
         private RelativeLayout layout;
         private ImageView icon, visiblity;
+        private TextView tvTransactionSize;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -108,6 +121,7 @@ public class VisiblistyCategoriesListAdapter extends RecyclerView.Adapter<Visibl
             layout = itemView.findViewById(R.id.layout_layout);
             icon = itemView.findViewById(R.id.image_view);
             visiblity = itemView.findViewById(R.id.visiblity);
+            tvTransactionSize = itemView.findViewById(R.id.tvTransactionSize);
         }
     }
 

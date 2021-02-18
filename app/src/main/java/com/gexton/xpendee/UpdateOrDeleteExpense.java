@@ -70,6 +70,14 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
     TextView tvDelete;
     String val;
     TextView tvToolBarTitle, tv_expense;
+    int flag = 0;
+    WalletBean newWalletBean;
+    Gson newGson;
+    SharedPreferences.Editor editor;
+    String MY_PREFS_NAME = "MY_PREFS_NAME";
+    SharedPreferences prefs1;
+    Gson gson;
+    String expense;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +113,10 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
         val = getIntent().getStringExtra("val");
         tvToolBarTitle = findViewById(R.id.tvToolBarTitle);
         tv_expense = findViewById(R.id.tv_expense);
+        newGson = new Gson();
+        editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+        prefs1 = getApplicationContext().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        gson = new Gson();
 
         pos = getIntent().getIntExtra("position", 10000);
         Log.d("position", "onCreate: " + pos);
@@ -117,7 +129,7 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
         description = timelineFragment.expenseBeanArrayList.get(pos).description;
         categoryIcon = timelineFragment.expenseBeanArrayList.get(pos).categoryIcon;
         exp_amt = timelineFragment.expenseBeanArrayList.get(pos).expense;
-        int flag = timelineFragment.expenseBeanArrayList.get(pos).flag;
+        flag = timelineFragment.expenseBeanArrayList.get(pos).flag;
         int id = timelineFragment.expenseBeanArrayList.get(pos).id;
 
         Log.d("expense_list_data", "onCreate: " + image_path + "\nId: "
@@ -234,18 +246,11 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
             }
         }));
 
-        for (int i = 0; i < database.getAllExpenseCategories().size(); i++) {
-            if (catName.equals(categoryBeanArrayList.get(i).categoryName)) {
-                adapter.selectedPos = pos;
-                adapter.notifyDataSetChanged();
-            }
-        }
-
         tv_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                String expense = edt_balance.getText().toString().trim();
+                expense = edt_balance.getText().toString().trim();
                 description = edt_description.getText().toString().trim();
 
                 if (TextUtils.isEmpty(expense)) {
@@ -262,61 +267,95 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
                     Toast.makeText(UpdateOrDeleteExpense.this, "Please enter description", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    SharedPreferences prefs1 = getApplicationContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
-                    String json = prefs1.getString("Wallet_Bean", "");
-                    Gson gson = new Gson();
-                    WalletBean walletBean = gson.fromJson(json, WalletBean.class);
+                    if (flag == 1) {
+                        String json = prefs1.getString("Wallet_Bean", "");
+                        Gson gson = new Gson();
+                        newWalletBean = gson.fromJson(json, WalletBean.class);
 
-                    double balance = walletBean.balance;
-                    String currency = walletBean.currency;
-                    String walletName = walletBean.wallet_name;
-                    expense_amount = Double.parseDouble(expense);
+                        double balance = newWalletBean.balance;
+                        String currency = newWalletBean.currency;
+                        String walletName = newWalletBean.wallet_name;
+                        expense_amount = Double.parseDouble(expense);
 
-                    if (expense_amount == exp_amt) {
-                        //Toast.makeText(UpdateOrDeleteExpense.this, "" + currency + "\n" + expense_amount + "\n" + categoryIcon + "\n" + catName + "\n" + color_code, Toast.LENGTH_SHORT).show();
-                        ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
-                                catName, user_selected_date, description, image_path, color_code, flag);
-                        database.updateExpense(expenseBean, id);
+                        if (expense_amount == exp_amt) {
+                            ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
+                                    catName, user_selected_date, description, image_path, color_code, flag);
+                            database.updateExpense(expenseBean, id);
+                            onBackPressed();
 
-                        onBackPressed();
+                        } else if (expense_amount > exp_amt) {
+                            double newExpense = expense_amount - exp_amt;
+                            double newBalance = balance - newExpense;
+                            newWalletBean = new WalletBean(newBalance, walletName, currency);
 
-                    } else if (expense_amount > exp_amt) {
-                        double newExpense = expense_amount - exp_amt;
-                        double newBalance = balance - newExpense;
-                        WalletBean newWalletBean = new WalletBean(newBalance, walletName, currency);
+                            String newJson = newGson.toJson(newWalletBean);
+                            editor.putString("Wallet_Bean", newJson);
+                            editor.apply();
 
-                        Gson newGson = new Gson();
-                        String newJson = newGson.toJson(newWalletBean);
+                            ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
+                                    catName, user_selected_date, description, image_path, color_code, flag);
+                            database.updateExpense(expenseBean, id);
+                            onBackPressed();
 
-                        SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
-                        editor.putString("Wallet_Bean", newJson);
-                        editor.apply();
+                        } else if (expense_amount < exp_amt) {
+                            double newExpense = exp_amt - expense_amount;
+                            double newBalance = balance + newExpense;
+                            WalletBean newWalletBean = new WalletBean(newBalance, walletName, currency);
 
-                        ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
-                                catName, user_selected_date, description, image_path, color_code, 1);
-                        database.updateExpense(expenseBean, id);
+                            String newJson = newGson.toJson(newWalletBean);
+                            editor.putString("Wallet_Bean", newJson);
+                            editor.apply();
 
-                        onBackPressed();
+                            ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
+                                    catName, user_selected_date, description, image_path, color_code, flag);
+                            database.updateExpense(expenseBean, id);
+                            onBackPressed();
+                        }
+                    }
 
-                    } else if (expense_amount < exp_amt) {
-                        double newExpense = exp_amt - expense_amount;
-                        double newBalance = balance + newExpense;
-                        WalletBean newWalletBean = new WalletBean(newBalance, walletName, currency);
+                    if (flag == 2) {
+                        String json = prefs1.getString("Wallet_Bean", "");
+                        newWalletBean = gson.fromJson(json, WalletBean.class);
 
-                        Gson newGson = new Gson();
-                        String newJson = newGson.toJson(newWalletBean);
+                        double balance = newWalletBean.balance;
+                        String currency = newWalletBean.currency;
+                        String walletName = newWalletBean.wallet_name;
+                        expense_amount = Double.parseDouble(expense);
 
-                        SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
-                        editor.putString("Wallet_Bean", newJson);
-                        editor.apply();
+                        if (expense_amount == exp_amt) {
+                            ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
+                                    catName, user_selected_date, description, image_path, color_code, 2);
+                            database.updateExpense(expenseBean, id);
+                            onBackPressed();
 
-                        ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
-                                catName, user_selected_date, description, image_path, color_code, 1);
-                        database.updateExpense(expenseBean, id);
+                        } else if (expense_amount > exp_amt) {
+                            double newExpense = expense_amount - exp_amt;
+                            double newBalance = balance + newExpense;
+                            newWalletBean = new WalletBean(newBalance, walletName, currency);
 
-                        onBackPressed();
-                    } else {
-                        Toast.makeText(UpdateOrDeleteExpense.this, "Sorry, increase your wallet to add this expense", Toast.LENGTH_SHORT).show();
+                            String newJson = newGson.toJson(newWalletBean);
+                            editor.putString("Wallet_Bean", newJson);
+                            editor.apply();
+
+                            ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
+                                    catName, user_selected_date, description, image_path, color_code, 2);
+                            database.updateExpense(expenseBean, id);
+                            onBackPressed();
+
+                        } else if (expense_amount < exp_amt) {
+                            double newExpense = exp_amt - expense_amount;
+                            double newBalance = balance - newExpense;
+                            WalletBean newWalletBean = new WalletBean(newBalance, walletName, currency);
+
+                            String newJson = newGson.toJson(newWalletBean);
+                            editor.putString("Wallet_Bean", newJson);
+                            editor.apply();
+
+                            ExpenseBean expenseBean = new ExpenseBean(0, currency, expense_amount, categoryIcon,
+                                    catName, user_selected_date, description, image_path, color_code, 2);
+                            database.updateExpense(expenseBean, id);
+                            onBackPressed();
+                        }
                     }
                 }
             }
@@ -340,26 +379,51 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                SharedPreferences prefs1 = getApplicationContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
-                String json = prefs1.getString("Wallet_Bean", "");
-                Gson gson = new Gson();
-                WalletBean walletBean = gson.fromJson(json, WalletBean.class);
+                if (flag == 1) {
+                    SharedPreferences prefs1 = getApplicationContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
+                    String json = prefs1.getString("Wallet_Bean", "");
+                    Gson gson = new Gson();
+                    WalletBean walletBean = gson.fromJson(json, WalletBean.class);
 
-                double newBalance = walletBean.balance + exp_amt;
-                String currency = walletBean.currency;
-                String walletName = walletBean.wallet_name;
+                    double newBalance = walletBean.balance + exp_amt;
+                    String currency = walletBean.currency;
+                    String walletName = walletBean.wallet_name;
 
-                WalletBean newWalletBean = new WalletBean(newBalance, walletName, currency);
-                Gson newGson = new Gson();
-                String newJson = newGson.toJson(newWalletBean);
+                    WalletBean newWalletBean = new WalletBean(newBalance, walletName, currency);
+                    Gson newGson = new Gson();
+                    String newJson = newGson.toJson(newWalletBean);
 
-                SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
-                editor.putString("Wallet_Bean", newJson);
-                editor.apply();
+                    SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
+                    editor.putString("Wallet_Bean", newJson);
+                    editor.apply();
 
-                database.deleteExpense(id);
-                Toast.makeText(UpdateOrDeleteExpense.this, "Expense Deleted", Toast.LENGTH_SHORT).show();
-                onBackPressed();
+                    database.deleteExpense(id);
+                    Toast.makeText(UpdateOrDeleteExpense.this, "Transaction Deleted", Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+                }
+
+                if (flag == 2) {
+                    SharedPreferences prefs1 = getApplicationContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
+                    String json = prefs1.getString("Wallet_Bean", "");
+                    Gson gson = new Gson();
+                    WalletBean walletBean = gson.fromJson(json, WalletBean.class);
+
+                    double newBalance = walletBean.balance - exp_amt;
+                    String currency = walletBean.currency;
+                    String walletName = walletBean.wallet_name;
+
+                    WalletBean newWalletBean = new WalletBean(newBalance, walletName, currency);
+                    Gson newGson = new Gson();
+                    String newJson = newGson.toJson(newWalletBean);
+
+                    SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
+                    editor.putString("Wallet_Bean", newJson);
+                    editor.apply();
+
+                    database.deleteExpense(id);
+                    Toast.makeText(UpdateOrDeleteExpense.this, "Transaction Deleted", Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+                }
             }
         });
 

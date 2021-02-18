@@ -149,12 +149,12 @@ public class HomeActivity extends AppCompatActivity {
 
         boolean shouldShowRequestPersmissionRational = ActivityCompat.shouldShowRequestPermissionRationale(HomeActivity.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE);
-        System.out.println("-- shouldShowRequestPersmissionRational: "+shouldShowRequestPersmissionRational);
+        System.out.println("-- shouldShowRequestPersmissionRational: " + shouldShowRequestPersmissionRational);
 
         boolean isPermissionGranted = ActivityCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED;
 
-        System.out.println("-- isPermissionGranted: "+isPermissionGranted);
+        System.out.println("-- isPermissionGranted: " + isPermissionGranted);
 
         Dexter.withContext(this)
                 .withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
