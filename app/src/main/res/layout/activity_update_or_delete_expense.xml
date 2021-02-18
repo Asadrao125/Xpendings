@@ -49,35 +49,6 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:text="UPDATE"
-                    android:textColor="@color/green"
-                    android:textSize="16sp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:id="@+id/layout_2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/layout_1">
-
-                <TextView
-                    android:id="@+id/tv_currency"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="Currency"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_expense"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:text="Expense"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
@@ -85,40 +56,71 @@
 
             <RelativeLayout
                 android:layout_marginBottom="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:id="@+id/layout_3"
+                android:id="@+id/layout_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/layout_2"
-                android:layout_marginTop="10dp">
-
-                <EditText
-                    android:imeOptions="actionDone"
-                    android:inputType="numberDecimal"
-                    android:maxLines="1"
-                    android:maxLength="10"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:background="@null"
-                    android:hint="e.g 1500.0"
-                    android:id="@+id/edt_balance"
-                    android:textAlignment="textEnd"
-                    android:textColor="@color/dark_grey"
-                    android:textColorHint="@color/dark_grey"
-                    android:textSize="18sp" />
+                android:layout_below="@+id/layout_1"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
 
                 <TextView
+                    android:id="@+id/tv_currency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Currency"
+                    android:visibility="gone"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="PKR"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
 
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tv_expense"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="Expense"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:layout_centerVertical="true"
+                    android:id="@+id/edt_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:hint="e.g 1500"
+                    android:background="@null"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:maxLength="10"
+                    android:maxLines="1"
+                    android:layout_margin="5dp"
+                    android:layout_below="@+id/tv_expense"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/light_grey" />
+
+                <ImageView
+                    android:id="@+id/imageview_Category"
+                    android:layout_centerVertical="true"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="7dp"
+                    android:src="@drawable/car"
+                    android:background="@drawable/circle"/>
+
             </RelativeLayout>
 
-        </RelativeLayout>
+        </RelativeLayout> <!-- Toolbar Layout -->
 
         <RelativeLayout
             android:layout_marginTop="10dp"
@@ -161,7 +163,7 @@
                 android:paddingTop="5dp"
                 android:text="Tuesday" />
 
-        </RelativeLayout>
+        </RelativeLayout> <!-- Calendar Layout -->
 
         <TextView
             android:id="@+id/tv_details"
@@ -183,6 +185,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
+            android:visibility="gone"
             android:layout_marginTop="20dp"
             android:text="Select Categories"
             android:textColor="@color/black"
@@ -191,7 +194,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCategories"
             android:layout_width="match_parent"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_categories" />
 
@@ -218,7 +221,7 @@
                 android:id="@+id/edt_description"
                 android:layout_toRightOf="@+id/img_title_add_expense"/>
 
-        </RelativeLayout>
+        </RelativeLayout> <!-- Write Description Layout -->
 
         <RelativeLayout
             android:paddingTop="10dp"
@@ -255,7 +258,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/forward_arrow"/>
 
-        </RelativeLayout>
+        </RelativeLayout> <!-- Select Image Layout -->
 
         <RelativeLayout
             android:id="@+id/galery_images_layout"
@@ -337,7 +340,7 @@
 
             </HorizontalScrollView>
 
-        </RelativeLayout>
+        </RelativeLayout> <!-- Gallery Image Layout -->
 
         <TextView
             android:layout_width="wrap_content"
@@ -358,6 +361,152 @@
             android:textColor="@android:color/holo_red_dark"
             android:layout_below="@+id/galery_images_layout"
             android:layout_height="wrap_content"/>
+
+        <androidx.cardview.widget.CardView
+            android:background="@color/white"
+            app:cardPreventCornerOverlap="true"
+            android:id="@+id/parentLayoutCategories"
+            android:layout_below="@+id/write_description_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Transaction Category"
+                        android:textColor="@color/black"
+                        android:layout_marginRight="10dp"/>
+
+                    <ImageView
+                        android:layout_toStartOf="@+id/imgTick"
+                        android:layout_marginRight="10dp"
+                        android:id="@+id/imgSetting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:tint="@color/dark_grey"
+                        android:src="@drawable/ic_setting"/>
+
+                    <ImageView
+                        android:padding="5dp"
+                        android:id="@+id/imgTick"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/tick"
+                        app:tint="@color/dark_grey"/>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/topBar"
+                    android:padding="5dp"
+                    android:background="@drawable/current_day_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:background="@drawable/curve_for_transaction_category"
+                        android:layout_marginRight="5dp"
+                        android:id="@+id/tvExpense"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="2dp"
+                        android:text="Expense"
+                        android:textColor="@color/black"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/tvIncome"
+                        android:gravity="center"
+                        android:padding="2dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Income"/>
+
+                </LinearLayout>
+
+                <ViewFlipper
+                    android:id="@+id/vfCategories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvCategoriesExpense"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp" />
+
+                    </RelativeLayout> <!-- Expense View FLipper -->
+
+                    <RelativeLayout
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvCategoriesIncome"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp" />
+
+                    </RelativeLayout> <!-- Income View FLipper -->
+
+                    <RelativeLayout
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="No Visible Categories"/>
+
+                    </RelativeLayout>
+
+                </ViewFlipper>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <View
+            android:id="@+id/transpareView"
+            android:layout_alignParentTop="true"
+            android:layout_above="@+id/parentLayoutCategories"
+            android:layout_width="match_parent"
+            android:background="@color/transparent_black"
+            android:layout_height="match_parent"/>
 
     </RelativeLayout>
 
