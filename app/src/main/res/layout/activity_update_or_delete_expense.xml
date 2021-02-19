@@ -116,7 +116,7 @@
                     android:layout_height="50dp"
                     android:padding="7dp"
                     android:src="@drawable/car"
-                    android:background="@drawable/circle"/>
+                    android:background="@drawable/new_circle_for_eidt_expense"/>
 
             </RelativeLayout>
 
@@ -169,7 +169,7 @@
             android:id="@+id/tv_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rvCategories"
+            android:layout_below="@+id/layout_complete"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
@@ -190,13 +190,6 @@
             android:text="Select Categories"
             android:textColor="@color/black"
             android:textSize="16sp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvCategories"
-            android:layout_width="match_parent"
-            android:visibility="gone"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_categories" />
 
         <RelativeLayout
             android:id="@+id/write_description_layout"
@@ -362,16 +355,10 @@
             android:layout_below="@+id/galery_images_layout"
             android:layout_height="wrap_content"/>
 
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:background="@color/white"
-            app:cardPreventCornerOverlap="true"
-            android:id="@+id/parentLayoutCategories"
-            android:layout_below="@+id/write_description_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:visibility="visible"
+                android:layout_below="@+id/galery_images_layout"
+                android:id="@+id/parentLayoutCategories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -453,7 +440,6 @@
                     android:layout_height="wrap_content">
 
                     <RelativeLayout
-                        android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -468,7 +454,6 @@
                     </RelativeLayout> <!-- Expense View FLipper -->
 
                     <RelativeLayout
-                        android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -498,13 +483,11 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
-
         <View
             android:id="@+id/transpareView"
-            android:layout_alignParentTop="true"
             android:layout_above="@+id/parentLayoutCategories"
             android:layout_width="match_parent"
+            android:layout_below="@id/layout_complete"
             android:background="@color/transparent_black"
             android:layout_height="match_parent"/>
 

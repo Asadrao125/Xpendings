@@ -31,6 +31,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,10 +57,8 @@ import java.util.Locale;
 public class UpdateOrDeleteExpense extends AppCompatActivity {
     ArrayList<CategoryBean> categoryBeanArrayList;
     CategoriesAdapterForExpense adapter = null;
-    RecyclerView rvCategories;
-    //
     View transpareView;
-    CardView parentLayoutCategories;
+    LinearLayout parentLayoutCategories;
     ViewFlipper vfCategories;
     ImageView imgTick, imgSetting;
     TextView tvExpense, tvIncome;
@@ -67,7 +66,6 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
     RecyclerView rvCategoriesExpense, rvCategoriesIncome;
     RelativeLayout galery_images_layout;
     ImageView imageview_Category;
-    //
     Database database;
     TextView tv_current_day, tv_date, tv_save, tv_reset, tv_details;
     ImageView img_back, img_camera;
@@ -203,8 +201,6 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
             categoryBeanArrayListIncome = database.getAllCategoriesVisiblity(2, 1);
             adapterIncome = new CategoriesAdapterForExpense(this, categoryBeanArrayListIncome);
             rvCategoriesIncome.setAdapter(adapterIncome);
-        } else {
-            vfCategories.setDisplayedChild(2);
         }
 
         rvCategoriesIncome.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(),
@@ -247,8 +243,6 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
             categoryBeanArrayListExpense = database.getAllCategoriesVisiblity(1, 1);
             adapter = new CategoriesAdapterForExpense(this, categoryBeanArrayListExpense);
             rvCategoriesExpense.setAdapter(adapter);
-        } else {
-            vfCategories.setDisplayedChild(2);
         }
 
         rvCategoriesExpense.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(),
@@ -299,7 +293,6 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
     private void initialise() {
         categoryBeanArrayList = new ArrayList<>();
         database = new Database(UpdateOrDeleteExpense.this);
-        rvCategories = findViewById(R.id.rvCategories);
         tv_current_day = findViewById(R.id.tv_current_day);
         img_1 = findViewById(R.id.img_1);
         img_2 = findViewById(R.id.img_2);
@@ -788,6 +781,7 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 parentLayoutCategories.setVisibility(View.GONE);
+                transpareView.setVisibility(View.GONE);
             }
         });
 
@@ -795,6 +789,7 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 parentLayoutCategories.setVisibility(View.GONE);
+                transpareView.setVisibility(View.GONE);
                 startActivity(new Intent(getApplicationContext(), VisiblistyActivityForCategories.class));
             }
         });
@@ -804,6 +799,7 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
             public void onClick(View view) {
                 if (parentLayoutCategories.isShown()) {
                     parentLayoutCategories.setVisibility(View.GONE);
+                    transpareView.setVisibility(View.GONE);
                 }
             }
         });
@@ -811,7 +807,8 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
         parentLayoutCategories.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                parentLayoutCategories.setVisibility(View.GONE);
+                transpareView.setVisibility(View.GONE);
             }
         });
 
@@ -819,6 +816,7 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 parentLayoutCategories.setVisibility(View.VISIBLE);
+                transpareView.setVisibility(View.VISIBLE);
             }
         });
 
@@ -832,8 +830,6 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
             categoryBeanArrayListIncome = database.getAllCategoriesVisiblity(2, 1);
             adapterIncome = new CategoriesAdapterForExpense(this, categoryBeanArrayListIncome);
             rvCategoriesIncome.setAdapter(adapterIncome);
-        } else {
-            vfCategories.setDisplayedChild(2);
         }
 
         // Expense
@@ -841,8 +837,6 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
             categoryBeanArrayListExpense = database.getAllCategoriesVisiblity(1, 1);
             adapter = new CategoriesAdapterForExpense(this, categoryBeanArrayListExpense);
             rvCategoriesExpense.setAdapter(adapter);
-        } else {
-            vfCategories.setDisplayedChild(2);
         }
     }
 }

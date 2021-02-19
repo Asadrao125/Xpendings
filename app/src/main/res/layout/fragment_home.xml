@@ -230,7 +230,7 @@
            android:background="@color/light_grey" />
 
        <androidx.cardview.widget.CardView
-           android:visibility="gone"
+           android:visibility="visible"
            android:layout_width="match_parent"
            android:layout_height="match_parent"
            android:elevation="8dp"
@@ -247,7 +247,15 @@
 
                <com.github.mikephil.charting.charts.PieChart
                    android:id="@+id/pieChart"
+                   android:visibility="gone"
                    android:layout_margin="5dp"
+                   android:layout_width="match_parent"
+                   android:layout_height="300dp"/>
+
+               <com.highsoft.highcharts.Core.HIChartView
+                   android:layout_margin="5dp"
+                   android:id="@+id/hc"
+                   android:layout_centerInParent="true"
                    android:layout_width="match_parent"
                    android:layout_height="300dp"/>
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,9 +7,8 @@
     tools:context=".AddExpenseActivity">
 
     <RelativeLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:id="@+id/layout_complete"
@@ -117,7 +116,7 @@
                     android:layout_height="50dp"
                     android:padding="7dp"
                     android:src="@drawable/car"
-                    android:background="@drawable/circle"/>
+                    android:background="@drawable/new_circle_for_eidt_expense"/>
 
             </RelativeLayout>
 
@@ -370,16 +369,10 @@
             android:text="RESET"
             android:textSize="16sp" />
 
-           <androidx.cardview.widget.CardView
-               android:background="@color/white"
-               app:cardPreventCornerOverlap="true"
-               android:id="@+id/parentLayoutCategories"
-               android:layout_below="@+id/write_description_layout"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content">
-
-               <LinearLayout
-                   android:visibility="visible"
+        <LinearLayout
+            android:background="@color/white"
+                   android:id="@+id/parentLayoutCategories"
+                   android:layout_below="@+id/galery_images_layout"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:orientation="vertical">
@@ -388,7 +381,6 @@
                        android:layout_marginTop="10dp"
                        android:layout_marginLeft="10dp"
                        android:layout_marginRight="10dp"
-                       android:gravity="center_vertical"
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content"
                        android:orientation="horizontal">
@@ -456,37 +448,30 @@
                    </LinearLayout>
 
                    <ViewFlipper
+                       android:layout_marginBottom="20dp"
                        android:id="@+id/vfCategories"
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content">
 
                        <RelativeLayout
-                           android:gravity="center"
                            android:layout_width="match_parent"
                            android:layout_height="wrap_content">
 
                            <androidx.recyclerview.widget.RecyclerView
                                android:id="@+id/rvCategoriesExpense"
                                android:layout_width="match_parent"
-                               android:layout_height="wrap_content"
-                               android:layout_marginLeft="10dp"
-                               android:layout_marginRight="10dp"
-                               android:layout_marginTop="10dp" />
+                               android:layout_height="wrap_content" />
 
                        </RelativeLayout>
 
                        <RelativeLayout
-                           android:gravity="center"
                            android:layout_width="match_parent"
                            android:layout_height="wrap_content">
 
                            <androidx.recyclerview.widget.RecyclerView
                                android:id="@+id/rvCategoriesIncome"
                                android:layout_width="match_parent"
-                               android:layout_height="wrap_content"
-                               android:layout_marginLeft="10dp"
-                               android:layout_marginRight="10dp"
-                               android:layout_marginTop="10dp" />
+                               android:layout_height="wrap_content" />
 
                        </RelativeLayout>
 
@@ -494,12 +479,9 @@
 
                </LinearLayout>
 
-           </androidx.cardview.widget.CardView>
-
         <View
-            android:visibility="visible"
             android:id="@+id/transpareView"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/layout_complete"
             android:layout_above="@+id/parentLayoutCategories"
             android:layout_width="match_parent"
             android:background="@color/transparent_black"
@@ -507,4 +489,4 @@
 
     </RelativeLayout>
 
-</ScrollView>
+</RelativeLayout>

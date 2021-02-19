@@ -36,9 +36,28 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.gson.Gson;
+import com.highsoft.highcharts.Common.HIChartsClasses.HICondition;
+import com.highsoft.highcharts.Common.HIChartsClasses.HILabel;
+import com.highsoft.highcharts.Common.HIChartsClasses.HILegend;
+import com.highsoft.highcharts.Common.HIChartsClasses.HILine;
+import com.highsoft.highcharts.Common.HIChartsClasses.HIOptions;
+import com.highsoft.highcharts.Common.HIChartsClasses.HIPie;
+import com.highsoft.highcharts.Common.HIChartsClasses.HIPlotOptions;
+import com.highsoft.highcharts.Common.HIChartsClasses.HIResponsive;
+import com.highsoft.highcharts.Common.HIChartsClasses.HIRules;
+import com.highsoft.highcharts.Common.HIChartsClasses.HISeries;
+import com.highsoft.highcharts.Common.HIChartsClasses.HISubtitle;
+import com.highsoft.highcharts.Common.HIChartsClasses.HITitle;
+import com.highsoft.highcharts.Common.HIChartsClasses.HIXAxis;
+import com.highsoft.highcharts.Common.HIChartsClasses.HIYAxis;
+import com.highsoft.highcharts.Core.HIChartView;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -62,6 +81,8 @@ public class HomeFragment extends Fragment {
     ImageView imgShare;
     float totalExpense = 0;
     float totalExpense2 = 0;
+    HIChartView chartView;
+    ArrayList<ExpenseBean> listExpenseBean;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -86,6 +107,8 @@ public class HomeFragment extends Fragment {
         cardView_pieChart = view.findViewById(R.id.card_view_pieChart);
         cardView_barChart = view.findViewById(R.id.card_view_barChart);
         imgShare = view.findViewById(R.id.imgShare);
+        chartView = (HIChartView) view.findViewById(R.id.hc);
+        listExpenseBean = new ArrayList<>();
 
         //Gettiing all categories list
         allCatList = database.getAllCategories(1);
@@ -99,7 +122,9 @@ public class HomeFragment extends Fragment {
             }
         }
 
-        if (allCatList != null && totalExpense > 0) {
+        settingHighChartLine();
+
+        /*if (allCatList != null && totalExpense > 0) {
             settingPieChart(allCatList);
             settingBarChart(allCatList);
             cardView_barChart.setVisibility(View.VISIBLE);
@@ -107,7 +132,7 @@ public class HomeFragment extends Fragment {
         } else {
             cardView_barChart.setVisibility(View.GONE);
             cardView_pieChart.setVisibility(View.GONE);
-        }
+        }*/
 
         converSionAndSettingData();
 
@@ -146,7 +171,79 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        settingHighChart();
+
         return view;
+    }
+
+    private void settingHighChartLine() {
+
+        HIOptions options = new HIOptions();
+
+        HITitle title = new HITitle();
+        title.setText("Solar Employment Growth by Sector, 2010-2016");
+        options.setTitle(title);
+
+        HISubtitle subtitle = new HISubtitle();
+        subtitle.setText("Source: thesolarfoundation.com");
+        options.setSubtitle(subtitle);
+
+        HIYAxis yaxis = new HIYAxis();
+        yaxis.setTitle(new HITitle());
+        yaxis.getTitle().setText("Number of Employees");
+        options.setYAxis(new ArrayList<>(Collections.singletonList(yaxis)));
+
+        HILegend legend = new HILegend();
+        legend.setLayout("vertical");
+        legend.setAlign("right");
+        legend.setVerticalAlign("middle");
+        options.setLegend(legend);
+
+        HIPlotOptions plotoptions = new HIPlotOptions();
+        plotoptions.setSeries(new HISeries());
+        plotoptions.getSeries().setLabel(new HILabel());
+        plotoptions.getSeries().getLabel().setConnectorAllowed(false);
+        plotoptions.getSeries().setPointStart(2010);
+        options.setPlotOptions(plotoptions);
+
+        HILine line1 = new HILine();
+        line1.setName("Installation");
+        line1.setData(new ArrayList<>(Arrays.asList(43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175)));
+
+        HILine line2 = new HILine();
+        line2.setName("Manufacturing");
+        line2.setData(new ArrayList<>(Arrays.asList(24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434)));
+
+        HILine line3 = new HILine();
+        line3.setName("Sales & Distribution");
+        line3.setData(new ArrayList<>(Arrays.asList(11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387)));
+
+        HILine line4 = new HILine();
+        line4.setName("Project Development");
+        line4.setData(new ArrayList<>(Arrays.asList(null, null, 7988, 12169, 15112, 22452, 34400, 34227)));
+
+        HILine line5 = new HILine();
+        line5.setName("Other");
+        line5.setData(new ArrayList<>(Arrays.asList(12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111)));
+
+        HIResponsive responsive = new HIResponsive();
+
+        HIRules rules1 = new HIRules();
+        rules1.setCondition(new HICondition());
+        rules1.getCondition().setMaxWidth(500);
+        HashMap<String, HashMap> chartLegend = new HashMap<>();
+        HashMap<String, String> legendOptions = new HashMap<>();
+        legendOptions.put("layout", "horizontal");
+        legendOptions.put("align", "center");
+        legendOptions.put("verticalAlign", "bottom");
+        chartLegend.put("legend", legendOptions);
+        rules1.setChartOptions(chartLegend);
+        responsive.setRules(new ArrayList<>(Collections.singletonList(rules1)));
+        options.setResponsive(responsive);
+
+        options.setSeries(new ArrayList<>(Arrays.asList(line1, line2, line3, line4, line5)));
+
+        chartView.setOptions(options);
     }
 
     public void converSionAndSettingData() {
@@ -172,7 +269,7 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         converSionAndSettingData();
-        if (allCatList != null) {
+       /* if (allCatList != null) {
             settingPieChart(allCatList);
             settingBarChart(allCatList);
 
@@ -183,8 +280,7 @@ public class HomeFragment extends Fragment {
                 cardView_pieChart.setVisibility(View.GONE);
                 cardView_barChart.setVisibility(View.GONE);
             }
-
-        }
+        }*/
     }
 
     private void settingPieChart(ArrayList<CategoryBean> categoryBeans) {
@@ -260,5 +356,65 @@ public class HomeFragment extends Fragment {
         } catch (Exception e) {
             e.toString();
         }
+    }
+
+    private void settingHighChart() {
+
+        HIOptions options = new HIOptions();
+
+        HITitle title = new HITitle();
+        title.setText("Pie point CSS");
+        options.setTitle(title);
+
+        HIXAxis xAxis = new HIXAxis();
+        /*String[] categoriesList = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+        xAxis.setCategories(new ArrayList<>(Arrays.asList(categoriesList)));
+        options.setXAxis(new ArrayList<HIXAxis>() {{
+            add(xAxis);
+        }});*/
+
+        if (database.getAllExpenses() != null) {
+            listExpenseBean = database.getAllExpenses();
+            ArrayList<String> stringList = new ArrayList<>();
+            stringList = database.getAllExpenseCategories();
+            for (int i = 0; i < listExpenseBean.size(); i++) {
+                xAxis.setCategories(stringList);
+            }
+            options.setXAxis(new ArrayList<HIXAxis>() {{
+                add(xAxis);
+            }});
+        }
+
+        HIPie series1 = new HIPie();
+        series1.setAllowPointSelect(true);
+        String[] keys = new String[]{"name", "y", "selected", "sliced"};
+        series1.setKeys(new ArrayList<>(Arrays.asList(keys)));
+        series1.setShowInLegend(true);
+        Object[] object1 = new Object[]{"Apples", 29.9, false};
+        Object[] object2 = new Object[]{"Pears", 71.5, false};
+        Object[] object3 = new Object[]{"Oranges", 106.4, false};
+        Object[] object4 = new Object[]{"Plums", 129.2, false};
+        Object[] object5 = new Object[]{"Bananas", 144.0, false};
+        Object[] object6 = new Object[]{"Peaches", 176.0, false};
+        Object[] object7 = new Object[]{"Prunes", 135.6, true, true};
+        Object[] object8 = new Object[]{"Avocados", 148.5, false};
+        series1.setData(new ArrayList<>(Arrays.asList(object1, object2, object3, object4, object5, object6, object7, object8)));
+        options.setSeries(new ArrayList<>(Arrays.asList(series1)));
+        chartView.setOptions(options);
+
+        ArrayList<ExpenseBean> listExpense = new ArrayList<>();
+        listExpense = database.getAllIncome(1);
+
+        Object[] object10 = new Object[0];
+        if (listExpense != null) {
+            for (int i = 0; i < listExpense.size(); i++) {
+                object10 = new Object[]{listExpense.get(i).categoryName, listExpenseBean.get(i).expense, false};
+            }
+        }
+
+        Log.d("lslsjkkdh", "settingHighChart: " + listExpense);
+        series1.setData(new ArrayList<>(Arrays.asList(object10)));
+        options.setSeries(new ArrayList<>(Arrays.asList(series1)));
+        chartView.setOptions(options);
     }
 }

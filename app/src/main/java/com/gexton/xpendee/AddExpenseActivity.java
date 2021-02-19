@@ -65,7 +65,7 @@ public class AddExpenseActivity extends AppCompatActivity {
     ImageView imageview_Category;
     ImageView imgTick, imgSetting;
     SharedPreferences prefs1, prefs;
-    CardView parentLayoutCategories;
+    LinearLayout parentLayoutCategories;
     final int CUSTOM_REQUEST_CODE = 987;
     public ImageView img_back, img_camera;
     EditText edt_description, edt_balance;
@@ -154,6 +154,7 @@ public class AddExpenseActivity extends AppCompatActivity {
                     categoryIcon = categoryBeanArrayListIncome.get(position).categoryIcon;
                     color_code = categoryBeanArrayListIncome.get(position).categoryHashCode;
                     colorHex = color_code;
+                    transpareView.setVisibility(View.GONE);
                     flag = categoryBeanArrayListIncome.get(position).catFlag;
                     parentLayoutCategories.setVisibility(View.GONE);
                     imageview_Category.setImageResource(categoryIcon);
@@ -196,6 +197,7 @@ public class AddExpenseActivity extends AppCompatActivity {
                     categoryIcon = categoryBeanArrayListExpense.get(position).categoryIcon;
                     color_code = categoryBeanArrayListExpense.get(position).categoryHashCode;
                     colorHex = color_code;
+                    transpareView.setVisibility(View.GONE);
                     flag = categoryBeanArrayListExpense.get(position).catFlag;
                     parentLayoutCategories.setVisibility(View.GONE);
                     layout_complete.setBackgroundColor(Color.parseColor(colorHex));
@@ -311,6 +313,14 @@ public class AddExpenseActivity extends AppCompatActivity {
                 adapter.selectedPos = 0;
                 adapter.notifyDataSetChanged();
 
+            }
+        });
+
+        transpareView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                transpareView.setVisibility(View.GONE);
+                parentLayoutCategories.setVisibility(View.GONE);
             }
         });
 
@@ -523,6 +533,7 @@ public class AddExpenseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 parentLayoutCategories.setVisibility(View.GONE);
+                transpareView.setVisibility(View.GONE);
             }
         });
 
@@ -530,6 +541,7 @@ public class AddExpenseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 parentLayoutCategories.setVisibility(View.GONE);
+                transpareView.setVisibility(View.GONE);
                 startActivity(new Intent(getApplicationContext(), VisiblistyActivityForCategories.class));
             }
         });
@@ -539,6 +551,7 @@ public class AddExpenseActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (parentLayoutCategories.isShown()) {
                     parentLayoutCategories.setVisibility(View.GONE);
+                    transpareView.setVisibility(View.GONE);
                 }
             }
         });
@@ -546,7 +559,8 @@ public class AddExpenseActivity extends AppCompatActivity {
         parentLayoutCategories.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                parentLayoutCategories.setVisibility(View.GONE);
+                transpareView.setVisibility(View.GONE);
             }
         });
 
@@ -554,6 +568,7 @@ public class AddExpenseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 parentLayoutCategories.setVisibility(View.VISIBLE);
+                transpareView.setVisibility(View.VISIBLE);
             }
         });
     }
