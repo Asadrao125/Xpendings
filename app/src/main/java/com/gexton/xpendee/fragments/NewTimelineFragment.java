@@ -1,6 +1,5 @@
 package com.gexton.xpendee.fragments;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,6 +24,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gexton.xpendee.HomeActivity;
 import com.gexton.xpendee.adapters.SectionListViewAdapter;
 import com.gexton.xpendee.AddExpenseActivity;
 import com.gexton.xpendee.R;
@@ -35,16 +35,10 @@ import com.gexton.xpendee.model.WalletBean;
 import com.gexton.xpendee.util.Database;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -223,6 +217,10 @@ public class NewTimelineFragment extends Fragment {
 
                         horizontalCalendar.getCalendarView().setVisibility(View.VISIBLE);
                         no_data_layout.setVisibility(View.GONE);
+
+                        startActivity(new Intent(getContext(), HomeActivity.class));
+                        getActivity().finish();
+
                     } else {
                         no_data_layout.setVisibility(View.VISIBLE);
                         sectionListView.setVisibility(View.GONE);
@@ -250,7 +248,6 @@ public class NewTimelineFragment extends Fragment {
                     fab_add_expense.setVisibility(View.VISIBLE);
                     horizontalCalendar.getCalendarView().setVisibility(View.GONE);
                     sectionListView.setVisibility(View.VISIBLE);
-
                     horizontalCalendar.getCalendarView().setVisibility(View.GONE);
                     if (database.getAllExpenses() != null) {
                         expenseBeanArrayList = database.getAllExpenses();
@@ -260,12 +257,13 @@ public class NewTimelineFragment extends Fragment {
                         viewBelowCashFlowLayout.setVisibility(View.VISIBLE);
 
                         tvWealth.setText("$ -" + sumExpense(expenseBeanArrayList));
-
                         double newDailyCashFlow = sumIncome(expenseBeanArrayList) - sumExpense(expenseBeanArrayList);
-
                         tvDailyCashFlow.setText("$ " + newDailyCashFlow);
-
                         no_data_layout.setVisibility(View.GONE);
+
+                        startActivity(new Intent(getContext(), HomeActivity.class));
+                        getActivity().finish();
+
                     } else {
                         no_data_layout.setVisibility(View.VISIBLE);
                         sectionListView.setVisibility(View.GONE);
@@ -500,25 +498,5 @@ public class NewTimelineFragment extends Fragment {
             }
         }
         return sum;
-    }
-
-    public void permissionCheck() {
-        Dexter.withContext(getContext())
-                .withPermissions(
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .withListener(new MultiplePermissionsListener() {
-                    @Override
-                    public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        if (report.areAllPermissionsGranted()) {
-                            startActivity(new Intent(getContext(), AddExpenseActivity.class));
-                        }
-                    }
-
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-                        token.continuePermissionRequest();
-                    }
-                }).check();
     }
 }

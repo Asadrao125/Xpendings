@@ -129,7 +129,6 @@ public class HomeActivity extends AppCompatActivity {
                 Log.d("predefined_data", "Data Inserted At: " + database.insertCategory(categoryBeanArrayListPD.get(i)));
             }
         }
-
     }
 
     @Override

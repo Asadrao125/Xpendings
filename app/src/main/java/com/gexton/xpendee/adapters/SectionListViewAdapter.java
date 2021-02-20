@@ -129,7 +129,7 @@ public class SectionListViewAdapter extends BaseAdapter {
                     String month_name = dtf2.format(ld);
 
                     if (current_date.equals(month_name)) {
-                        tv_date.setText("Today");
+                        tv_date.setText(month_name);
                     } else {
                         tv_date.setText(month_name);
                     }

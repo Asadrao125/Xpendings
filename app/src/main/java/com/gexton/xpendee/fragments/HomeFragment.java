@@ -53,7 +53,6 @@ import com.highsoft.highcharts.Common.HIChartsClasses.HIYAxis;
 import com.highsoft.highcharts.Core.HIChartView;
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -111,7 +110,7 @@ public class HomeFragment extends Fragment {
         listExpenseBean = new ArrayList<>();
 
         //Gettiing all categories list
-        allCatList = database.getAllCategories(1);
+        /*allCatList = database.getAllCategories(1);
         if (allCatList != null) {
             for (int i = 0; i < allCatList.size(); i++) {
                 CategoryBean cb = allCatList.get(i);
@@ -120,9 +119,9 @@ public class HomeFragment extends Fragment {
                 cb.listExpenseBean = expenseBeansListInThisCat;
                 Log.d("list_list_list", "onCreateView: " + cb.listExpenseBean);
             }
-        }
+        }*/
 
-        settingHighChartLine();
+        //settingHighChartLine();
 
         /*if (allCatList != null && totalExpense > 0) {
             settingPieChart(allCatList);
@@ -390,7 +389,8 @@ public class HomeFragment extends Fragment {
         String[] keys = new String[]{"name", "y", "selected", "sliced"};
         series1.setKeys(new ArrayList<>(Arrays.asList(keys)));
         series1.setShowInLegend(true);
-        Object[] object1 = new Object[]{"Apples", 29.9, false};
+
+        /*Object[] object1 = new Object[]{"Apples", 29.9, false};
         Object[] object2 = new Object[]{"Pears", 71.5, false};
         Object[] object3 = new Object[]{"Oranges", 106.4, false};
         Object[] object4 = new Object[]{"Plums", 129.2, false};
@@ -400,21 +400,20 @@ public class HomeFragment extends Fragment {
         Object[] object8 = new Object[]{"Avocados", 148.5, false};
         series1.setData(new ArrayList<>(Arrays.asList(object1, object2, object3, object4, object5, object6, object7, object8)));
         options.setSeries(new ArrayList<>(Arrays.asList(series1)));
-        chartView.setOptions(options);
+        chartView.setOptions(options);*/
 
-        ArrayList<ExpenseBean> listExpense = new ArrayList<>();
-        listExpense = database.getAllIncome(1);
-
-        Object[] object10 = new Object[0];
-        if (listExpense != null) {
-            for (int i = 0; i < listExpense.size(); i++) {
-                object10 = new Object[]{listExpense.get(i).categoryName, listExpenseBean.get(i).expense, false};
+        ArrayList<ExpenseBean> list1 = new ArrayList<>();
+        list1 = database.getAllExpenses();
+        if (list1 != null){
+            Object[] object10 = new Object[list1.size()];
+            for (int i = 0; i < list1.size(); i++) {
+                String catName = list1.get(i).categoryName;
+                double exp = list1.get(i).expense;
+                object10[i] = new Object[]{catName, exp, false};
             }
+            series1.setData(new ArrayList<>(Arrays.asList(object10)));
+            options.setSeries(new ArrayList<>(Arrays.asList(series1)));
+            chartView.setOptions(options);
         }
-
-        Log.d("lslsjkkdh", "settingHighChart: " + listExpense);
-        series1.setData(new ArrayList<>(Arrays.asList(object10)));
-        options.setSeries(new ArrayList<>(Arrays.asList(series1)));
-        chartView.setOptions(options);
     }
 }
