@@ -45,7 +45,18 @@
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider192519792590832"
             android:exported="true" />
+
+        <!-- <provider android:authorities="com.gexton.xpendee.FileProvider"
+             android:name="android.support.v4.content.FileProvider"
+             android:exported="false"
+             android:grantUriPermissions="true">
+             <meta-data
+                 android:name="android.support.FILE_PROVIDER_PATHS"
+                 android:resource="@xml/provider_paths"/>
+         </provider>-->
+
     </application>
+
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission

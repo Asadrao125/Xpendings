@@ -75,11 +75,11 @@ public class AddExpenseActivity extends AppCompatActivity {
     CategoriesAdapterForExpense adapterIncome = null;
     ArrayList<CategoryBean> categoryBeanArrayListIncome;
     ArrayList<CategoryBean> categoryBeanArrayListExpense;
-    private ArrayList<Uri> photoPaths = new ArrayList<>();
     RecyclerView rvCategoriesExpense, rvCategoriesIncome;
     RelativeLayout layout_complete, galery_images_layout;
-    ImageView img_calendar, img_title_add_expense, img_select_imagee;
+    private ArrayList<Uri> photoPaths = new ArrayList<>();
     public static ImageView img_1, img_2, img_3, img_4, img_5, img_6;
+    ImageView img_calendar, img_title_add_expense, img_select_imagee;
     RelativeLayout current_day_layout, select_image_layout, no_data_layout;
     @SuppressLint("StaticFieldLeak")
     TextView tv_current_day, tv_date, tv_save, tv_reset, tv_categories, tv_details;
@@ -96,6 +96,9 @@ public class AddExpenseActivity extends AppCompatActivity {
         }
 
         initialise();
+
+        String formattedDate = new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime());
+        user_selected_date = formattedDate;
 
         ClickListeners();
 
@@ -166,6 +169,8 @@ public class AddExpenseActivity extends AppCompatActivity {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         getWindow().setStatusBarColor(Color.parseColor(colorHex));
                     }
+                    tv_add_category.setText("Add " + categoryBeanArrayListIncome.get(position).categoryName);
+                    tv_expense.setText("Add " + categoryBeanArrayListIncome.get(position).categoryName);
                 }
                 adapterIncome.selectedPos = position;
                 adapterIncome.notifyDataSetChanged();
@@ -209,6 +214,10 @@ public class AddExpenseActivity extends AppCompatActivity {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         getWindow().setStatusBarColor(Color.parseColor(colorHex));
                     }
+
+                    tv_add_category.setText("Add " + categoryBeanArrayListExpense.get(position).categoryName);
+                    tv_expense.setText("Add " + categoryBeanArrayListExpense.get(position).categoryName);
+
                 }
                 adapter.selectedPos = position;
                 adapter.notifyDataSetChanged();

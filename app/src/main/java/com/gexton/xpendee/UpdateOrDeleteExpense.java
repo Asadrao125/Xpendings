@@ -129,6 +129,8 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
         flag = timelineFragment.expenseBeanArrayList.get(pos).flag;
         id = timelineFragment.expenseBeanArrayList.get(pos).id;
 
+        tvToolBarTitle.setText("Edit " + catName);
+
         imageview_Category.setImageResource(categoryIcon);
         layout_complete.setBackgroundColor(Color.parseColor(color_code));
         imageview_Category.setColorFilter(Color.parseColor(color_code), android.graphics.PorterDuff.Mode.MULTIPLY);
@@ -224,6 +226,8 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         getWindow().setStatusBarColor(Color.parseColor(colorHex));
                     }
+                    transpareView.setVisibility(View.GONE);
+                    tvToolBarTitle.setText("Edit " + categoryBeanArrayListIncome.get(position).categoryName);
                 }
                 adapterIncome.selectedPos = position;
                 adapterIncome.notifyDataSetChanged();
@@ -266,6 +270,8 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         getWindow().setStatusBarColor(Color.parseColor(colorHex));
                     }
+                    transpareView.setVisibility(View.GONE);
+                    tvToolBarTitle.setText("Edit " + categoryBeanArrayListExpense.get(position).categoryName);
                 }
                 adapter.selectedPos = position;
                 adapter.notifyDataSetChanged();
@@ -276,6 +282,8 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
                 System.out.println("-- item long press pos: " + position);
             }
         }));
+
+        tvToolBarTitle.setText("Edit " + catName);
 
         boolean isPermissionGranted = ActivityCompat.checkSelfPermission(UpdateOrDeleteExpense.this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED;
