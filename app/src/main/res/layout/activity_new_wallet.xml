@@ -133,6 +133,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_toEndOf="@+id/img_wallet"
                 android:hint="Wallet Name"
+                android:inputType="textCapWords"
                 android:maxLines="1"
                 android:textSize="18sp" />
 

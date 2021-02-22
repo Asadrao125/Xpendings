@@ -207,6 +207,7 @@
                 android:src="@drawable/title_addexpense"/>
 
             <EditText
+                android:inputType="textCapSentences"
                 android:layout_centerVertical="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

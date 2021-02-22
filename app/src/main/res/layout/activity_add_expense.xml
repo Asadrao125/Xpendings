@@ -189,6 +189,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:inputType="textCapSentences"
                 android:layout_toRightOf="@+id/img_title_add_expense"
                 android:hint="Write Description" />
 
@@ -359,7 +360,7 @@
                 android:layout_height="wrap_content"
                 android:text="Please Enable Storage Permission to Use Images"/>
 
-        </RelativeLayout>
+        </RelativeLayout> <!-- Enable Storage Permission -->
 
         <TextView
             android:id="@+id/tv_categories"
