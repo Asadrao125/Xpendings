@@ -346,6 +346,21 @@
 
         </RelativeLayout> <!-- No Data Layout -->
 
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/enable_storage_layout"
+            android:layout_margin="20dp"
+            android:layout_below="@+id/select_image_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Please Enable Storage Permission to Use Images"/>
+
+        </RelativeLayout>
+
         <TextView
             android:id="@+id/tv_categories"
             android:layout_width="wrap_content"

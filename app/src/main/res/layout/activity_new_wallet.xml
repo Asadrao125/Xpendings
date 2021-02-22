@@ -132,7 +132,7 @@
                 android:layout_below="@+id/tv_currency_new"
                 android:layout_marginLeft="10dp"
                 android:layout_toEndOf="@+id/img_wallet"
-                android:hint="e.g My Wallet"
+                android:hint="Wallet Name"
                 android:maxLines="1"
                 android:textSize="18sp" />
 

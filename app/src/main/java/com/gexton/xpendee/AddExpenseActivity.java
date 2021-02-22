@@ -80,7 +80,7 @@ public class AddExpenseActivity extends AppCompatActivity {
     private ArrayList<Uri> photoPaths = new ArrayList<>();
     public static ImageView img_1, img_2, img_3, img_4, img_5, img_6;
     ImageView img_calendar, img_title_add_expense, img_select_imagee;
-    RelativeLayout current_day_layout, select_image_layout, no_data_layout;
+    RelativeLayout current_day_layout, select_image_layout, no_data_layout, enable_storage_layout;
     @SuppressLint("StaticFieldLeak")
     TextView tv_current_day, tv_date, tv_save, tv_reset, tv_categories, tv_details;
     public static String img_path1, img_path2, img_path3, img_path4, img_path5, img_path6;
@@ -340,9 +340,12 @@ public class AddExpenseActivity extends AppCompatActivity {
             fetchGalleryImages(AddExpenseActivity.this);
             select_image_layout.setVisibility(View.VISIBLE);
             galery_images_layout.setVisibility(View.VISIBLE);
+            //enable_storage_layout.setVisibility(View.GONE);
         } else {
             select_image_layout.setVisibility(View.GONE);
             galery_images_layout.setVisibility(View.GONE);
+            Toast.makeText(this, "Enable Storage Permission To Use Images", Toast.LENGTH_SHORT).show();
+            //enable_storage_layout.setVisibility(View.VISIBLE);
         }
 
     }
@@ -389,6 +392,7 @@ public class AddExpenseActivity extends AppCompatActivity {
         img_title_add_expense = findViewById(R.id.img_title_add_expense);
         img_select_imagee = findViewById(R.id.img_select_imagee);
         galery_images_layout = findViewById(R.id.galery_images_layout);
+        enable_storage_layout = findViewById(R.id.enable_storage_layout);
     }
 
     private void ClickListeners() {
