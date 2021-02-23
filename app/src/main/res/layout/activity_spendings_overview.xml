@@ -19,50 +19,32 @@
             android:padding="20dp">
 
             <ImageView
-                android:padding="5dp"
                 android:id="@+id/imgBack"
-                android:layout_marginRight="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:src="@drawable/back"/>
+                android:layout_marginRight="10dp"
+                android:padding="5dp"
+                android:src="@drawable/back" />
 
             <TextView
-                android:layout_toEndOf="@+id/imgBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/imgBack"
                 android:text="Spending Overview"
                 android:textColor="@color/white"
-                android:layout_centerVertical="true"
-                android:textSize="16sp" />
-
-            <ImageView
-                android:id="@+id/imgCalendar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/calendar_top"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"/>
+                android:textSize="18sp" />
 
         </RelativeLayout> <!-- Toolbar Layout -->
-
-        <devs.mulham.horizontalcalendar.HorizontalCalendarView
-            android:id="@+id/calendarView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar"
-            android:visibility="gone"
-            android:background="@color/navy_blue"
-            app:selectorColor="@android:color/white"
-            app:textColorSelected="@android:color/white"/>
 
         <!-- Recycler view Layout -->
         <RelativeLayout
             android:id="@+id/recycler_view_layout"
-            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/calendarView">
+            android:layout_below="@+id/toolbar"
+            android:layout_margin="10dp">
 
             <LinearLayout
                 android:id="@+id/income_expense_layout"
@@ -76,22 +58,22 @@
                 android:weightSum="2">
 
                 <LinearLayout
-                    android:padding="5dp"
                     android:id="@+id/expense"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/curve_for_transaction_category"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
                     <TextView
-                        android:textColor="@color/red"
                         android:id="@+id/tvExpenseAmount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
-                        android:text="-PKR 123,234" />
+                        android:text="-PKR 123,234"
+                        android:textColor="@color/red" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -102,19 +84,19 @@
                 </LinearLayout> <!-- Expense -->
 
                 <LinearLayout
-                    android:padding="5dp"
                     android:id="@+id/income"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
                     <TextView
+                        android:id="@+id/tvIncomeAmount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
-                        android:id="@+id/tvIncomeAmount"
                         android:text="PKR 123,234" />
 
                     <TextView
@@ -127,27 +109,12 @@
 
             </LinearLayout>
 
-            <com.github.mikephil.charting.charts.PieChart
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:visibility="gone"
-                android:layout_below="@+id/income_expense_layout"
-                android:id="@+id/pieChart"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvCategories"
-                android:layout_width="match_parent"
-                android:visibility="gone"
-                android:layout_height="match_parent"
-                android:layout_below="@id/income_expense_layout"
-                android:layout_marginTop="10dp" />
-
             <ListView
-                android:divider="@color/white"
-                android:layout_below="@id/income_expense_layout"
                 android:id="@+id/sectionListView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:layout_below="@id/income_expense_layout"
+                android:divider="@color/white" />
 
             <TextView
                 android:id="@+id/tvCategories"
@@ -157,108 +124,22 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-        </RelativeLayout>  <!-- Recycler view Layout -->
-
-
-        <!-- Transparent View -->
-        <View
-            android:visibility="gone"
-            android:id="@+id/transparentView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar"
-            android:background="#66000000"/> <!-- Transparent View -->
-
-
-        <!-- Filter Layout -->
-        <RelativeLayout
-            android:id="@+id/filter_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/cureve_background_for_filter_dialog"
-            android:visibility="gone">
-
-            <RelativeLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCategories"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/view_gray"
-                android:layout_marginTop="20dp"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp">
+                android:layout_height="match_parent"
+                android:layout_below="@id/income_expense_layout"
+                android:layout_marginTop="10dp"
+                android:visibility="gone" />
 
-                <RelativeLayout
-                    android:id="@+id/daily_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvSelectPeriod"
-                    android:layout_marginTop="20dp">
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChart"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_below="@+id/income_expense_layout"
+                android:visibility="gone" />
 
-                    <CheckBox
-                        android:id="@+id/cbDaily"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:longClickable="false" />
-
-                    <TextView
-                        android:id="@+id/tvDaily"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="Daily"
-                        android:textSize="16sp" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/all_time_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/daily_layout"
-                    android:layout_marginBottom="20dp">
-
-                    <CheckBox
-                        android:id="@+id/cbAllTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:longClickable="false" />
-
-                    <TextView
-                        android:id="@+id/tvAllTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="All Time"
-                        android:textSize="16sp" />
-
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/tvSelectPeriod"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="SELECT PERIOD"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
-
-            <View
-                android:id="@+id/view_gray"
-                android:layout_width="60dp"
-                android:layout_height="10px"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/current_day_background" />
-
-        </RelativeLayout> <!-- Filter Layout -->
+        </RelativeLayout>  <!-- Recycler view Layout -->
 
     </RelativeLayout>
 

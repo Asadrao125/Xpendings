@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,8 @@ import java.util.Date;
 import java.util.Locale;
 
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class TestAdapter extends BaseAdapter {
 
@@ -100,6 +103,10 @@ public class TestAdapter extends BaseAdapter {
                 tv_cat_name.setText((list.get(i)).categoryName);
                 icon.setImageResource((list.get(i)).categoryIcon);
 
+                //Setting tint to icon
+                icon.setColorFilter(ContextCompat.getColor(context, R.color.white), android.graphics.PorterDuff.Mode.SRC_IN);
+
+                //Setting circle background color
                 if (!TextUtils.isEmpty((list.get(i)).colorCode)) {
                     GradientDrawable background = (GradientDrawable) layout.getBackground();
                     background.setColor(Color.parseColor((list.get(i)).colorCode));
@@ -111,9 +118,15 @@ public class TestAdapter extends BaseAdapter {
                         amount = amount + database.getExpenseByName((list.get(i).categoryName)).get(j).expense;
                     }
                 }
-                tvAmount.setText("-PKR " + amount);
+                if (list.get(i).flag == 1) {
+                    tvAmount.setTextColor(Color.RED);
+                    tvAmount.setText("-PKR " + amount);
+                } else {
+                    tvAmount.setTextColor(context.getResources().getColor(R.color.green));
+                    tvAmount.setText("PKR " + amount);
+                }
 
-
+                //Getting transaction size for each category
                 if (database.getExpenseByName((list.get(i)).categoryName) != null) {
                     if (database.getExpenseByName((list.get(i)).categoryName).size() == 1) {
                         tvTransactionSize.setText(database.getExpenseByName((list.get(i)).categoryName).size() + " transaction");

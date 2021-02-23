@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 
 public class SectionListViewAdapter extends BaseAdapter {
     ArrayList<ExpenseBean> list;
@@ -100,6 +101,9 @@ public class SectionListViewAdapter extends BaseAdapter {
                 tv_catName.setText((list.get(i)).categoryName);
                 tv_description.setText((list.get(i)).description);
                 image_view.setImageResource((list.get(i)).categoryIcon);
+
+                //Setting tint to icon
+                image_view.setColorFilter(ContextCompat.getColor(context, R.color.white), android.graphics.PorterDuff.Mode.SRC_IN);
 
                 // Directing to view image
                 image_path.setOnClickListener(new View.OnClickListener() {

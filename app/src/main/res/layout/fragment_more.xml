@@ -45,6 +45,8 @@
           android:textColor="@android:color/black"
           android:textSize="16sp" />
 
+
+      <!-- ProfileLayout -->
       <RelativeLayout
           android:layout_width="match_parent"
           android:layout_margin="20dp"
@@ -76,8 +78,10 @@
               android:layout_height="wrap_content"
               android:text="dummy@gmail.com"/>
 
-      </RelativeLayout>
+      </RelativeLayout> <!-- ProfileLayout -->
 
+
+      <!-- Change Password -->
       <RelativeLayout
           android:visibility="gone"
           android:layout_width="match_parent"
@@ -103,7 +107,7 @@
               android:textColor="@color/black"
               android:text="Change Password"/>
 
-      </RelativeLayout>
+      </RelativeLayout> <!-- Change Password -->
 
       <View
           android:layout_width="match_parent"
@@ -114,10 +118,11 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_margin="20dp"
-          android:text="Wallet and Accounts"
+          android:text="Manage"
           android:textColor="@android:color/black"
           android:textSize="16sp" />
 
+      <!-- Add Income Layout -->
       <RelativeLayout
           android:visibility="gone"
           android:id="@+id/add_income"
@@ -144,10 +149,12 @@
               android:textColor="@color/black"
               android:text="Add Income"/>
 
-      </RelativeLayout>
+      </RelativeLayout> <!-- Add Income Layout -->
 
+
+      <!-- Main Currency -->
       <RelativeLayout
-          android:visibility="gone"
+          android:id="@+id/manageIncExp"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="?attr/selectableItemBackground"
@@ -156,23 +163,25 @@
           android:orientation="horizontal">
 
           <ImageView
-              android:id="@+id/img_password"
+              android:id="@+id/img_manage"
               android:layout_centerVertical="true"
               android:layout_marginRight="20dp"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:src="@drawable/curency_more"/>
+              android:src="@drawable/sign_out"/>
 
           <TextView
-              android:layout_toRightOf="@+id/img_password"
+              android:layout_toRightOf="@+id/img_manage"
               android:layout_centerVertical="true"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:textColor="@color/black"
-              android:text="Main Currency"/>
+              android:text="Manage Income/Expense"/>
 
-      </RelativeLayout>
+      </RelativeLayout> <!-- Main Currency -->
 
+
+      <!-- Manage Categories -->
       <RelativeLayout
           android:id="@+id/manage_categories"
           android:layout_width="match_parent"
@@ -198,7 +207,7 @@
               android:textColor="@color/black"
               android:text="Manage Categories"/>
 
-      </RelativeLayout>
+      </RelativeLayout> <!-- Manage Categories -->
 
       <View
           android:layout_width="match_parent"
@@ -213,6 +222,8 @@
           android:textColor="@android:color/black"
           android:textSize="16sp" />
 
+
+      <!-- About App -->
       <RelativeLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -238,8 +249,10 @@
               android:textColor="@color/black"
               android:text="About App"/>
 
-      </RelativeLayout>
+      </RelativeLayout> <!-- About App -->
 
+
+      <!-- Share to a friend -->
       <RelativeLayout
           android:id="@+id/share_app_layout"
           android:layout_width="match_parent"
@@ -265,8 +278,10 @@
               android:textColor="@color/black"
               android:text="Share to a friend"/>
 
-      </RelativeLayout>
+      </RelativeLayout> <!-- Share to a friend -->
 
+
+      <!-- Rate App -->
       <RelativeLayout
           android:id="@+id/rate_app_layout"
           android:layout_width="match_parent"
@@ -292,8 +307,10 @@
               android:textColor="@color/black"
               android:text="Rate App"/>
 
-      </RelativeLayout>
+      </RelativeLayout> <!-- Rate App -->
 
+
+      <!-- Logout -->
       <RelativeLayout
           android:id="@+id/logout_layout"
           android:layout_width="match_parent"
@@ -319,7 +336,7 @@
               android:textColor="@color/black"
               android:text="Logout"/>
 
-      </RelativeLayout>
+      </RelativeLayout> <!-- Logout -->
 
       <TextView
           android:layout_margin="20dp"

@@ -230,7 +230,6 @@
            android:background="@color/light_grey" />
 
        <androidx.cardview.widget.CardView
-           android:visibility="visible"
            android:layout_width="match_parent"
            android:layout_height="match_parent"
            android:elevation="8dp"
@@ -241,17 +240,6 @@
            android:layout_below="@+id/wallet_complete"
            app:cardCornerRadius="8dp">
 
-           <RelativeLayout
-               android:layout_width="match_parent"
-               android:layout_height="match_parent">
-
-               <com.github.mikephil.charting.charts.PieChart
-                   android:id="@+id/pieChart"
-                   android:visibility="gone"
-                   android:layout_margin="5dp"
-                   android:layout_width="match_parent"
-                   android:layout_height="300dp"/>
-
                <com.highsoft.highcharts.Core.HIChartView
                    android:layout_margin="5dp"
                    android:id="@+id/hc"
@@ -259,42 +247,16 @@
                    android:layout_width="match_parent"
                    android:layout_height="300dp"/>
 
-           </RelativeLayout>
-
-       </androidx.cardview.widget.CardView>
-
-       <androidx.cardview.widget.CardView
-           android:visibility="gone"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:elevation="8dp"
-           app:cardElevation="8dp"
-           android:id="@+id/card_view_barChart"
-           app:cardMaxElevation="8dp"
-           android:layout_margin="10dp"
-           android:layout_below="@+id/card_view_pieChart"
-           app:cardCornerRadius="8dp">
-
-           <RelativeLayout
-               android:layout_width="match_parent"
-               android:layout_height="match_parent">
-
-               <com.github.mikephil.charting.charts.BarChart
-                   android:id="@+id/barChart"
-                   android:layout_margin="5dp"
-                   android:layout_width="match_parent"
-                   android:layout_height="300dp" />
-
-           </RelativeLayout>
-
        </androidx.cardview.widget.CardView>
 
        <Button
            android:backgroundTint="@color/transparent_green"
            android:layout_centerHorizontal="true"
            android:layout_below="@+id/card_view_pieChart"
-           android:layout_width="wrap_content"
+           android:layout_width="match_parent"
            android:layout_height="40dp"
+           android:layout_marginLeft="10dp"
+           android:layout_marginRight="10dp"
            android:id="@+id/btnSpendingsOverview"
            android:textColor="@color/dark_green"
            android:text="Spendings Overview" />

@@ -66,21 +66,16 @@ public class HomeFragment extends Fragment {
     CircleImageView profile_image;
     Button btn_add_cash_wallet, btn_edit_wallet;
     TextView tv_balance, tv_currency, tv_my_wallet_name, tv_name;
-    public LinearLayout layout_no_data_found;
-    public RelativeLayout wallet_complete;
+    LinearLayout layout_no_data_found;
+    RelativeLayout wallet_complete;
     RelativeLayout static_layout_wallet;
     ArrayList<ExpenseBean> expenseBeanArrayList;
     Database database;
     ArrayList<String> dateBeanArrayList;
-    PieChart pieChart;
-    BarChart barChart;
-    ArrayList<PieEntry> list = new ArrayList<>();
-    ArrayList<BarEntry> listBarEntry = new ArrayList<>();
     ArrayList<CategoryBean> allCatList;
-    CardView cardView_pieChart, cardView_barChart;
+    CardView cardView_pieChart;
     ImageView imgShare;
     float totalExpense = 0;
-    float totalExpense2 = 0;
     HIChartView chartView;
     ArrayList<ExpenseBean> listExpenseBean;
     Button btnSpendingsOverview;
@@ -103,10 +98,7 @@ public class HomeFragment extends Fragment {
         database = new Database(getContext());
         expenseBeanArrayList = new ArrayList<>();
         dateBeanArrayList = new ArrayList<>();
-        pieChart = view.findViewById(R.id.pieChart);
-        barChart = view.findViewById(R.id.barChart);
         cardView_pieChart = view.findViewById(R.id.card_view_pieChart);
-        cardView_barChart = view.findViewById(R.id.card_view_barChart);
         imgShare = view.findViewById(R.id.imgShare);
         chartView = (HIChartView) view.findViewById(R.id.hc);
         listExpenseBean = new ArrayList<>();
@@ -216,30 +208,14 @@ public class HomeFragment extends Fragment {
         title.setText("All Expenses");
         options.setTitle(title);
 
-        /*HIXAxis xAxis = new HIXAxis();
-        String[] categoriesList = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-        xAxis.setCategories(new ArrayList<>(Arrays.asList(categoriesList)));
-        options.setXAxis(new ArrayList<HIXAxis>() {{
-            add(xAxis);
-        }});
-
-        if (database.getAllExpenses() != null) {
-            listExpenseBean = database.getAllExpenses();
-            ArrayList<String> stringList = new ArrayList<>();
-            stringList = database.getAllExpenseCategories();
-            for (int i = 0; i < listExpenseBean.size(); i++) {
-                xAxis.setCategories(stringList);
-            }
-            options.setXAxis(new ArrayList<HIXAxis>() {{
-                add(xAxis);
-            }});
-        }*/
-
         HIPie series1 = new HIPie();
         series1.setAllowPointSelect(true);
         String[] keys = new String[]{"name", "y", "selected", "sliced"};
         series1.setKeys(new ArrayList<>(Arrays.asList(keys)));
-        series1.setShowInLegend(true);
+
+        //Colors setting turning off
+        series1.setShowInLegend(false);
+
         Object[] object10 = new Object[categoryBeans.size()];
         for (int i = 0; i < categoryBeans.size(); i++) {
             CategoryBean categoryBean = categoryBeans.get(i);
@@ -249,8 +225,13 @@ public class HomeFragment extends Fragment {
                     totalExpense = (float) (totalExpense + expenseBeansInThisCat.get(j).expense);
                 } //end inner loop
             }
-            object10[i] = new Object[]{categoryBean.categoryName, totalExpense, false};
-            series1.setData(new ArrayList<>(Arrays.asList(object10)));
+            if (totalExpense > 0) {
+                object10[i] = new Object[]{categoryBean.categoryName, totalExpense, false};
+                series1.setData(new ArrayList<>(Arrays.asList(object10)));
+            } else {
+                object10[i] = new Object[]{"", null, false};
+                series1.setData(new ArrayList<>(Arrays.asList(object10)));
+            }
             totalExpense = 0;
         } //end outer loop
         options.setSeries(new ArrayList<>(Arrays.asList(series1)));
@@ -269,151 +250,6 @@ public class HomeFragment extends Fragment {
         } catch (Exception e) {
             e.toString();
         }
-    }
-
-    private void settingHighChartLine(ArrayList<CategoryBean> categoryBeans) {
-
-        HIOptions options = new HIOptions();
-
-        HITitle title = new HITitle();
-        title.setText("Expenses Chart");
-        options.setTitle(title);
-
-        HISubtitle subtitle = new HISubtitle();
-        subtitle.setText("");
-        options.setSubtitle(subtitle);
-
-        HIYAxis yaxis = new HIYAxis();
-        yaxis.setTitle(new HITitle());
-        yaxis.getTitle().setText("");
-        options.setYAxis(new ArrayList<>(Collections.singletonList(yaxis)));
-
-        HILegend legend = new HILegend();
-        legend.setLayout("vertical");
-        legend.setAlign("right");
-        legend.setVerticalAlign("middle");
-        options.setLegend(legend);
-
-        HIPlotOptions plotoptions = new HIPlotOptions();
-        plotoptions.setSeries(new HISeries());
-        plotoptions.getSeries().setLabel(new HILabel());
-        plotoptions.getSeries().getLabel().setConnectorAllowed(false);
-        plotoptions.getSeries().setPointStart(2021);
-        options.setPlotOptions(plotoptions);
-
-        HILine line1 = new HILine();
-        //line1.setName("Installation");
-        //line1.setData(new ArrayList<>(Arrays.asList(43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175)));
-
-        //
-        for (int i = 0; i < categoryBeans.size(); i++) {
-            CategoryBean categoryBean = categoryBeans.get(i);
-            ArrayList<ExpenseBean> expenseBeansInThisCat = categoryBean.listExpenseBean;
-            if (expenseBeansInThisCat != null) {
-                for (int j = 0; j < expenseBeansInThisCat.size(); j++) {
-                    line1.setName(categoryBean.categoryName);
-                    line1.setData(new ArrayList<>(Arrays.asList(expenseBeansInThisCat.get(j).expense)));
-                }
-            }
-            totalExpense = 0;
-        }
-
-        //
-
-       /* HILine line2 = new HILine();
-        line2.setName("Manufacturing");
-        line2.setData(new ArrayList<>(Arrays.asList(24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434)));
-
-        HILine line3 = new HILine();
-        line3.setName("Sales & Distribution");
-        line3.setData(new ArrayList<>(Arrays.asList(11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387)));
-
-        HILine line4 = new HILine();
-        line4.setName("Project Development");
-        line4.setData(new ArrayList<>(Arrays.asList(null, null, 7988, 12169, 15112, 22452, 34400, 34227)));
-
-        HILine line5 = new HILine();
-        line5.setName("Other");
-        line5.setData(new ArrayList<>(Arrays.asList(12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111)));*/
-
-        HIResponsive responsive = new HIResponsive();
-
-        HIRules rules1 = new HIRules();
-        rules1.setCondition(new HICondition());
-        rules1.getCondition().setMaxWidth(500);
-        HashMap<String, HashMap> chartLegend = new HashMap<>();
-        HashMap<String, String> legendOptions = new HashMap<>();
-        legendOptions.put("layout", "horizontal");
-        legendOptions.put("align", "center");
-        legendOptions.put("verticalAlign", "bottom");
-        chartLegend.put("legend", legendOptions);
-        rules1.setChartOptions(chartLegend);
-        responsive.setRules(new ArrayList<>(Collections.singletonList(rules1)));
-        options.setResponsive(responsive);
-
-        //options.setSeries(new ArrayList<>(Arrays.asList(line1, line2, line3, line4, line5)));
-        options.setSeries(new ArrayList<>(Arrays.asList(line1)));
-        chartView.setOptions(options);
-    }
-
-    private void settingPieChart(ArrayList<CategoryBean> categoryBeans) {
-
-        list.clear();
-        totalExpense = 0;
-
-        for (int i = 0; i < categoryBeans.size(); i++) {
-            CategoryBean categoryBean = categoryBeans.get(i);
-            ArrayList<ExpenseBean> expenseBeansInThisCat = categoryBean.listExpenseBean;
-            if (expenseBeansInThisCat != null) {
-                for (int j = 0; j < expenseBeansInThisCat.size(); j++) {
-                    totalExpense = (float) (totalExpense + expenseBeansInThisCat.get(j).expense);
-                }//end inner loop
-            }
-            list.add(new PieEntry(totalExpense, categoryBean.categoryName));
-            totalExpense = 0;
-        }//end outer loop
-
-        PieDataSet pieDataSet = new PieDataSet(list, "");
-        pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-        pieDataSet.setValueTextColor(Color.BLACK);
-        pieDataSet.setValueTextSize(16f);
-
-        PieData pieData = new PieData(pieDataSet);
-        pieChart.setData(pieData);
-        pieChart.getDescription().setEnabled(false);
-        pieChart.setCenterText("All Expenses");
-        pieChart.animateX(500);
-        pieChart.animateY(500);
-        pieChart.animate();
-
-    }
-
-    public void settingBarChart(ArrayList<CategoryBean> categoryBeans) {
-        listBarEntry.clear();
-        totalExpense2 = 0;
-        for (int i = 0; i < categoryBeans.size(); i++) {
-            CategoryBean categoryBean = categoryBeans.get(i);
-            ArrayList<ExpenseBean> expenseBeansInThisCat = categoryBean.listExpenseBean;
-            if (expenseBeansInThisCat != null) {
-                for (int j = 0; j < expenseBeansInThisCat.size(); j++) {
-                    totalExpense2 = (float) (totalExpense2 + expenseBeansInThisCat.get(j).expense);
-                }//end inner loop
-            }
-            listBarEntry.add(new BarEntry(i, totalExpense2));
-            totalExpense = 0;
-        }//end outer loop
-
-        BarDataSet barDataSet = new BarDataSet(listBarEntry, "All Expenses");
-        barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-        barDataSet.setValueTextColor(Color.BLACK);
-        barDataSet.setValueTextSize(16f);
-
-        BarData barData = new BarData(barDataSet);
-        barChart.setFitBars(true);
-        barChart.setData(barData);
-        barChart.getDescription().setText("");
-        barChart.animateY(1000);
-        barChart.setPinchZoom(false);
     }
 
 }

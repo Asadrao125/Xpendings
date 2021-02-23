@@ -28,7 +28,7 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
     TabLayout tabs;
-    ViewPager viewPager;
+    public ViewPager viewPager;
     ViewPagerAdapterHome viewPagerAdapterHome;
     Database database;
     SharedPreferences.Editor editor;

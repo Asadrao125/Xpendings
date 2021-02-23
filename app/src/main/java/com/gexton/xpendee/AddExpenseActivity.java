@@ -15,6 +15,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -28,6 +29,8 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -567,19 +570,12 @@ public class AddExpenseActivity extends AppCompatActivity {
             }
         });
 
-        /*parentLayoutCategories.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                parentLayoutCategories.setVisibility(View.GONE);
-                transpareView.setVisibility(View.GONE);
-            }
-        });*/
-
         imageview_Category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 parentLayoutCategories.setVisibility(View.VISIBLE);
                 transpareView.setVisibility(View.VISIBLE);
+                hideKeyboard();
             }
         });
     }
@@ -731,6 +727,11 @@ public class AddExpenseActivity extends AppCompatActivity {
                         token.continuePermissionRequest();
                     }
                 }).check();
+    }
+
+    public void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
 }

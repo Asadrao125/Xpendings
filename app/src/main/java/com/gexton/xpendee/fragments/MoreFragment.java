@@ -36,17 +36,16 @@ import java.util.List;
 import static android.content.Context.MODE_PRIVATE;
 
 public class MoreFragment extends Fragment {
-    String MY_PREFS_NAME = "Xpendee";
-    TextView tv_username, tv_email;
-    CircleImageView profile_image;
-    RelativeLayout manage_categories, add_income;
     View view;
-    RelativeLayout logout_layout, about_app_layout, share_app_layout, rate_app_layout;
-    SharedPreferences preferences;
     String json;
+    CircleImageView profile_image;
+    TextView tv_username, tv_email;
+    SharedPreferences preferences;
+    String MY_PREFS_NAME = "Xpendee";
+    RelativeLayout manage_categories, add_income, manageIncExp;
+    RelativeLayout logout_layout, about_app_layout, share_app_layout, rate_app_layout;
 
     @Override
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_more, container, false);
@@ -60,7 +59,15 @@ public class MoreFragment extends Fragment {
         about_app_layout = view.findViewById(R.id.about_app_layout);
         share_app_layout = view.findViewById(R.id.share_app_layout);
         rate_app_layout = view.findViewById(R.id.rate_app_layout);
+        manageIncExp = view.findViewById(R.id.manageIncExp);
         preferences = getContext().getSharedPreferences("Xpendee", 0);
+
+        manageIncExp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         manage_categories.setOnClickListener(new View.OnClickListener() {
             @Override
