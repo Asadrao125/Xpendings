@@ -45,7 +45,6 @@
           android:textColor="@android:color/black"
           android:textSize="16sp" />
 
-
       <!-- ProfileLayout -->
       <RelativeLayout
           android:layout_width="match_parent"
@@ -79,35 +78,6 @@
               android:text="dummy@gmail.com"/>
 
       </RelativeLayout> <!-- ProfileLayout -->
-
-
-      <!-- Change Password -->
-      <RelativeLayout
-          android:visibility="gone"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="?attr/selectableItemBackground"
-          android:padding="10dp"
-          android:layout_margin="10dp"
-          android:orientation="horizontal">
-
-          <ImageView
-              android:id="@+id/img_password"
-              android:layout_centerVertical="true"
-              android:layout_marginRight="20dp"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:src="@drawable/changepwd_more"/>
-
-          <TextView
-              android:layout_toRightOf="@+id/img_password"
-              android:layout_centerVertical="true"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:textColor="@color/black"
-              android:text="Change Password"/>
-
-      </RelativeLayout> <!-- Change Password -->
 
       <View
           android:layout_width="match_parent"
@@ -152,7 +122,36 @@
       </RelativeLayout> <!-- Add Income Layout -->
 
 
-      <!-- Main Currency -->
+      <!-- Spendings Overview Layout -->
+      <RelativeLayout
+          android:id="@+id/spendings_overview"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="?attr/selectableItemBackground"
+          android:padding="10dp"
+          android:layout_margin="10dp"
+          android:orientation="horizontal">
+
+          <ImageView
+              android:id="@+id/imgSpendingOver"
+              android:layout_centerVertical="true"
+              android:layout_marginRight="20dp"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:src="@drawable/sign_out"/>
+
+          <TextView
+              android:layout_toRightOf="@+id/imgSpendingOver"
+              android:layout_centerVertical="true"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textColor="@color/black"
+              android:text="Spendings Overview"/>
+
+      </RelativeLayout> <!-- Spendings Overview Layout -->
+
+
+      <!-- Manage Income and Expense -->
       <RelativeLayout
           android:id="@+id/manageIncExp"
           android:layout_width="match_parent"
@@ -176,9 +175,9 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:textColor="@color/black"
-              android:text="Manage Income/Expense"/>
+              android:text="Manage Income and Expense"/>
 
-      </RelativeLayout> <!-- Main Currency -->
+      </RelativeLayout> <!-- Manage Income and Expense -->
 
 
       <!-- Manage Categories -->

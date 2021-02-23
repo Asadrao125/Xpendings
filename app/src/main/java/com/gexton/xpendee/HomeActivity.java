@@ -27,15 +27,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
-    TabLayout tabs;
-    public ViewPager viewPager;
-    ViewPagerAdapterHome viewPagerAdapterHome;
-    Database database;
-    SharedPreferences.Editor editor;
-    SharedPreferences prefs;
     int indexVal;
-    ArrayList<CategoryBean> categoryBeanArrayListPD;
+    TabLayout tabs;
+    Database database;
+    ViewPager viewPager;
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
     ArrayList<CategoryBean> newList;
+    ViewPagerAdapterHome viewPagerAdapterHome;
+    ArrayList<CategoryBean> categoryBeanArrayListPD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -17,11 +17,13 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gexton.xpendee.AddExpenseActivity;
 import com.gexton.xpendee.AddIncomeActivity;
 import com.gexton.xpendee.BuildConfig;
 import com.gexton.xpendee.LoginActivity;
 import com.gexton.xpendee.ManageCategories;
 import com.gexton.xpendee.R;
+import com.gexton.xpendee.SpendingsOverviewActivity;
 import com.gexton.xpendee.model.WalletBean;
 import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
@@ -42,7 +44,7 @@ public class MoreFragment extends Fragment {
     TextView tv_username, tv_email;
     SharedPreferences preferences;
     String MY_PREFS_NAME = "Xpendee";
-    RelativeLayout manage_categories, add_income, manageIncExp;
+    RelativeLayout manage_categories, add_income, manageIncExp, spendings_overview;
     RelativeLayout logout_layout, about_app_layout, share_app_layout, rate_app_layout;
 
     @Override
@@ -60,12 +62,20 @@ public class MoreFragment extends Fragment {
         share_app_layout = view.findViewById(R.id.share_app_layout);
         rate_app_layout = view.findViewById(R.id.rate_app_layout);
         manageIncExp = view.findViewById(R.id.manageIncExp);
+        spendings_overview = view.findViewById(R.id.spendings_overview);
         preferences = getContext().getSharedPreferences("Xpendee", 0);
+
+        spendings_overview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), SpendingsOverviewActivity.class));
+            }
+        });
 
         manageIncExp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(getContext(), AddExpenseActivity.class));
             }
         });
 
