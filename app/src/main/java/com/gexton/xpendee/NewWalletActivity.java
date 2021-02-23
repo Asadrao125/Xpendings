@@ -97,10 +97,16 @@ public class NewWalletActivity extends AppCompatActivity {
             }
         });
 
-        if (database.getAllVisibleCategories(1) != null) {
-            tvAllExpenses.setText("" + database.getAllVisibleCategories(1).size());
-        }
+        if (database.getAllCategories(1) != null && database.getAllCategories(2) != null && database.getAllVisibleCategories(1) != null) {
+            int allCatSize = database.getAllCategories(1).size() + database.getAllCategories(2).size();
+            int visibleCatSize = database.getAllVisibleCategories(1).size();
 
+            if (visibleCatSize == allCatSize) {
+                tvAllExpenses.setText("All Expenses");
+            } else {
+                tvAllExpenses.setText("" + database.getAllVisibleCategories(1).size());
+            }
+        }
     }
 
     private void settingDataInFields() {
@@ -118,8 +124,16 @@ public class NewWalletActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (database.getAllVisibleCategories(1) != null) {
-            tvAllExpenses.setText("" + database.getAllVisibleCategories(1).size());
+
+        if (database.getAllCategories(1) != null && database.getAllCategories(2) != null && database.getAllVisibleCategories(1) != null) {
+            int allCatSize = database.getAllCategories(1).size() + database.getAllCategories(2).size();
+            int visibleCatSize = database.getAllVisibleCategories(1).size();
+
+            if (visibleCatSize == allCatSize) {
+                tvAllExpenses.setText("All Expenses");
+            } else {
+                tvAllExpenses.setText("" + database.getAllVisibleCategories(1).size());
+            }
         }
     }
 }

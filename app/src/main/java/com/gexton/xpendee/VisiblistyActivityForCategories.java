@@ -35,8 +35,7 @@ public class VisiblistyActivityForCategories extends AppCompatActivity {
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                finish();
+                onBackPressed();
             }
         });
     }

@@ -44,6 +44,11 @@ import com.gexton.xpendee.model.WalletBean;
 import com.gexton.xpendee.util.Database;
 import com.gexton.xpendee.util.RecyclerItemClickListener;
 import com.google.gson.Gson;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -51,6 +56,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class AddExpenseActivity extends AppCompatActivity {
@@ -321,15 +327,6 @@ public class AddExpenseActivity extends AppCompatActivity {
                 user_selected_date = "";
                 adapter.selectedPos = 0;
                 adapter.notifyDataSetChanged();
-
-            }
-        });
-
-        transpareView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                transpareView.setVisibility(View.GONE);
-                parentLayoutCategories.setVisibility(View.GONE);
             }
         });
 
@@ -344,8 +341,9 @@ public class AddExpenseActivity extends AppCompatActivity {
         } else {
             select_image_layout.setVisibility(View.GONE);
             galery_images_layout.setVisibility(View.GONE);
-            Toast.makeText(this, "Enable Storage Permission To Use Images", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Enable Storage Permission To Use Images", Toast.LENGTH_SHORT).show();
             //enable_storage_layout.setVisibility(View.VISIBLE);
+            permissionCheck();
         }
 
     }
@@ -562,20 +560,20 @@ public class AddExpenseActivity extends AppCompatActivity {
         transpareView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (parentLayoutCategories.isShown()) {
+                /*if (parentLayoutCategories.isShown()) {
                     parentLayoutCategories.setVisibility(View.GONE);
                     transpareView.setVisibility(View.GONE);
-                }
+                }*/
             }
         });
 
-        parentLayoutCategories.setOnClickListener(new View.OnClickListener() {
+        /*parentLayoutCategories.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 parentLayoutCategories.setVisibility(View.GONE);
                 transpareView.setVisibility(View.GONE);
             }
-        });
+        });*/
 
         imageview_Category.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -614,7 +612,8 @@ public class AddExpenseActivity extends AppCompatActivity {
         FilePickerBuilder.getInstance()
                 .setMaxCount(1)
                 .setSelectedFiles(photoPaths) //this is optional
-                .setActivityTheme(R.style.FilePickerTheme)
+                /*.setActivityTheme(R.style.FilePickerTheme)*/
+                .setActivityTheme(R.style.ThemeOverlay_AppCompat_Dark)
                 .setActivityTitle("Please select media")
                 .setImageSizeLimit(5)
                 .setVideoSizeLimit(10)
@@ -695,4 +694,43 @@ public class AddExpenseActivity extends AppCompatActivity {
             rvCategoriesExpense.setAdapter(adapter);
         }
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        permissionCheck();
+    }
+
+    public void permissionCheck() {
+
+        boolean shouldShowRequestPersmissionRational = ActivityCompat.shouldShowRequestPermissionRationale(AddExpenseActivity.this,
+                Manifest.permission.READ_EXTERNAL_STORAGE);
+        System.out.println("-- shouldShowRequestPersmissionRational: " + shouldShowRequestPersmissionRational);
+
+        boolean isPermissionGranted = ActivityCompat.checkSelfPermission(AddExpenseActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED;
+
+        System.out.println("-- isPermissionGranted: " + isPermissionGranted);
+
+        Dexter.withContext(this)
+                .withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (report.areAllPermissionsGranted()) {
+                            Log.d("TAG", "onPermissionsChecked: Permission Granted");
+                            fetchGalleryImages(AddExpenseActivity.this);
+                            select_image_layout.setVisibility(View.VISIBLE);
+                            galery_images_layout.setVisibility(View.VISIBLE);
+                            //enable_storage_layout.setVisibility(View.GONE);
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
+    }
+
 }

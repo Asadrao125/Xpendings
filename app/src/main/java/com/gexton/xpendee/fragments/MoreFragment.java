@@ -72,7 +72,6 @@ public class MoreFragment extends Fragment {
         add_income.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                permissionCheck();
             }
         });
 
@@ -134,26 +133,6 @@ public class MoreFragment extends Fragment {
         }
     }
 
-    public void permissionCheck() {
-        Dexter.withContext(getContext())
-                .withPermissions(
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .withListener(new MultiplePermissionsListener() {
-                    @Override
-                    public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        if (report.areAllPermissionsGranted()) {
-                            startActivity(new Intent(getContext(), AddIncomeActivity.class));
-                        }
-                    }
-
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-                        token.continuePermissionRequest();
-                    }
-                }).check();
-    }
-
     public void showDialog() {
         new AlertDialog.Builder(getContext())
                 .setTitle("")
@@ -173,6 +152,25 @@ public class MoreFragment extends Fragment {
                 .show();
     }
 
+    public void permissionCheck() {
+        Dexter.withContext(getContext())
+                .withPermissions(
+                        Manifest.permission.READ_EXTERNAL_STORAGE)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (report.areAllPermissionsGranted()) {
+                            startActivity(new Intent(getContext(), AddIncomeActivity.class));
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
+    }
+
     private void checkWalletExistance() {
         SharedPreferences prefs1 = getContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
         json = prefs1.getString("Wallet_Bean", "");
@@ -183,17 +181,5 @@ public class MoreFragment extends Fragment {
         } else {
             add_income.setVisibility(View.GONE);
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        //checkWalletExistance();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        //checkWalletExistance();
     }
 }

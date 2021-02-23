@@ -386,7 +386,8 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
         FilePickerBuilder.getInstance()
                 .setMaxCount(1)
                 .setSelectedFiles(photoPaths) //this is optional
-                .setActivityTheme(R.style.FilePickerTheme)
+                /*.setActivityTheme(R.style.FilePickerTheme)*/
+                .setActivityTheme(R.style.ThemeOverlay_AppCompat_Dark)
                 .setActivityTitle("Please select media")
                 .setImageSizeLimit(5)
                 .setVideoSizeLimit(10)
@@ -805,20 +806,20 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
         transpareView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (parentLayoutCategories.isShown()) {
+                /*if (parentLayoutCategories.isShown()) {
                     parentLayoutCategories.setVisibility(View.GONE);
                     transpareView.setVisibility(View.GONE);
-                }
+                }*/
             }
         });
 
-        parentLayoutCategories.setOnClickListener(new View.OnClickListener() {
+        /*parentLayoutCategories.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 parentLayoutCategories.setVisibility(View.GONE);
                 transpareView.setVisibility(View.GONE);
             }
-        });
+        });*/
 
         imageview_Category.setOnClickListener(new View.OnClickListener() {
             @Override

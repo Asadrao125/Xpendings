@@ -23,4 +23,17 @@ public class CategoryBean {
         this.visiblity = visiblisty;
         //this.isPredefined = isPredefined;
     }
+
+    @Override
+    public String toString() {
+        return "CategoryBean{" +
+                "id=" + id +
+                ", categoryName='" + categoryName + '\'' +
+                ", categoryIcon=" + categoryIcon +
+                ", categoryHashCode='" + categoryHashCode + '\'' +
+                ", catFlag=" + catFlag +
+                ", visiblity=" + visiblity +
+                ", listExpenseBean=" + listExpenseBean +
+                '}';
+    }
 }

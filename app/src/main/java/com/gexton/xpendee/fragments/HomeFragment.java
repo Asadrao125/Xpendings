@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.gexton.xpendee.NewWalletActivity;
 import com.gexton.xpendee.R;
+import com.gexton.xpendee.SpendingsOverviewActivity;
 import com.gexton.xpendee.model.CategoryBean;
 import com.gexton.xpendee.model.ExpenseBean;
 import com.gexton.xpendee.model.WalletBean;
@@ -82,6 +83,7 @@ public class HomeFragment extends Fragment {
     float totalExpense2 = 0;
     HIChartView chartView;
     ArrayList<ExpenseBean> listExpenseBean;
+    Button btnSpendingsOverview;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -108,6 +110,7 @@ public class HomeFragment extends Fragment {
         imgShare = view.findViewById(R.id.imgShare);
         chartView = (HIChartView) view.findViewById(R.id.hc);
         listExpenseBean = new ArrayList<>();
+        btnSpendingsOverview = view.findViewById(R.id.btnSpendingsOverview);
 
         converSionAndSettingData();
 
@@ -115,6 +118,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), NewWalletActivity.class));
+            }
+        });
+
+        btnSpendingsOverview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), SpendingsOverviewActivity.class));
             }
         });
 

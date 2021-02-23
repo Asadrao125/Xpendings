@@ -143,7 +143,6 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        permissionCheck();
     }
 
     public void permissionCheck() {
@@ -164,7 +163,6 @@ public class HomeActivity extends AppCompatActivity {
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         if (report.areAllPermissionsGranted()) {
                             Log.d("TAG", "onPermissionsChecked: Permission Granted");
-                            //Toast.makeText(HomeActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
                         }
                     }
 
