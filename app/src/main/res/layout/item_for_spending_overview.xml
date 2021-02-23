@@ -44,7 +44,7 @@
             android:layout_marginTop="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0 transactions in 0 wallets" />
+            android:text="0 transactions" />
 
     </LinearLayout>
 

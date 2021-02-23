@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.gexton.xpendee.adapters.CategoriesAdapterForSpendingOverview;
 import com.gexton.xpendee.adapters.CategoriesListAdapter;
 import com.gexton.xpendee.adapters.SectionListViewAdapter;
+import com.gexton.xpendee.adapters.TestAdapter;
 import com.gexton.xpendee.model.CategoryBean;
 import com.gexton.xpendee.model.ExpenseBean;
 import com.gexton.xpendee.util.Database;
@@ -62,6 +63,7 @@ public class SpendingsOverviewActivity extends AppCompatActivity {
     CategoriesAdapterForSpendingOverview adapter = null;
     RelativeLayout filter_layout, daily_layout, all_time_layout;
     ArrayList<ExpenseBean> expenseBeanArrayList = new ArrayList<>();
+    ListView sectionListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,20 +78,28 @@ public class SpendingsOverviewActivity extends AppCompatActivity {
 
         listeners();
 
+        loadCategories(1);
+
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Calendar date, int position) {
                 String dateNew = DateFormat.format("dd-MM-yyyy", date).toString();
-
                 if (database.getAllDailyExpenses(dateNew) != null) {
+                    sectionListView.setVisibility(View.VISIBLE);
+                    expenseBeanArrayList = database.getAllDailyExpenses(currentDate);
+                    sectionListView.setAdapter(new TestAdapter(expenseBeanArrayList, getApplicationContext()));
+
                     if (database.getAllIncome(1) != null) {
-                        tvExpenseAmount.setText("-PKR " + sumExpense(database.getAllIncome(1)));
+                        tvExpenseAmount.setText("-PKR " + sumExpense(database.getAllDailyExpenses(currentDate)));
                     }
 
                     if (database.getAllIncome(2) != null) {
-                        tvIncomeAmount.setText("PKR " + sumIncome(database.getAllIncome(2)));
+                        tvIncomeAmount.setText("PKR " + sumIncome(database.getAllDailyExpenses(currentDate)));
                     }
-                    expenseBeanArrayList = database.getAllDailyExpenses(dateNew);
+                } else {
+                    tvExpenseAmount.setText("-PKR 0");
+                    tvIncomeAmount.setText("PKR 0");
+                    sectionListView.setVisibility(View.GONE);
                 }
             }
 
@@ -103,16 +113,6 @@ public class SpendingsOverviewActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-        loadCategories(1);
-
-        if (database.getAllIncome(1) != null) {
-            tvExpenseAmount.setText("-PKR " + sumExpense(database.getAllIncome(1)));
-        }
-
-        if (database.getAllIncome(2) != null) {
-            tvIncomeAmount.setText("PKR " + sumIncome(database.getAllIncome(2)));
-        }
 
     }
 
@@ -236,6 +236,7 @@ public class SpendingsOverviewActivity extends AppCompatActivity {
         cbAllTime = findViewById(R.id.cbAllTime);
         daily_layout = findViewById(R.id.daily_layout);
         all_time_layout = findViewById(R.id.all_time_layout);
+        sectionListView = findViewById(R.id.sectionListView);
 
         Calendar startDate = Calendar.getInstance();
         startDate.add(Calendar.MONTH, -2);
@@ -256,13 +257,35 @@ public class SpendingsOverviewActivity extends AppCompatActivity {
     }
 
     private void loadCategories(int flag) {
-        rvCategories.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        if (database.getAllCategories(flag) != null) {
-            categoryBeanArrayList = database.getAllCategories(flag);
-            Log.d("categoriess", "loadCategories: " + categoryBeanArrayList);
-            adapter = new CategoriesAdapterForSpendingOverview(getApplicationContext(), categoryBeanArrayList);
-            rvCategories.setAdapter(adapter);
+
+        if (!TextUtils.isEmpty(filter_value) && filter_value.equals("daily")) {
+            expenseBeanArrayList.clear();
+            expenseBeanArrayList = database.getAllDailyExpenses(currentDate);
+            sectionListView.setAdapter(new TestAdapter(expenseBeanArrayList, getApplicationContext()));
+
+            if (database.getAllIncome(1) != null) {
+                tvExpenseAmount.setText("-PKR " + sumExpense(database.getAllDailyExpenses(currentDate)));
+            }
+
+            if (database.getAllIncome(2) != null) {
+                tvIncomeAmount.setText("PKR " + sumIncome(database.getAllDailyExpenses(currentDate)));
+            }
+
+        } else {
+            expenseBeanArrayList.clear();
+            expenseBeanArrayList = database.getAllIncome(flag);
+            sectionListView.setAdapter(new TestAdapter(expenseBeanArrayList, getApplicationContext()));
+
+            if (database.getAllIncome(1) != null) {
+                tvExpenseAmount.setText("-PKR " + sumExpense(expenseBeanArrayList));
+            }
+
+            if (database.getAllIncome(2) != null) {
+                tvIncomeAmount.setText("PKR " + sumIncome(expenseBeanArrayList));
+            }
+
         }
+
     }
 
     public double sumExpense(ArrayList<ExpenseBean> list) {
@@ -311,15 +334,27 @@ public class SpendingsOverviewActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(filter_value) && filter_value.equals("daily")) {
             if (database.getAllDailyExpenses(currentDate) != null) {
                 horizontalCalendar.getCalendarView().setVisibility(View.VISIBLE);
-            } else {
+
+                if (database.getAllIncome(1) != null) {
+                    tvExpenseAmount.setText("-PKR " + sumExpense(database.getAllDailyExpenses(currentDate)));
+                }
+
+                if (database.getAllIncome(2) != null) {
+                    tvIncomeAmount.setText("PKR " + sumIncome(database.getAllDailyExpenses(currentDate)));
+                }
 
             }
             cbDaily.setChecked(true);
         } else if (!TextUtils.isEmpty(filter_value) && filter_value.equals("all_time")) {
             horizontalCalendar.getCalendarView().setVisibility(View.GONE);
             if (database.getAllExpenses() != null) {
+                if (database.getAllIncome(1) != null) {
+                    tvExpenseAmount.setText("-PKR " + sumExpense(database.getAllExpenses()));
+                }
 
-            } else {
+                if (database.getAllIncome(2) != null) {
+                    tvIncomeAmount.setText("PKR " + sumIncome(database.getAllExpenses()));
+                }
 
             }
             cbAllTime.setChecked(true);

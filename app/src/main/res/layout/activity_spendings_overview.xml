@@ -137,9 +137,17 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvCategories"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="match_parent"
                 android:layout_below="@id/income_expense_layout"
                 android:layout_marginTop="10dp" />
+
+            <ListView
+                android:divider="@color/white"
+                android:layout_below="@id/income_expense_layout"
+                android:id="@+id/sectionListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
             <TextView
                 android:id="@+id/tvCategories"
