@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.gexton.xpendee.adapters.SectionListViewAdapter;
 import com.gexton.xpendee.model.ExpenseBean;
+import com.gexton.xpendee.util.AdUtil;
 import com.gexton.xpendee.util.Database;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 
@@ -40,6 +42,10 @@ public class CategoryWiseTransactionActivity extends AppCompatActivity {
         imgBack = findViewById(R.id.imgBack);
 
         tvToolbar.setText(category_name);
+
+        AdView adView = findViewById(R.id.adView);
+        AdUtil adUtil = new AdUtil(this);
+        adUtil.loadBannerAd(adView);
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override

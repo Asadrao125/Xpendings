@@ -89,6 +89,7 @@
         android:layout_below="@+id/cashflow_layout"/> <!-- Border Gray View -->
 
     <ListView
+        android:layout_marginBottom="80dp"
         android:id="@+id/sectionListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -266,9 +267,9 @@
         android:id="@+id/fab_add_expense"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="20dp"
+        android:layout_above="@+id/adView"
         android:backgroundTint="@color/navy_blue"
         android:src="@drawable/ic_baseline_add_24"
         app:fabSize="normal"
@@ -284,5 +285,15 @@
         android:visibility="gone"
         app:selectorColor="@android:color/white"
         app:textColorSelected="@android:color/white" />
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:adSize="SMART_BANNER"
+        android:layout_marginTop="10dp"
+        app:adUnitId="@string/ad_unit_id">
+    </com.google.android.gms.ads.AdView>
 
 </RelativeLayout>

@@ -7,19 +7,18 @@
     tools:context=".ManageCategories">
 
     <RelativeLayout
+        android:padding="20dp"
         android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/navy_blue"
-        android:paddingBottom="15dp"
-        android:paddingTop="15dp">
+        android:background="@color/navy_blue">
 
         <ImageView
+            android:layout_marginRight="10dp"
             android:id="@+id/img_back"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
-            android:layout_margin="10dp"
             android:src="@drawable/back" />
 
         <TextView

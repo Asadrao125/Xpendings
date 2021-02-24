@@ -40,11 +40,14 @@
 
         <!-- Recycler view Layout -->
         <RelativeLayout
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="80dp"
             android:id="@+id/recycler_view_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar"
-            android:layout_margin="10dp">
+            android:layout_below="@+id/toolbar">
 
             <LinearLayout
                 android:id="@+id/income_expense_layout"
@@ -72,7 +75,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
-                        android:text="-PKR 123,234"
+                        android:text="-PKR 0"
                         android:textColor="@color/red" />
 
                     <TextView
@@ -97,7 +100,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
-                        android:text="PKR 123,234" />
+                        android:text="PKR 0" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -140,6 +143,16 @@
                 android:visibility="gone" />
 
         </RelativeLayout>  <!-- Recycler view Layout -->
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:adSize="SMART_BANNER"
+            android:layout_marginTop="10dp"
+            app:adUnitId="@string/ad_unit_id">
+        </com.google.android.gms.ads.AdView>
 
     </RelativeLayout>
 

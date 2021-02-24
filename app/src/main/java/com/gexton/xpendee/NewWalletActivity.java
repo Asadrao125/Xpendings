@@ -15,7 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gexton.xpendee.model.WalletBean;
+import com.gexton.xpendee.util.AdUtil;
 import com.gexton.xpendee.util.Database;
+import com.google.android.gms.ads.AdView;
 import com.google.gson.Gson;
 
 public class NewWalletActivity extends AppCompatActivity {
@@ -45,6 +47,10 @@ public class NewWalletActivity extends AppCompatActivity {
         tvAllExpenses = findViewById(R.id.tvAllExpenses);
         category_layout = findViewById(R.id.category_layout);
         database = new Database(getApplicationContext());
+
+        AdView adView = findViewById(R.id.adView);
+        AdUtil adUtil = new AdUtil(this);
+        adUtil.loadBannerAd(adView);
 
         settingDataInFields();
 

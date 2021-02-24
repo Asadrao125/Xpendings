@@ -32,7 +32,9 @@ import com.gexton.xpendee.SearchActivity;
 import com.gexton.xpendee.UpdateOrDeleteExpense;
 import com.gexton.xpendee.model.ExpenseBean;
 import com.gexton.xpendee.model.WalletBean;
+import com.gexton.xpendee.util.AdUtil;
 import com.gexton.xpendee.util.Database;
+import com.google.android.gms.ads.AdView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
@@ -45,6 +47,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class NewTimelineFragment extends Fragment {
     View view;
     String json;
+    AdView adView;
     Database database;
     String currentDate;
     String filter_value;
@@ -70,6 +73,10 @@ public class NewTimelineFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_new_timeline, container, false);
+
+        adView = view.findViewById(R.id.adView);
+        AdUtil adUtil = new AdUtil(getActivity());
+        adUtil.loadBannerAd(adView);
 
         init();
 

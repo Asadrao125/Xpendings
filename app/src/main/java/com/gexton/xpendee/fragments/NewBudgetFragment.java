@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.gexton.xpendee.NewBudgetActivity;
 import com.gexton.xpendee.R;
 import com.gexton.xpendee.model.BudgetBean;
+import com.gexton.xpendee.util.AdUtil;
+import com.google.android.gms.ads.AdView;
 import com.google.gson.Gson;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -30,6 +32,7 @@ public class NewBudgetFragment extends Fragment {
     String MY_PREFS_NAME = "MY_PREFS_NAME", json;
     LinearLayout no_data_layout;
     ProgressBar progressBar;
+    AdView adView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,6 +47,10 @@ public class NewBudgetFragment extends Fragment {
         budget_complete = view.findViewById(R.id.budget_complete);
         progressBar = view.findViewById(R.id.progressBar);
         tvBudgetPercentage = view.findViewById(R.id.tvBudgetPercentage);
+
+        adView = view.findViewById(R.id.adView);
+        AdUtil adUtil = new AdUtil(getActivity());
+        adUtil.loadBannerAd(adView);
 
         static_layout_wallet.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +78,6 @@ public class NewBudgetFragment extends Fragment {
     }
 
     public void converSionAndSettingData() {
-        // Converting GSON object into String
         SharedPreferences prefs1 = getContext().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         json = prefs1.getString("Budget_Bean", "");
         Gson gson = new Gson();

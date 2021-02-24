@@ -43,6 +43,10 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/app_id_facebook" />
 
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/admob_app_id" />
+
         <provider
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider192519792590832"

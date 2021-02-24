@@ -13,12 +13,15 @@ import android.view.ViewGroup;
 import com.gexton.xpendee.adapters.VisiblistyCategoriesListAdapter;
 import com.gexton.xpendee.R;
 import com.gexton.xpendee.model.CategoryBean;
+import com.gexton.xpendee.util.AdUtil;
 import com.gexton.xpendee.util.Database;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 
 public class VisiblistyExpenseFragment extends Fragment {
     View view;
+    AdView adView;
     Database database;
     RecyclerView rvCategories;
     VisiblistyCategoriesListAdapter VisiblistyCategoriesListAdapter = null;
@@ -31,6 +34,10 @@ public class VisiblistyExpenseFragment extends Fragment {
         rvCategories = view.findViewById(R.id.rvCategoriesList);
         rvCategories.setLayoutManager(new LinearLayoutManager(getContext()));
         database = new Database(getContext());
+
+        adView = view.findViewById(R.id.adView);
+        AdUtil adUtil = new AdUtil(getActivity());
+        adUtil.loadBannerAd(adView);
 
         if (database.getAllCategories(1) != null) {
             categoryBeanArrayList = database.getAllCategories(1);

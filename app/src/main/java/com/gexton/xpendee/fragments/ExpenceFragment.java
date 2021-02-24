@@ -17,8 +17,10 @@ import com.gexton.xpendee.AddCategoryActivity;
 import com.gexton.xpendee.R;
 import com.gexton.xpendee.UpdateOrDeleteCategory;
 import com.gexton.xpendee.model.CategoryBean;
+import com.gexton.xpendee.util.AdUtil;
 import com.gexton.xpendee.util.Database;
 import com.gexton.xpendee.util.RecyclerItemClickListener;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 
@@ -29,6 +31,7 @@ public class ExpenceFragment extends Fragment {
     Database database;
     TextView tv_add_category;
     View view;
+    AdView adView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,6 +41,10 @@ public class ExpenceFragment extends Fragment {
         rvCategories = view.findViewById(R.id.rvCategoriesList);
         rvCategories.setLayoutManager(new LinearLayoutManager(getContext()));
         database = new Database(getContext());
+
+        adView = view.findViewById(R.id.adView);
+        AdUtil adUtil = new AdUtil(getActivity());
+        adUtil.loadBannerAd(adView);
 
         categoryBeanArrayList = new ArrayList<>();
 

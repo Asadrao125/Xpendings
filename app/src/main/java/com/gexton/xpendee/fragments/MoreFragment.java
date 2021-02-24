@@ -25,6 +25,8 @@ import com.gexton.xpendee.ManageCategories;
 import com.gexton.xpendee.R;
 import com.gexton.xpendee.SpendingsOverviewActivity;
 import com.gexton.xpendee.model.WalletBean;
+import com.gexton.xpendee.util.AdUtil;
+import com.google.android.gms.ads.AdView;
 import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -40,6 +42,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class MoreFragment extends Fragment {
     View view;
     String json;
+    AdView adView;
     CircleImageView profile_image;
     TextView tv_username, tv_email;
     SharedPreferences preferences;
@@ -64,6 +67,10 @@ public class MoreFragment extends Fragment {
         manageIncExp = view.findViewById(R.id.manageIncExp);
         spendings_overview = view.findViewById(R.id.spendings_overview);
         preferences = getContext().getSharedPreferences("Xpendee", 0);
+
+        adView = view.findViewById(R.id.adView);
+        AdUtil adUtil = new AdUtil(getActivity());
+        adUtil.loadBannerAd(adView);
 
         spendings_overview.setOnClickListener(new View.OnClickListener() {
             @Override

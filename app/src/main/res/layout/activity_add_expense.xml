@@ -385,6 +385,16 @@
             android:text="RESET"
             android:textSize="16sp" />
 
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_reset"
+            app:adSize="SMART_BANNER"
+            android:layout_marginTop="10dp"
+            app:adUnitId="@string/ad_unit_id">
+        </com.google.android.gms.ads.AdView>
+
         <LinearLayout
             android:background="@color/white"
                    android:id="@+id/parentLayoutCategories"

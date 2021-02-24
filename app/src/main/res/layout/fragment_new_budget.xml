@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_centerInParent="true"
     tools:context=".fragments.NewBudgetFragment">
 
@@ -189,5 +190,15 @@
         </RelativeLayout>
 
     </RelativeLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:adSize="SMART_BANNER"
+        android:layout_marginTop="10dp"
+        app:adUnitId="@string/ad_unit_id">
+    </com.google.android.gms.ads.AdView>
 
 </RelativeLayout>

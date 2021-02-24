@@ -112,6 +112,7 @@ public class SectionListViewAdapter extends BaseAdapter {
                         if (list.get(i).imagePath != null) {
                             Intent intent = new Intent(context, ViewImageActivity.class);
                             intent.putExtra("image_path", list.get(i).imagePath);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(intent);
                         } else {
                             Toast.makeText(context, "No Image", Toast.LENGTH_SHORT).show();

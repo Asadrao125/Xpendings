@@ -33,12 +33,14 @@ import com.gexton.xpendee.adapters.SectionListViewAdapter;
 import com.gexton.xpendee.adapters.TestAdapter;
 import com.gexton.xpendee.model.CategoryBean;
 import com.gexton.xpendee.model.ExpenseBean;
+import com.gexton.xpendee.util.AdUtil;
 import com.gexton.xpendee.util.Database;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.android.gms.ads.AdView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,13 +48,13 @@ import java.util.Calendar;
 
 public class SpendingsOverviewActivity extends AppCompatActivity {
     Database database;
+    ImageView imgBack;
     String currentDate;
     String filter_value;
     SharedPreferences prefs;
     ListView sectionListView;
     CheckBox cbDaily, cbAllTime;
     LinearLayout expense, income;
-    ImageView imgBack;
     SharedPreferences.Editor editor;
     String MY_PREFS_NAME = "MY_PREFS_NAME";
     TextView tvExpenseAmount, tvIncomeAmount;
@@ -66,6 +68,10 @@ public class SpendingsOverviewActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.navy_blue, this.getTheme()));
         }
+
+        AdView adView = findViewById(R.id.adView);
+        AdUtil adUtil = new AdUtil(this);
+        adUtil.loadBannerAd(adView);
 
         init();
 
@@ -144,35 +150,43 @@ public class SpendingsOverviewActivity extends AppCompatActivity {
     private void loadCategories(int flag) {
 
         if (!TextUtils.isEmpty(filter_value) && filter_value.equals("daily")) {
-            expenseBeanArrayList.clear();
-            expenseBeanArrayList = database.getAllDailyExpenses(currentDate);
-            expenseBeanArrayList = removeDuplicates(expenseBeanArrayList);
-            sectionListView.setAdapter(new TestAdapter(expenseBeanArrayList, getApplicationContext()));
 
-            if (database.getAllIncome(1) != null) {
-                tvExpenseAmount.setText("-PKR " + sumExpense(database.getAllDailyExpenses(currentDate)));
+            if (database.getAllDailyExpenses(currentDate) != null) {
+                sectionListView.setVisibility(View.VISIBLE);
+                expenseBeanArrayList.clear();
+                expenseBeanArrayList = database.getAllDailyExpenses(currentDate);
+                expenseBeanArrayList = removeDuplicates(expenseBeanArrayList);
+                sectionListView.setAdapter(new TestAdapter(expenseBeanArrayList, getApplicationContext()));
+
+                if (database.getAllIncome(1) != null) {
+                    tvExpenseAmount.setText("-PKR " + sumExpense(database.getAllIncome(1)));
+                }
+
+                if (database.getAllIncome(2) != null) {
+                    tvIncomeAmount.setText("PKR " + sumIncome(database.getAllIncome(2)));
+                }
+            } else {
+                sectionListView.setVisibility(View.GONE);
             }
-
-            if (database.getAllIncome(2) != null) {
-                tvIncomeAmount.setText("PKR " + sumIncome(database.getAllDailyExpenses(currentDate)));
-            }
-
         } else {
-            expenseBeanArrayList.clear();
-            expenseBeanArrayList = database.getAllIncome(flag);
-            expenseBeanArrayList = removeDuplicates(expenseBeanArrayList);
-            sectionListView.setAdapter(new TestAdapter(expenseBeanArrayList, getApplicationContext()));
+            if (database.getAllIncome(flag) != null) {
+                sectionListView.setVisibility(View.VISIBLE);
+                expenseBeanArrayList.clear();
+                expenseBeanArrayList = database.getAllIncome(flag);
+                expenseBeanArrayList = removeDuplicates(expenseBeanArrayList);
+                sectionListView.setAdapter(new TestAdapter(expenseBeanArrayList, getApplicationContext()));
 
-            if (database.getAllIncome(1) != null) {
-                tvExpenseAmount.setText("-PKR " + sumExpense(expenseBeanArrayList));
+                if (database.getAllIncome(1) != null) {
+                    tvExpenseAmount.setText("-PKR " + sumExpense(database.getAllIncome(1)));
+                }
+
+                if (database.getAllIncome(2) != null) {
+                    tvIncomeAmount.setText("PKR " + sumIncome(database.getAllIncome(2)));
+                }
+            } else {
+                sectionListView.setVisibility(View.GONE);
             }
-
-            if (database.getAllIncome(2) != null) {
-                tvIncomeAmount.setText("PKR " + sumIncome(expenseBeanArrayList));
-            }
-
         }
-
     }
 
     public double sumExpense(ArrayList<ExpenseBean> list) {

@@ -19,8 +19,10 @@ import android.widget.Toast;
 import com.gexton.xpendee.adapters.ColorsAdapter;
 import com.gexton.xpendee.adapters.ImageAdapter;
 import com.gexton.xpendee.model.CategoryBean;
+import com.gexton.xpendee.util.AdUtil;
 import com.gexton.xpendee.util.Database;
 import com.gexton.xpendee.util.RecyclerItemClickListener;
+import com.google.android.gms.ads.AdView;
 
 public class AddCategoryActivity extends AppCompatActivity {
     ImageView img_cross, img_tick, image_view_selected;
@@ -103,6 +105,10 @@ public class AddCategoryActivity extends AppCompatActivity {
         img_tick = findViewById(R.id.img_tick);
         image_view_selected = findViewById(R.id.image_view_selected);
         layout_complete = findViewById(R.id.layout_complete);
+
+        AdView adView = findViewById(R.id.adView);
+        AdUtil adUtil = new AdUtil(this);
+        adUtil.loadBannerAd(adView);
 
         img_cross.setOnClickListener(new View.OnClickListener() {
             @Override

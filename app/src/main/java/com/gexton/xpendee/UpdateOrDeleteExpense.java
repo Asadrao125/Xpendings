@@ -15,12 +15,14 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,6 +30,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -42,8 +45,10 @@ import com.gexton.xpendee.fragments.NewTimelineFragment;
 import com.gexton.xpendee.model.CategoryBean;
 import com.gexton.xpendee.model.ExpenseBean;
 import com.gexton.xpendee.model.WalletBean;
+import com.gexton.xpendee.util.AdUtil;
 import com.gexton.xpendee.util.Database;
 import com.gexton.xpendee.util.RecyclerItemClickListener;
+import com.google.android.gms.ads.AdView;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
@@ -111,6 +116,10 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
             getWindow().setStatusBarColor(getResources().getColor(R.color.navy_blue, this.getTheme()));
         }
 
+        AdView adView = findViewById(R.id.adView);
+        AdUtil adUtil = new AdUtil(this);
+        adUtil.loadBannerAd(adView);
+
         initialise();
 
         clickListeners();
@@ -133,10 +142,10 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
 
         imageview_Category.setImageResource(categoryIcon);
         layout_complete.setBackgroundColor(Color.parseColor(color_code));
-        imageview_Category.setColorFilter(Color.parseColor(color_code), android.graphics.PorterDuff.Mode.MULTIPLY);
-        img_calendar.setColorFilter(Color.parseColor(color_code), android.graphics.PorterDuff.Mode.MULTIPLY);
-        img_title_add_expense.setColorFilter(Color.parseColor(color_code), android.graphics.PorterDuff.Mode.MULTIPLY);
-        img_select_imagee.setColorFilter(Color.parseColor(color_code), android.graphics.PorterDuff.Mode.MULTIPLY);
+        imageview_Category.setColorFilter(Color.parseColor(color_code), PorterDuff.Mode.SRC_IN);
+        img_calendar.setColorFilter(Color.parseColor(color_code), PorterDuff.Mode.SRC_IN);
+        img_title_add_expense.setColorFilter(Color.parseColor(color_code), PorterDuff.Mode.SRC_IN);
+        img_select_imagee.setColorFilter(Color.parseColor(color_code), PorterDuff.Mode.SRC_IN);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().setStatusBarColor(Color.parseColor(color_code));
         }
@@ -218,11 +227,11 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
                     flag = categoryBeanArrayListIncome.get(position).catFlag;
                     parentLayoutCategories.setVisibility(View.GONE);
                     imageview_Category.setImageResource(categoryIcon);
-                    imageview_Category.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
+                    imageview_Category.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
                     layout_complete.setBackgroundColor(Color.parseColor(colorHex));
-                    img_calendar.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
-                    img_title_add_expense.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
-                    img_select_imagee.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
+                    img_calendar.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
+                    img_title_add_expense.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
+                    img_select_imagee.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         getWindow().setStatusBarColor(Color.parseColor(colorHex));
                     }
@@ -263,10 +272,10 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
                     parentLayoutCategories.setVisibility(View.GONE);
                     layout_complete.setBackgroundColor(Color.parseColor(colorHex));
                     imageview_Category.setImageResource(categoryIcon);
-                    imageview_Category.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
-                    img_calendar.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
-                    img_title_add_expense.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
-                    img_select_imagee.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
+                    imageview_Category.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
+                    img_calendar.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
+                    img_title_add_expense.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
+                    img_select_imagee.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         getWindow().setStatusBarColor(Color.parseColor(colorHex));
                     }
@@ -806,26 +815,15 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
         transpareView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*if (parentLayoutCategories.isShown()) {
-                    parentLayoutCategories.setVisibility(View.GONE);
-                    transpareView.setVisibility(View.GONE);
-                }*/
             }
         });
-
-        /*parentLayoutCategories.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                parentLayoutCategories.setVisibility(View.GONE);
-                transpareView.setVisibility(View.GONE);
-            }
-        });*/
 
         imageview_Category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 parentLayoutCategories.setVisibility(View.VISIBLE);
                 transpareView.setVisibility(View.VISIBLE);
+                hideKeyboard();
             }
         });
 
@@ -848,4 +846,16 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
             rvCategoriesExpense.setAdapter(adapter);
         }
     }
+
+    public void hideKeyboard() {
+        if (((InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE)).isAcceptingText()) {
+            // Log.d(TAG,"Software Keyboard was shown");
+            View view = this.getCurrentFocus();
+            if (view != null) {
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        }
+    }
+
 }

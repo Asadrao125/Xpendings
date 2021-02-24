@@ -22,6 +22,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,8 +45,10 @@ import com.gexton.xpendee.adapters.CategoriesAdapterForExpense;
 import com.gexton.xpendee.model.CategoryBean;
 import com.gexton.xpendee.model.ExpenseBean;
 import com.gexton.xpendee.model.WalletBean;
+import com.gexton.xpendee.util.AdUtil;
 import com.gexton.xpendee.util.Database;
 import com.gexton.xpendee.util.RecyclerItemClickListener;
+import com.google.android.gms.ads.AdView;
 import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -103,6 +106,10 @@ public class AddExpenseActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.navy_blue, this.getTheme()));
         }
+
+        AdView adView = findViewById(R.id.adView);
+        AdUtil adUtil = new AdUtil(this);
+        adUtil.loadBannerAd(adView);
 
         initialise();
 
@@ -170,11 +177,11 @@ public class AddExpenseActivity extends AppCompatActivity {
                     flag = categoryBeanArrayListIncome.get(position).catFlag;
                     parentLayoutCategories.setVisibility(View.GONE);
                     imageview_Category.setImageResource(categoryIcon);
-                    imageview_Category.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
+                    imageview_Category.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
                     layout_complete.setBackgroundColor(Color.parseColor(colorHex));
-                    img_calendar.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
-                    img_title_add_expense.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
-                    img_select_imagee.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
+                    img_calendar.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
+                    img_title_add_expense.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
+                    img_select_imagee.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         getWindow().setStatusBarColor(Color.parseColor(colorHex));
                     }
@@ -216,10 +223,10 @@ public class AddExpenseActivity extends AppCompatActivity {
                     parentLayoutCategories.setVisibility(View.GONE);
                     layout_complete.setBackgroundColor(Color.parseColor(colorHex));
                     imageview_Category.setImageResource(categoryIcon);
-                    imageview_Category.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
-                    img_calendar.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
-                    img_title_add_expense.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
-                    img_select_imagee.setColorFilter(Color.parseColor(colorHex), android.graphics.PorterDuff.Mode.MULTIPLY);
+                    imageview_Category.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
+                    img_calendar.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
+                    img_title_add_expense.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
+                    img_select_imagee.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         getWindow().setStatusBarColor(Color.parseColor(colorHex));
                     }
@@ -340,12 +347,9 @@ public class AddExpenseActivity extends AppCompatActivity {
             fetchGalleryImages(AddExpenseActivity.this);
             select_image_layout.setVisibility(View.VISIBLE);
             galery_images_layout.setVisibility(View.VISIBLE);
-            //enable_storage_layout.setVisibility(View.GONE);
         } else {
             select_image_layout.setVisibility(View.GONE);
             galery_images_layout.setVisibility(View.GONE);
-            //Toast.makeText(this, "Enable Storage Permission To Use Images", Toast.LENGTH_SHORT).show();
-            //enable_storage_layout.setVisibility(View.VISIBLE);
             permissionCheck();
         }
 
@@ -563,10 +567,6 @@ public class AddExpenseActivity extends AppCompatActivity {
         transpareView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*if (parentLayoutCategories.isShown()) {
-                    parentLayoutCategories.setVisibility(View.GONE);
-                    transpareView.setVisibility(View.GONE);
-                }*/
             }
         });
 
@@ -730,8 +730,14 @@ public class AddExpenseActivity extends AppCompatActivity {
     }
 
     public void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+        if (((InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE)).isAcceptingText()) {
+            // Log.d(TAG,"Software Keyboard was shown");
+            View view = this.getCurrentFocus();
+            if (view != null) {
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        }
     }
 
 }

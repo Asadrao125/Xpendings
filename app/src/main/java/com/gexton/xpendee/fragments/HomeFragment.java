@@ -25,6 +25,7 @@ import com.gexton.xpendee.SpendingsOverviewActivity;
 import com.gexton.xpendee.model.CategoryBean;
 import com.gexton.xpendee.model.ExpenseBean;
 import com.gexton.xpendee.model.WalletBean;
+import com.gexton.xpendee.util.AdUtil;
 import com.gexton.xpendee.util.Database;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -35,6 +36,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.android.gms.ads.AdView;
 import com.google.gson.Gson;
 import com.highsoft.highcharts.Common.HIChartsClasses.HICondition;
 import com.highsoft.highcharts.Common.HIChartsClasses.HILabel;
@@ -79,6 +81,7 @@ public class HomeFragment extends Fragment {
     HIChartView chartView;
     ArrayList<ExpenseBean> listExpenseBean;
     Button btnSpendingsOverview;
+    AdView adView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -103,6 +106,10 @@ public class HomeFragment extends Fragment {
         chartView = (HIChartView) view.findViewById(R.id.hc);
         listExpenseBean = new ArrayList<>();
         btnSpendingsOverview = view.findViewById(R.id.btnSpendingsOverview);
+        adView = view.findViewById(R.id.adView);
+
+        AdUtil adUtil = new AdUtil(getActivity());
+        adUtil.loadBannerAd(adView);
 
         converSionAndSettingData();
 
@@ -161,9 +168,11 @@ public class HomeFragment extends Fragment {
 
         if (database.getAllIncome(1) != null) {
             chartView.setVisibility(View.VISIBLE);
+            btnSpendingsOverview.setVisibility(View.VISIBLE);
             settingHighChart(allCatList);
         } else {
             chartView.setVisibility(View.GONE);
+            btnSpendingsOverview.setVisibility(View.GONE);
         }
 
         return view;

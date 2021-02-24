@@ -261,6 +261,20 @@
            android:textColor="@color/dark_green"
            android:text="Spendings Overview" />
 
+       <com.google.android.gms.ads.AdView
+           android:id="@+id/adView"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_centerHorizontal="true"
+           android:layout_below="@id/btnSpendingsOverview"
+           android:layout_alignParentBottom="true"
+           app:adSize="SMART_BANNER"
+           android:layout_marginTop="10dp"
+           android:layout_marginRight="10dp"
+           android:layout_marginLeft="10dp"
+           app:adUnitId="@string/ad_unit_id">
+       </com.google.android.gms.ads.AdView>
+
    </RelativeLayout>
 
 </ScrollView>
