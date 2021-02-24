@@ -34,7 +34,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
-    ImageView iv_google, iv_fb, iv_apple;
+    ImageView iv_google, iv_fb;
     private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN_FACEBOOK = 64206;
     private static final int RC_SIGN_IN_GOOGLE = 9001;
@@ -52,7 +52,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         iv_google = findViewById(R.id.iv_google);
         iv_fb = findViewById(R.id.iv_fb);
-        iv_apple = findViewById(R.id.iv_apple);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
@@ -73,13 +72,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onClick(View view) {
                 fbLogin2();
-            }
-        });
-
-        iv_apple.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
             }
         });
     }

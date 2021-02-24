@@ -62,6 +62,8 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import static android.content.Context.MODE_PRIVATE;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class HomeFragment extends Fragment {
     String MY_PREFS_NAME = "Xpendee", json;
@@ -194,6 +196,10 @@ public class HomeFragment extends Fragment {
             layout_no_data_found.setVisibility(View.VISIBLE);
             wallet_complete.setVisibility(View.GONE);
 
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
+            params.addRule(RelativeLayout.BELOW, layout_no_data_found.getId());
+            adView.setLayoutParams(params);
+
         }
     }
 
@@ -251,8 +257,8 @@ public class HomeFragment extends Fragment {
         try {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Xpendee");
-            String shareMessage = "Let me recommend you this application\n\n";
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Xpendings");
+            String shareMessage = "Let me recommend you Xpendings application\n\n";
             shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID;
             shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
             startActivity(Intent.createChooser(shareIntent, "Please select"));

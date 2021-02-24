@@ -146,6 +146,7 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
         img_calendar.setColorFilter(Color.parseColor(color_code), PorterDuff.Mode.SRC_IN);
         img_title_add_expense.setColorFilter(Color.parseColor(color_code), PorterDuff.Mode.SRC_IN);
         img_select_imagee.setColorFilter(Color.parseColor(color_code), PorterDuff.Mode.SRC_IN);
+        //img_camera.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().setStatusBarColor(Color.parseColor(color_code));
         }
@@ -232,6 +233,7 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
                     img_calendar.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
                     img_title_add_expense.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
                     img_select_imagee.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
+                    img_camera.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         getWindow().setStatusBarColor(Color.parseColor(colorHex));
                     }
@@ -276,6 +278,7 @@ public class UpdateOrDeleteExpense extends AppCompatActivity {
                     img_calendar.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
                     img_title_add_expense.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
                     img_select_imagee.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
+                    img_camera.setColorFilter(Color.parseColor(colorHex), PorterDuff.Mode.SRC_IN);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         getWindow().setStatusBarColor(Color.parseColor(colorHex));
                     }

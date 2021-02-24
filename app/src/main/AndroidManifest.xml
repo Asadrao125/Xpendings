@@ -11,7 +11,7 @@
         android:roundIcon="@drawable/logo_login"
         android:supportsRtl="true"
         android:theme="@style/Theme.Xpendee">
-        <activity android:name=".CategoryWiseTransactionActivity"></activity>
+        <activity android:name=".CategoryWiseTransactionActivity"/>
         <activity android:name=".SpendingsOverviewActivity" />
         <activity android:name=".ViewImageActivity" />
         <activity android:name=".VisiblistyActivityForCategories" />
@@ -68,7 +68,6 @@
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

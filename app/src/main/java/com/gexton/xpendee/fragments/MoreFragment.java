@@ -47,7 +47,7 @@ public class MoreFragment extends Fragment {
     TextView tv_username, tv_email;
     SharedPreferences preferences;
     String MY_PREFS_NAME = "Xpendee";
-    RelativeLayout manage_categories, add_income, manageIncExp, spendings_overview;
+    RelativeLayout manage_categories, manageIncExp, spendings_overview;
     RelativeLayout logout_layout, about_app_layout, share_app_layout, rate_app_layout;
 
     @Override
@@ -59,7 +59,6 @@ public class MoreFragment extends Fragment {
         tv_email = view.findViewById(R.id.tv_email);
         profile_image = view.findViewById(R.id.profile_image);
         manage_categories = view.findViewById(R.id.manage_categories);
-        add_income = view.findViewById(R.id.add_income);
         logout_layout = view.findViewById(R.id.logout_layout);
         about_app_layout = view.findViewById(R.id.about_app_layout);
         share_app_layout = view.findViewById(R.id.share_app_layout);
@@ -71,6 +70,8 @@ public class MoreFragment extends Fragment {
         adView = view.findViewById(R.id.adView);
         AdUtil adUtil = new AdUtil(getActivity());
         adUtil.loadBannerAd(adView);
+
+        checkWalletExistance();
 
         spendings_overview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,12 +91,6 @@ public class MoreFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), ManageCategories.class));
-            }
-        });
-
-        add_income.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
             }
         });
 
@@ -147,8 +142,8 @@ public class MoreFragment extends Fragment {
         try {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Xpendee");
-            String shareMessage = "Let me recommend you this application\n\n";
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Xpendings");
+            String shareMessage = "Let me recommend you Xpendings application\n\n";
             shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID;
             shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
             startActivity(Intent.createChooser(shareIntent, "Please select"));
@@ -176,34 +171,15 @@ public class MoreFragment extends Fragment {
                 .show();
     }
 
-    public void permissionCheck() {
-        Dexter.withContext(getContext())
-                .withPermissions(
-                        Manifest.permission.READ_EXTERNAL_STORAGE)
-                .withListener(new MultiplePermissionsListener() {
-                    @Override
-                    public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        if (report.areAllPermissionsGranted()) {
-                            startActivity(new Intent(getContext(), AddIncomeActivity.class));
-                        }
-                    }
-
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-                        token.continuePermissionRequest();
-                    }
-                }).check();
-    }
-
     private void checkWalletExistance() {
         SharedPreferences prefs1 = getContext().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
         json = prefs1.getString("Wallet_Bean", "");
         Gson gson = new Gson();
         WalletBean walletBean = gson.fromJson(json, WalletBean.class);
         if (walletBean != null) {
-            add_income.setVisibility(View.VISIBLE);
+            manageIncExp.setVisibility(View.VISIBLE);
         } else {
-            add_income.setVisibility(View.GONE);
+            manageIncExp.setVisibility(View.GONE);
         }
     }
 }

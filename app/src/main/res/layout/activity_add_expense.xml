@@ -152,6 +152,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
+                app:tint="@color/navy_blue"
                 android:src="@drawable/calendar_addexpense" />
 
             <TextView
@@ -199,6 +200,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
+                app:tint="@color/navy_blue"
                 android:src="@drawable/title_addexpense" />
 
         </RelativeLayout> <!-- Write Description Layout -->
@@ -221,6 +223,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
+                app:tint="@color/navy_blue"
                 android:src="@drawable/image_addexpense" />
 
             <ImageView
@@ -266,6 +269,7 @@
                         android:layout_marginRight="20dp"
                         android:background="@drawable/current_day_background"
                         android:padding="20dp"
+                        app:tint="@color/navy_blue"
                         android:src="@drawable/camera__addexpense" />
 
                     <LinearLayout

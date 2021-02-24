@@ -74,14 +74,6 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/fb"/>
 
-                <ImageView
-                    android:id="@+id/iv_apple"
-                    android:layout_margin="10dp"
-                    android:visibility="gone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/apple"/>
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
