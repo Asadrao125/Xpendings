@@ -144,9 +144,11 @@ public class NewTimelineFragment extends Fragment {
                 if (filter_layout.isShown()) {
                     filter_layout.setVisibility(View.GONE);
                     transparentView.setVisibility(View.GONE);
+                    adView.setVisibility(View.VISIBLE);
                     fab_add_expense.setVisibility(View.VISIBLE);
                 } else {
                     filter_layout.setVisibility(View.VISIBLE);
+                    adView.setVisibility(View.GONE);
                     transparentView.setVisibility(View.VISIBLE);
                     fab_add_expense.setVisibility(View.GONE);
                 }
@@ -159,6 +161,7 @@ public class NewTimelineFragment extends Fragment {
                 if (filter_layout.isShown()) {
                     filter_layout.setVisibility(View.GONE);
                     transparentView.setVisibility(View.GONE);
+                    adView.setVisibility(View.VISIBLE);
                     fab_add_expense.setVisibility(View.VISIBLE);
                 } else {
                     transparentView.setVisibility(View.GONE);
@@ -172,6 +175,7 @@ public class NewTimelineFragment extends Fragment {
             public void onClick(View view) {
                 filter_layout.setVisibility(View.GONE);
                 transparentView.setVisibility(View.GONE);
+                adView.setVisibility(View.VISIBLE);
                 fab_add_expense.setVisibility(View.VISIBLE);
             }
         });
