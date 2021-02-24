@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gexton.xpendee.AboutAppActivity;
 import com.gexton.xpendee.AddExpenseActivity;
 import com.gexton.xpendee.AddIncomeActivity;
 import com.gexton.xpendee.BuildConfig;
@@ -97,7 +98,7 @@ public class MoreFragment extends Fragment {
         about_app_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(getContext(), AboutAppActivity.class));
             }
         });
 

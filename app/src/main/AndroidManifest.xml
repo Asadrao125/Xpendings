@@ -11,7 +11,8 @@
         android:roundIcon="@drawable/logo_login"
         android:supportsRtl="true"
         android:theme="@style/Theme.Xpendee">
-        <activity android:name=".CategoryWiseTransactionActivity"/>
+        <activity android:name=".AboutAppActivity"></activity>
+        <activity android:name=".CategoryWiseTransactionActivity" />
         <activity android:name=".SpendingsOverviewActivity" />
         <activity android:name=".ViewImageActivity" />
         <activity android:name=".VisiblistyActivityForCategories" />
@@ -42,7 +43,6 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/app_id_facebook" />
-
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/admob_app_id" />
@@ -51,23 +51,21 @@
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider192519792590832"
             android:exported="true" />
-
         <provider
-            android:authorities="com.gexton.xpendee.FileProvider"
             android:name="androidx.core.content.FileProvider"
+            android:authorities="com.gexton.xpendee.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
-
+                android:resource="@xml/provider_paths" />
         </provider>
-
     </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>
