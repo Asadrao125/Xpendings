@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         multiDexEnabled true
-        applicationId "com.gexton.xpendee"
+        applicationId "com.gexton.xpendings"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1

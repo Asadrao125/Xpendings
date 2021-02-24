@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.gexton.xpendee">
+    package="com.gexton.xpendings">
 
     <application
         android:allowBackup="true"
@@ -11,28 +11,28 @@
         android:roundIcon="@drawable/logo_login"
         android:supportsRtl="true"
         android:theme="@style/Theme.Xpendee">
-        <activity android:name=".AboutAppActivity"></activity>
-        <activity android:name=".CategoryWiseTransactionActivity" />
-        <activity android:name=".SpendingsOverviewActivity" />
-        <activity android:name=".ViewImageActivity" />
-        <activity android:name=".VisiblistyActivityForCategories" />
-        <activity android:name=".SearchActivity" />
-        <activity android:name=".AllExpensesCategoryActivity" />
-        <activity android:name=".NewBudgetActivity" />
-        <activity android:name=".UpdateOrDeleteExpense" />
-        <activity android:name=".AddIncomeActivity" />
-        <activity android:name=".AddExpenseActivity" />
-        <activity android:name=".NewWalletActivity" />
-        <activity android:name=".UpdateOrDeleteCategory" />
-        <activity android:name=".AddCategoryActivity" />
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".ManageCategories" />
+        <activity android:name="com.gexton.xpendings.AboutAppActivity"></activity>
+        <activity android:name="com.gexton.xpendings.CategoryWiseTransactionActivity" />
+        <activity android:name="com.gexton.xpendings.SpendingsOverviewActivity" />
+        <activity android:name="com.gexton.xpendings.ViewImageActivity" />
+        <activity android:name="com.gexton.xpendings.VisiblistyActivityForCategories" />
+        <activity android:name="com.gexton.xpendings.SearchActivity" />
+        <activity android:name="com.gexton.xpendings.AllExpensesCategoryActivity" />
+        <activity android:name="com.gexton.xpendings.NewBudgetActivity" />
+        <activity android:name="com.gexton.xpendings.UpdateOrDeleteExpense" />
+        <activity android:name="com.gexton.xpendings.AddIncomeActivity" />
+        <activity android:name="com.gexton.xpendings.AddExpenseActivity" />
+        <activity android:name="com.gexton.xpendings.NewWalletActivity" />
+        <activity android:name="com.gexton.xpendings.UpdateOrDeleteCategory" />
+        <activity android:name="com.gexton.xpendings.AddCategoryActivity" />
+        <activity android:name="com.gexton.xpendings.HomeActivity" />
+        <activity android:name="com.gexton.xpendings.ManageCategories" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".SplashActivity">
+        <activity android:name="com.gexton.xpendings.LoginActivity" />
+        <activity android:name="com.gexton.xpendings.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,7 +53,7 @@
             android:exported="true" />
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.gexton.xpendee.FileProvider"
+            android:authorities="com.gexton.xpendings.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
